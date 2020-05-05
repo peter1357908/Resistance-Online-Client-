@@ -1,7 +1,6 @@
 # Project Name
 
-![Team Photo](Insert a Team Photo URL here)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+![Team Photo](https://i.imgur.com/FAXdtY4.jpg)
 
 TODO: short project description, some sample screenshots or mockups
 
