@@ -11,12 +11,13 @@ TODO: short project description, some sample screenshots or mockups
 We plan on organizing our project similarly to how we've implemented the blog project we built in lab 3.
 
 Backend (host on Heroku):
-* Sockets
+* Socket.io
 * Express
-* Mongo
+* MongoDB
 
 Frontend (host on Surge):
 * Webpack (to bundle everything together)
+* Socket.io
 * React
 * CSS
 
