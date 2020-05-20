@@ -21,7 +21,7 @@ Frontend (host on Surge):
 * React
 * CSS
 
-We will also use p5.js and mo.js to support some simple graphics / animations and for UI.
+We will also use p5.js and mo.js to support some simple graphics / animations and for UI!
 
 ## Setup
 
