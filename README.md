@@ -33,12 +33,12 @@ We'll deploy to the front-end surge, as we've been doing for the labs. As mentio
 
 ## Authors
 
-Peter Gao
-Will Baxley
-Carlos Yepes
-Jose Chanchavac
-Sunbir Chawla
-Bryan Shin
+Peter Gao  
+Will Baxley  
+Carlos Yepes  
+Jose Chanchavac  
+Sunbir Chawla  
+Bryan Shin  
 
 ## Acknowledgments
 
