@@ -17,9 +17,9 @@ Backend (host on Heroku):
 
 Frontend (host on Surge):
 * Webpack (to bundle everything together)
-* Socket.io
+* Socket.io-client
 * React
-* CSS
+* SCSS
 
 We will also use p5.js and mo.js to support some simple graphics / animations and for UI!
 
@@ -29,7 +29,7 @@ We'll use yarn to manage our packages, like we've been doing in the labs. So, in
 
 ## Deployment
 
-We'll deploy to the front-end surge, as we've been doing for the labs. As mentioned already, the back-end will be hosted on Firebase.
+We'll deploy to the front-end surge, as we've been doing for the labs. As mentioned already, the back-end will be hosted on Heroku.
 
 ## Authors
 
