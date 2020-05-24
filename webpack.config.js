@@ -69,7 +69,11 @@ module.exports = {
       filename: './index.html',
     }),
   ],
+  output: {
+    publicPath: '/',
+  },
   devServer: {
     hot: true,
+    historyApiFallback: true,
   },
 };
