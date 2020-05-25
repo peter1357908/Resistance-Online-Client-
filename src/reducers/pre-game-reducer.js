@@ -2,13 +2,14 @@ import { ActionTypes } from '../actions';
 
 const initialState = {
   sessionID: '',
-  players: [''],
+  players: [],
   currentPlayer: '',
 };
 
 const PreGameReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.SET_PLAYERS:
+      console.log(action);
       return { ...state, players: action.players };
     case ActionTypes.SET_SESSION_ID:
       return { ...state, sessionID: action.sessionID };

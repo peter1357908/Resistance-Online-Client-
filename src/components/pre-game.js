@@ -16,7 +16,7 @@ function mapStateToProps(reduxState) {
 
 class PreGame extends Component {
   componentDidMount() {
-    socket.on(this.props.sessionID, setPlayers);
+    socket.on(this.props.sessionID, this.props.setPlayers);
   }
 
   // Relies on the backend to discard illegal startGame requests
@@ -28,12 +28,14 @@ class PreGame extends Component {
 
   onClickQuit = (event) => {
     socket.emit('quitGame', this.props.sessionID, this.props.currentPlayer);
-    this.props.history.push('/join-game');
+    this.props.history.push('/');
   }
 
   // TODO: highlight the session creator's playerID
   render() {
+    console.log(`players: ${this.props}`);
     const players = this.props.players.map((player) => {
+      console.log(`player: ${player}`);
       return (
         // assumes that each playerID is unique within a session
         <div key={player}>
@@ -45,9 +47,9 @@ class PreGame extends Component {
     return (
       <div className="vertical-flex pre-game-container">
         <div className="title-text">
-          Players
+          Players:
         </div>
-        <div className="vertical-flex">
+        <div className="vertical-flex title-text">
           {players}
         </div>
         <div className="title-text">

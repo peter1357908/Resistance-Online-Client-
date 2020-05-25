@@ -33,7 +33,7 @@ class JoinGame extends Component {
   onClickJoin = (event) => {
     const sessionInfo = {
       sessionID: this.state.sessionID,
-      sessionPassword: this.state.sessionPassword,
+      // sessionPassword: this.state.sessionPassword,
       playerID: this.state.playerID,
     };
     socket.emit('joinGame', sessionInfo);

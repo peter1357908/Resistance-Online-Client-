@@ -14,7 +14,7 @@ export function setSessionID(sessionID) {
 export function setPlayers(gameInfo) {
   return {
     type: ActionTypes.SET_PLAYERS,
-    players: gameInfo.players,
+    players: gameInfo.playerIDs,
   };
 }
 
