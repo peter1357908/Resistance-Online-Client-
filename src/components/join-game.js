@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
 import { setSessionID, setCurrentlayer } from '../actions';
@@ -15,7 +15,21 @@ class JoinGame extends Component {
       sessionID: '',
       sessionPassword: '',
       playerID: '',
+      failed: false,
     };
+  }
+
+  componentDidMount() {
+    socket.on('joinFailed', this.setAlarm);
+    socket.on('joinSucceeded', this.onSuccess);
+  }
+
+  setAlarm = () => {
+    this.setState({ failed: true });
+  }
+
+  onSuccess = () => {
+    this.props.history.push('/pre-game');
   }
 
   onChangeSessionID = (event) => {
@@ -40,8 +54,6 @@ class JoinGame extends Component {
 
     this.props.setSessionID(this.state.sessionID);
     this.props.setCurrentlayer(this.state.playerID);
-
-    this.props.history.push('/pre-game');
   }
 
   onClickBack = (event) => {
@@ -55,6 +67,7 @@ class JoinGame extends Component {
           Join a Game
         </div>
         <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
+        {this.state.failed ? <Alert variant="danger">SessionID does not exist</Alert> : <></>}
         <Form.Control type="input" onChange={this.onChangeSessionPassword} value={this.state.sessionPassword} placeholder="Session Password" />
         <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="Player ID (this will be your in-game name)" />
         <div className="horizontal-flex">
