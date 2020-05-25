@@ -36,10 +36,11 @@ class CreateGame extends Component {
   onClickCreate = (event) => {
     const sessionInfo = {
       sessionID: this.state.sessionID,
-      sessionPassword: this.state.sessionPassword,
-      playerID: this.state.playerID,
+      creator: this.state.playerID,
+      // sessionPassword: this.state.sessionPassword,
+      playerIDs: [this.state.playerID],
     };
-    socket.emit('CreateGame', sessionInfo);
+    socket.emit('createGame', sessionInfo);
 
     this.props.setSessionID(this.state.sessionID);
     this.props.setCurrentlayer(this.state.playerID);
