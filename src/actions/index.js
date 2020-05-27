@@ -1,7 +1,7 @@
 export const ActionTypes = {
   SET_SESSION_ID: 'SET_SESSION_ID',
-  SET_PLAYERS: 'SET_PLAYERS',
-  SET_CURRENT_PLAYER: 'SET_CURRENT_PLAYER',
+  SET_PLAYER_IDS: 'SET_PLAYER_IDS',
+  SET_CURRENT_PLAYER_ID: 'SET_CURRENT_PLAYER_ID',
 };
 
 export function setSessionID(sessionID) {
@@ -11,16 +11,16 @@ export function setSessionID(sessionID) {
   };
 }
 
-export function setPlayers(gameInfo) {
+export function setPlayerIDs(playerIDs) {
   return {
-    type: ActionTypes.SET_PLAYERS,
-    players: gameInfo.playerIDs,
+    type: ActionTypes.SET_PLAYER_IDS,
+    playerIDs,
   };
 }
 
-export function setCurrentlayer(currentPlayer) {
+export function setCurrentPlayerID(currentPlayerID) {
   return {
-    type: ActionTypes.SET_CURRENT_PLAYER,
-    currentPlayer,
+    type: ActionTypes.SET_CURRENT_PLAYER_ID,
+    currentPlayerID,
   };
 }

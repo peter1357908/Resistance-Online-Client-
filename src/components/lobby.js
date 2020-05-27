@@ -4,53 +4,58 @@ import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
 import socket from '../socketConfig';
-import { setPlayers } from '../actions';
+import { setPlayerIDs } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    sessionID: reduxState.preGame.sessionID,
-    players: reduxState.preGame.players,
-    currentPlayer: reduxState.preGame.currentPlayer,
+    sessionID: reduxState.lobby.sessionID,
+    playerIDs: reduxState.lobby.playerIDs,
+    currentPlayerID: reduxState.lobby.currentPlayerID,
   };
 }
 
-class PreGame extends Component {
+class Lobby extends Component {
   componentDidMount() {
-    socket.on(this.props.sessionID, this.props.setPlayers);
+    socket.on('lobby', (result) => {
+      this.props.setPlayerIDs(result.playerIDs);
+      if (result.currentLeader !== -1) {
+        this.props.history.push('/in-game');
+      }
+    });
   }
 
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
-    socket.emit('startGame', this.props.sessionID, this.props.currentPlayer);
-    this.props.history.push('/in-game');
+    socket.emit('lobby', { action: 'startGame' });
   }
 
   onClickQuit = (event) => {
-    socket.emit('quitGame', this.props.sessionID, this.props.currentPlayer);
+    socket.emit('lobby', { action: 'quitGame' });
     this.props.history.push('/');
   }
 
   // TODO: highlight the session creator's playerID
+  // TODO: make it consistent with the Figma mock-up (different rendering for creators than joiners)
   render() {
-    console.log(`players: ${this.props}`);
-    const players = this.props.players.map((player) => {
-      console.log(`player: ${player}`);
+    console.log(`playerIDs: ${this.props.playerIDs}`);
+    const playerIDs = this.props.playerIDs.map((playerID) => {
+      console.log(`player: ${playerID}`);
       return (
         // assumes that each playerID is unique within a session
-        <div key={player}>
-          {player}
+        <div key={playerID}>
+          {playerID}
         </div>
       );
     });
 
     return (
-      <div className="vertical-flex pre-game-container">
+      <div className="vertical-flex lobby-container">
         <div className="title-text">
-          Players:
+          PlayerIDs:
         </div>
         <div className="vertical-flex title-text">
-          {players}
+          {playerIDs}
         </div>
         <div className="title-text">
           Session ID: {this.props.sessionID}
@@ -68,4 +73,4 @@ class PreGame extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setPlayers })(PreGame));
+export default withRouter(connect(mapStateToProps, { setPlayerIDs })(Lobby));

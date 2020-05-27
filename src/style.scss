@@ -37,19 +37,13 @@ body {
 }
 
 // various containers
-.welcome-container {
+.welcome-container, .join-game-container, .create-game-container {
   background-image: url('../images/spy_squad.jpg');
   background-position: center;
   background-size: cover;
 }
 
-.join-game-container {
-  background-image: url('../images/spy_squad.jpg');
-  background-position: center;
-  background-size: cover;
-}
-
-.pre-game-container {
+.lobby-container {
   background-image: url('../images/smoking_spy.jpg');
   background-position: center;
   background-size: cover;
