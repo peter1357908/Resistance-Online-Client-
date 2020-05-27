@@ -38,9 +38,7 @@ class Lobby extends Component {
   // TODO: highlight the session creator's playerID
   // TODO: make it consistent with the Figma mock-up (different rendering for creators than joiners)
   render() {
-    console.log(`playerIDs: ${this.props.playerIDs}`);
     const playerIDs = this.props.playerIDs.map((playerID) => {
-      console.log(`player: ${playerID}`);
       return (
         // assumes that each playerID is unique within a session
         <div key={playerID}>
