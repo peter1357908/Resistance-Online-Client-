@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentlayer } from '../actions';
+import { setSessionID, setCurrentPlayerID } from '../actions';
 
 import socket from '../socketConfig';
 
@@ -13,31 +13,30 @@ class JoinGame extends Component {
 
     this.state = {
       sessionID: '',
-      sessionPassword: '',
+      password: '',
       playerID: '',
       failed: false,
     };
   }
 
   componentDidMount() {
-    socket.on('joinFailed', this.setAlarm);
-    socket.on('joinSucceeded', this.onSuccess);
-  }
-
-  setAlarm = () => {
-    this.setState({ failed: true });
-  }
-
-  onSuccess = () => {
-    this.props.history.push('/pre-game');
+    socket.on('joinGame', (result) => {
+      if (result.playerID === null) {
+        this.setState({ failed: true });
+      } else {
+        this.props.setSessionID(this.state.sessionID);
+        this.props.setCurrentPlayerID(result.playerID);
+        this.props.history.push('/lobby');
+      }
+    });
   }
 
   onChangeSessionID = (event) => {
     this.setState({ sessionID: event.target.value });
   }
 
-  onChangeSessionPassword = (event) => {
-    this.setState({ sessionPassword: event.target.value });
+  onChangePassword = (event) => {
+    this.setState({ password: event.target.value });
   }
 
   onChangePlayerID = (event) => {
@@ -47,13 +46,11 @@ class JoinGame extends Component {
   onClickJoin = (event) => {
     const sessionInfo = {
       sessionID: this.state.sessionID,
-      // sessionPassword: this.state.sessionPassword,
+      password: this.state.password,
       playerID: this.state.playerID,
+      failed: false,
     };
     socket.emit('joinGame', sessionInfo);
-
-    this.props.setSessionID(this.state.sessionID);
-    this.props.setCurrentlayer(this.state.playerID);
   }
 
   onClickBack = (event) => {
@@ -63,13 +60,14 @@ class JoinGame extends Component {
   render() {
     return (
       <div className="vertical-flex join-game-container">
+        {/* alert is probably not the best choice for notification of failure here */}
+        {this.state.failed ? <Alert variant="danger">Join attempt failed.</Alert> : <></>}
         <div className="title-text">
           Join a Game
         </div>
         <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
-        {this.state.failed ? <Alert variant="danger">SessionID does not exist</Alert> : <></>}
-        <Form.Control type="input" onChange={this.onChangeSessionPassword} value={this.state.sessionPassword} placeholder="Session Password" />
-        <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="Player ID (this will be your in-game name)" />
+        <Form.Control type="input" onChange={this.onChangePassword} value={this.state.password} placeholder="Session Password" />
+        <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="PlayerID (this will be your in-game name)" />
         <div className="horizontal-flex">
           <Button variant="primary" onClick={this.onClickJoin}>
             Join
@@ -83,4 +81,4 @@ class JoinGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentlayer })(JoinGame));
+export default withRouter(connect(null, { setSessionID, setCurrentPlayerID })(JoinGame));

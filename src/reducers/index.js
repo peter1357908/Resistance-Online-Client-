@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import PreGameReducer from './pre-game-reducer';
+import LobbyReducer from './lobby-reducer';
 
 const rootReducer = combineReducers({
-  preGame: PreGameReducer,
+  lobby: LobbyReducer,
 });
 
 export default rootReducer;
