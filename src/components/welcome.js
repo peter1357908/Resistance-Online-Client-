@@ -6,9 +6,9 @@ const Welcome = (props) => {
   return (
     <div className="vertical-flex welcome-container">
       <div className="title-text">
-        Welcome to Resistance Online
+        <div>Welcome to Resistance Online</div>
       </div>
-      <div className="horizontal-flex">
+      <div className="horizontal-flex-center bottom-navigation">
         <Link to="/join-game">
           <Button variant="primary">
             Join Game
