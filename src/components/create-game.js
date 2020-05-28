@@ -67,10 +67,12 @@ class CreateGame extends Component {
         <div className="title-text">
           Create a Game
         </div>
-        <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
-        <Form.Control type="input" onChange={this.onChangePassword} value={this.state.password} placeholder="Session Password" />
-        <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="playerID (this will be your name in the game)" />
-        <div className="horizontal-flex">
+        <div className="input-container">
+          <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
+          <Form.Control type="input" onChange={this.onChangePassword} value={this.state.password} placeholder="Session Password" />
+          <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="playerID (this will be your name in the game)" />
+        </div>
+        <div className="horizontal-flex-center bottom-navigation">
           <Button variant="primary" onClick={this.onClickCreate}>
             Create
           </Button>
