@@ -29,8 +29,8 @@ const initialState = {
         MissionStatus.TBD, 
         MissionStatus.TBD],
     selectedPlayers: [], // i.e. which cards should be displayed as enlarged and glowing
-    gamePhase = Phase.VIEWING_TEAM,
-    waitingOn = [] // the players we're waiting on 
+    gamePhase: Phase.VIEWING_TEAM,
+    waitingOn: [], // the players we're waiting on 
 };
 
 // const InGameReducer = (state = initialState, action) => {
