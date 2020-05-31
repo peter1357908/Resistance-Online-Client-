@@ -38,29 +38,60 @@ class Lobby extends Component {
   // TODO: highlight the session creator's playerID
   // TODO: make it consistent with the Figma mock-up (different rendering for creators than joiners)
   render() {
-    console.log(`playerIDs: ${this.props.playerIDs}`);
-    const playerIDs = this.props.playerIDs.map((playerID) => {
-      console.log(`player: ${playerID}`);
-      return (
-        // assumes that each playerID is unique within a session
-        <div key={playerID}>
-          {playerID}
-        </div>
-      );
+    const placeholderIDs = ['Player 1',
+      'Player 2',
+      'Player 3',
+      'Player 4',
+      'Player 5',
+      'Player 6 (optional)',
+      'Player 7 (optional)',
+      'Player 8 (optional)',
+      'Player 9 (optional)',
+      'Player 10 (optional)'];
+    const numPlayers = this.props.playerIDs.length;
+    const playerIDs = this.props.playerIDs.concat(placeholderIDs.slice(numPlayers, placeholderIDs.length));
+
+    // NOTE: playerIDs must be unique or else there will be a "two elements have the same key" error
+    const players = playerIDs.map((playerID, index) => {
+      // render each player's name
+      if (index < numPlayers) {
+        return (
+          <div className="playerID" key={playerID}>
+            {playerID}
+          </div>
+        );
+      // and render each placeholder name
+      } else {
+        return (
+          <div className="placeholderID" key={playerID}>
+            {playerID}
+          </div>
+        );
+      }
     });
 
+    console.log(playerIDs);
+    console.log(this.props.playerIDs);
+
     return (
-      <div className="vertical-flex lobby-container">
-        <div className="title-text">
-          PlayerIDs:
-        </div>
-        <div className="vertical-flex title-text">
-          {playerIDs}
-        </div>
-        <div className="title-text">
+      <div className="lobby-container">
+        <div className="sessionID">
           Session ID: {this.props.sessionID}
         </div>
-        <div className="horizontal-flex">
+        <div className="title-text">
+          Resistance
+        </div>
+        <div className="playerID-grid">
+          <div className="playerID-column">
+            {players.slice(0, 5)}
+            {/* {placeholderIDs.slice(0, 5).map((ID, index) => <div key={ID}>{ID}</div>)} */}
+          </div>
+          <div className="playerID-column">
+            {players.slice(5, 10)}
+            {/* {placeholderIDs.slice(5, 10).map((ID) => <div key={ID}>{ID}</div>)} */}
+          </div>
+        </div>
+        <div className="horizontal-flex-center bottom-navigation">
           <Button variant="primary" onClick={this.onClickStart}>
             Start
           </Button>

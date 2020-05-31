@@ -85,4 +85,44 @@ body {
   background-image: url('../images/smoking_spy.jpg');
   background-position: center;
   background-size: cover;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  height: 100%;
+
+  .sessionID {
+    width: 100%;
+    padding: 0px 50px 0px 50px;
+    font-size: 30px;
+    color: white;
+    text-shadow: 0px 0px 10px #FF0000;
+  }
+
+  .playerID-grid {
+    color: white;
+    text-shadow: 0px 0px 10px #000000;
+    font-size: 25px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    
+    .playerID-column {
+      margin: 0px 20px 0px 20px;
+      min-width: 220px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 100%;
+
+      .placeholderID {
+       font-style: italic; 
+      }
+    }
+  }
 }
