@@ -57,7 +57,7 @@ class GameBoard extends Component {
     });
 
     return (
-      <div className="in-game-container">
+      <div className="game-board-container">
         <div className="shade">
           <div className="directions">
             The current direction will go here
