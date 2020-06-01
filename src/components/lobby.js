@@ -75,29 +75,31 @@ class Lobby extends Component {
 
     return (
       <div className="lobby-container">
-        <div className="sessionID">
-          Session ID: {this.props.sessionID}
-        </div>
-        <div className="title-text">
-          Resistance
-        </div>
-        <div className="playerID-grid">
-          <div className="playerID-column">
-            {players.slice(0, 5)}
-            {/* {placeholderIDs.slice(0, 5).map((ID, index) => <div key={ID}>{ID}</div>)} */}
+        <div className="shade">
+          <div className="sessionID">
+            Session ID: {this.props.sessionID}
           </div>
-          <div className="playerID-column">
-            {players.slice(5, 10)}
-            {/* {placeholderIDs.slice(5, 10).map((ID) => <div key={ID}>{ID}</div>)} */}
+          <div className="title-text">
+            Resistance
           </div>
-        </div>
-        <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.onClickStart}>
-            Start
-          </Button>
-          <Button variant="primary" onClick={this.onClickQuit}>
-            Quit
-          </Button>
+          <div className="playerID-grid">
+            <div className="playerID-column">
+              {players.slice(0, 5)}
+              {/* {placeholderIDs.slice(0, 5).map((ID, index) => <div key={ID}>{ID}</div>)} */}
+            </div>
+            <div className="playerID-column">
+              {players.slice(5, 10)}
+              {/* {placeholderIDs.slice(5, 10).map((ID) => <div key={ID}>{ID}</div>)} */}
+            </div>
+          </div>
+          <div className="horizontal-flex-center bottom-navigation">
+            <Button variant="primary" onClick={this.onClickStart}>
+              Start
+            </Button>
+            <Button variant="primary" onClick={this.onClickQuit}>
+              Quit
+            </Button>
+          </div>
         </div>
       </div>
     );
