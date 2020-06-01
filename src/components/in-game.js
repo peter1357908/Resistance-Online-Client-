@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import GameBoard from './game-board';
+import TeamReveal from './team-reveal';
+import Chat from './chat';
 import Phase from '../resources/phase';
 
 function mapStateToProps(reduxState) {
@@ -13,14 +15,18 @@ function mapStateToProps(reduxState) {
 
 class InGame extends Component {
   render() {
-    // eventually, this section will contain logic for every gamePhase
-    if (this.props.gamePhase === Phase.SELECTING_TEAM) {
+    if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (
-        <GameBoard />
+        <div className="in-game-container">
+          <TeamReveal />
+        </div>
       );
     }
     return (
-      <div>Game phase is currently not SELECTING TEAM</div>
+      <div className="in-game-container">
+        <Chat />
+        <GameBoard />
+      </div>
     );
   }
 }

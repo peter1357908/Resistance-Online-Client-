@@ -136,71 +136,133 @@ body {
 }
 
 .in-game-container {
-  background-image: url('../images/smoking_spy.jpg');
-  background-position: center;
-  background-size: cover;
-
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   height: 100%;
+  justify-content: space-between;
 
-  .shade {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-
-    background-color: rgba(0, 0, 0, 0.65);
+  .game-board-container {
+    background-image: url('../images/smoking_spy.jpg');
+    background-position: center;
+    background-size: cover;
 
     height: 100%;
+    width: 80%;
 
-    .directions {
-      color: white;
-    }
-
-    .missions {
+    .shade {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: space-evenly;
 
-      .mission {
+      background-color: rgba(0, 0, 0, 0.65);
+
+      height: 100%;
+
+      .directions {
         color: white;
+      }
 
-        height: 100px;
-        width: 100px;
-        border-radius: 50px;
-        margin: 0px 10px 0px 10px;
-
-        border: solid;
-        border-color: white;
-        border-width: 4px;
-
+      .missions {
         display: flex;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
+
+        .mission {
+          color: white;
+
+          height: 100px;
+          width: 100px;
+          border-radius: 50px;
+          margin: 0px 10px 0px 10px;
+
+          border: solid;
+          border-color: white;
+          border-width: 4px;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .succeeded {
+          background-color: $resistance-blue;
+        }
+
+        .failed {
+          background-color: $spy-red;
+        }
       }
 
-      .succeeded {
-        background-color: $resistance-blue;
+      .failed-votes {
+        color: white;
       }
 
-      .failed {
-        background-color: $spy-red;
+      .player-cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .player-card {
+          width: 100px;
+          height: 143px;
+
+          margin: 0px 7px 0px 7px;
+
+          background-image: url('../images/card_back.png');
+          background-size: cover;
+          background-position: center;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .playerID {
+            color: white;
+            padding: 0px 3px 0px 3px;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            font-size: 16px;
+          }
+        }
+
+        .selected {
+          box-shadow: 0px 0px 10px white;
+          width: 110px;
+          height: 157.3px;
+        }
       }
     }
+  }
 
-    .failed-votes {
-      color: white;
-    }
+  .team-reveal-container {
+    background-image: url('../images/smoking_spy.jpg');
+    background-position: center;
+    background-size: cover;
 
-    .player-cards {
+    height: 100%;
+    width: 100%;
+
+    .shade {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: space-evenly;
+
+      background-color: rgba(0, 0, 0, 0.65);
+
+      height: 100%;
+
+      .directions {
+        color: white;
+      }
 
       .player-card {
-        width: 100px;
-        height: 143px;
+        width: 170px;
+        height: 243.1px;
 
         margin: 0px 7px 0px 7px;
 
@@ -212,7 +274,7 @@ body {
         justify-content: center;
         align-items: center;
 
-        .playerID {
+        .card-text {
           color: white;
           padding: 0px 3px 0px 3px;
           background-color: rgba(0, 0, 0, 0.5);
@@ -220,10 +282,18 @@ body {
           font-size: 16px;
         }
       }
-
-      .selected {
-        box-shadow: 0px 0px 10px white;
-      }
     }
+  }
+
+  .chat-container {
+    color: white;
+    background-color: #AAAAAA;
+    width: 20%;
+    height: 100%;
+
+    // temporary formatting to put this text in the center
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -13,7 +13,7 @@ const initialState = {
     MissionStatus.TBD,
     MissionStatus.TBD],
   selectedPlayers: [1, 2], // i.e. which cards should be displayed as enlarged and glowing
-  gamePhase: Phase.SELECTING_TEAM,
+  gamePhase: Phase.VIEWING_TEAM,
   waitingOn: [], // the players we're waiting on
 };
 
