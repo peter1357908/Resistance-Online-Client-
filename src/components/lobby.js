@@ -85,11 +85,9 @@ class Lobby extends Component {
           <div className="playerID-grid">
             <div className="playerID-column">
               {players.slice(0, 5)}
-              {/* {placeholderIDs.slice(0, 5).map((ID, index) => <div key={ID}>{ID}</div>)} */}
             </div>
             <div className="playerID-column">
               {players.slice(5, 10)}
-              {/* {placeholderIDs.slice(5, 10).map((ID) => <div key={ID}>{ID}</div>)} */}
             </div>
           </div>
           <div className="horizontal-flex-center bottom-navigation">
