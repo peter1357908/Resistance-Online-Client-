@@ -18,7 +18,7 @@ const initialState = {
   ],
   selectedPlayers: [], // i.e. which cards should be displayed as enlarged and glowing
   numSelectedPlayers: 0, // this is not really needed, but it's fixing a bug where the board doesn't refresh when selectedPlayers changes
-  gamePhase: Phase.SELECTING_TEAM,
+  gamePhase: Phase.VIEWING_TEAM,
   waitingOn: [], // the players we're waiting on
   faction: 'spy',
   otherSpies: ['player1', 'player2'], // empty if you're not a spy
