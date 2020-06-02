@@ -25,7 +25,6 @@ class JoinGame extends Component {
       if (result.playerID === null) {
         this.setState({ failed: true, failMessage: result.failMessage });
       } else {
-        console.log(result);
         this.props.setSessionID(this.state.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
         this.props.setCreatorID(result.creatorID);

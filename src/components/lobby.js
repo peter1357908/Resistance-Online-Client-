@@ -133,8 +133,8 @@ class Lobby extends Component {
 
     return (
       <div className="lobby-container">
-        {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
         <div className="shade">
+          {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
           <div className="sessionID">
             Session ID: {this.props.sessionID}
           </div>
