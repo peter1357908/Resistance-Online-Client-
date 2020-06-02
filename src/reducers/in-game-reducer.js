@@ -7,13 +7,15 @@ const initialState = {
   currentLeader: '', // whose turn it is
   currentMission: 1,
   currentRound: 1,
-  missionStatuses: [MissionStatus.SUCCEEDED, // the success/failure status of all 5 missions
+  missionStatuses: [
+    MissionStatus.SUCCEEDED, // the success/failure status of all 5 missions
     MissionStatus.FAILED,
     MissionStatus.TBD,
     MissionStatus.TBD,
-    MissionStatus.TBD],
+    MissionStatus.TBD,
+  ],
   selectedPlayers: [1, 2], // i.e. which cards should be displayed as enlarged and glowing
-  gamePhase: Phase.VIEWING_TEAM,
+  gamePhase: Phase.SELECTING_TEAM,
   waitingOn: [], // the players we're waiting on
 };
 

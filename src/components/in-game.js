@@ -14,6 +14,12 @@ function mapStateToProps(reduxState) {
 }
 
 class InGame extends Component {
+  componentDidMount() {
+    // socket.on('in-game', (result) => {
+    //   console.log('this does not do anything yet');
+    // });
+  }
+
   render() {
     if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (

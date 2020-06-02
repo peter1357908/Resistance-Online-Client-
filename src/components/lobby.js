@@ -11,6 +11,7 @@ function mapStateToProps(reduxState) {
     sessionID: reduxState.lobby.sessionID,
     playerIDs: reduxState.lobby.playerIDs,
     currentPlayerID: reduxState.lobby.currentPlayerID,
+    creatorID: reduxState.lobby.creatorID,
   };
 }
 
@@ -18,8 +19,8 @@ class Lobby extends Component {
   componentDidMount() {
     socket.on('lobby', (result) => {
       this.props.setPlayerIDs(result.playerIDs);
-      if (result.currentLeader !== -1) {
-        this.props.history.push('/in-game');
+      if (result.action === 'gameStarted') {
+        this.props.history.push(`/in-game/${this.props.sessionID}`);
       }
     });
   }
@@ -27,12 +28,46 @@ class Lobby extends Component {
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
+    // TODO eventually we'll check that there are the appropriate number of players
     socket.emit('lobby', { action: 'startGame' });
   }
 
   onClickQuit = (event) => {
-    socket.emit('lobby', { action: 'quitGame' });
+    socket.emit('lobby', { action: 'quitLobby' });
     this.props.history.push('/');
+  }
+
+  renderMessage = () => {
+    if (this.props.playerIDs.length < 5) {
+      return <div className="message">Waiting for players to join</div>;
+    } else if (this.props.creatorID === this.props.currentPlayerID) {
+      return <div className="message">Ready to start game</div>;
+    } else {
+      return <div className="message">Waiting for {this.props.creatorID} to start the game</div>;
+    }
+  }
+
+  renderBottom = () => {
+    if (this.props.creatorID === this.props.currentPlayerID) {
+      return (
+        <div className="horizontal-flex-center bottom-navigation">
+          <Button variant="primary" onClick={this.onClickStart}>
+            Start
+          </Button>
+          <Button variant="primary" onClick={this.onClickQuit}>
+            Quit
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="horizontal-flex-center bottom-navigation">
+          <Button variant="primary" onClick={this.onClickQuit}>
+            Quit
+          </Button>
+        </div>
+      );
+    }
   }
 
   // TODO: highlight the session creator's playerID
@@ -70,9 +105,6 @@ class Lobby extends Component {
       }
     });
 
-    console.log(playerIDs);
-    console.log(this.props.playerIDs);
-
     return (
       <div className="lobby-container">
         <div className="shade">
@@ -82,6 +114,7 @@ class Lobby extends Component {
           <div className="title-text">
             Resistance
           </div>
+          {this.renderMessage()}
           <div className="playerID-grid">
             <div className="playerID-column">
               {players.slice(0, 5)}
@@ -90,14 +123,7 @@ class Lobby extends Component {
               {players.slice(5, 10)}
             </div>
           </div>
-          <div className="horizontal-flex-center bottom-navigation">
-            <Button variant="primary" onClick={this.onClickStart}>
-              Start
-            </Button>
-            <Button variant="primary" onClick={this.onClickQuit}>
-              Quit
-            </Button>
-          </div>
+          {this.renderBottom()}
         </div>
       </div>
     );
