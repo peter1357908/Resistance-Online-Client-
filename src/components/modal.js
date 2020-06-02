@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import HelpModal from './help';
 
-class Header extends Component {
+class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,4 +28,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Modal;
