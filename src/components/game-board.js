@@ -3,21 +3,52 @@ import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-// import socket from '../socketConfig';
-// import from '../actions';
+import { updateSelectedPlayers } from '../actions';
 import MissionStatus from '../resources/mission-status';
 
 function mapStateToProps(reduxState) {
   return {
+    playerID: reduxState.inGame.playerID,
+    currentLeader: reduxState.inGame.currentLeader,
     missionStatuses: reduxState.inGame.missionStatuses,
     playerIDs: reduxState.inGame.playerIDs,
     currentRound: reduxState.inGame.currentRound,
     selectedPlayers: reduxState.inGame.selectedPlayers,
+    numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)
+    missionSize: reduxState.inGame.missionSize,
   };
 }
 
 class GameBoard extends Component {
-  // componentDidMount() {}
+  renderButton = () => {
+    if (this.props.selectedPlayers.length === this.props.missionSize && this.props.currentLeader === this.props.playerID) {
+      return (
+        <div className="horizontal-flex-center bottom-navigation">
+          <Button variant="primary" onClick={this.thisMethodDoesNotExist}>
+            Done
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="horizontal-flex-center bottom-navigation">
+          <Button variant="primary" className="hidden" onClick={this.thisMethodDoesNotExist} />
+        </div>
+      );
+    }
+  }
+
+  cardClicked = (ID) => {
+    if (this.props.currentLeader === this.props.playerID) {
+      if (this.props.selectedPlayers.includes(ID)) {
+        const selectedPlayers = this.props.selectedPlayers.filter((e) => e !== ID);
+        this.props.updateSelectedPlayers(selectedPlayers);
+      } else {
+        this.props.selectedPlayers.push(ID);
+        this.props.updateSelectedPlayers(this.props.selectedPlayers);
+      }
+    }
+  }
 
   render() {
     const missions = this.props.missionStatuses.map((status, index) => {
@@ -48,7 +79,7 @@ class GameBoard extends Component {
     const players = this.props.playerIDs.map((ID) => {
       const className = this.props.selectedPlayers.includes(ID) ? 'player-card selected' : 'player-card';
       return (
-        <div key={ID} className={className}>
+        <div role="button" tabIndex="0" key={ID} className={className} onClick={() => this.cardClicked(ID)}>
           <div className="playerID">
             {ID}
           </div>
@@ -71,15 +102,11 @@ class GameBoard extends Component {
           <div className="player-cards">
             {players}
           </div>
-          <div className="horizontal-flex-center bottom-navigation">
-            <Button variant="primary" onClick={this.thisMethodDoesNotExist}>
-              Done
-            </Button>
-          </div>
+          {this.renderButton()}
         </div>
       </div>
     );
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(GameBoard));
+export default withRouter(connect(mapStateToProps, { updateSelectedPlayers })(GameBoard));
