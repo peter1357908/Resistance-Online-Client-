@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentPlayerID } from '../actions';
+import { setSessionID, setCurrentPlayerID, setCreatorID } from '../actions';
 
 import socket from '../socketConfig';
 
@@ -16,16 +16,22 @@ class JoinGame extends Component {
       password: '',
       playerID: '',
       failed: false,
+      failMessage: '',
     };
   }
 
   componentDidMount() {
     socket.on('joinGame', (result) => {
       if (result.playerID === null) {
-        this.setState({ failed: true });
+        this.setState({ failed: true, failMessage: result.failMessage });
       } else {
+        console.log(result);
         this.props.setSessionID(this.state.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
+        this.props.setCreatorID(result.creatorID);
+        if (result.action === 'quitGame') {
+          console.log('quitting game'); // Display something here
+        }
         this.props.history.push('/lobby');
       }
     });
@@ -61,7 +67,7 @@ class JoinGame extends Component {
     return (
       <div className="vertical-flex join-game-container">
         {/* alert is probably not the best choice for notification of failure here */}
-        {this.state.failed ? <Alert variant="danger">Join attempt failed.</Alert> : <></>}
+        {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
         <div className="title-text">
           Join a Game
         </div>
@@ -83,4 +89,4 @@ class JoinGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentPlayerID })(JoinGame));
+export default withRouter(connect(null, { setSessionID, setCurrentPlayerID, setCreatorID })(JoinGame));

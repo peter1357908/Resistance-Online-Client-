@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentPlayerID } from '../actions';
+import { setSessionID, setCurrentPlayerID, setCreatorID } from '../actions';
 
 import socket from '../socketConfig';
 
@@ -19,16 +19,18 @@ class CreateGame extends Component {
       password: '',
       playerID: '',
       failed: false,
+      failMessage: '',
     };
   }
 
   componentDidMount() {
     socket.on('createGame', (result) => {
       if (result.playerID === null) {
-        this.setState({ failed: true });
+        this.setState({ failed: true, failMessage: result.failMessage });
       } else {
         this.props.setSessionID(this.state.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
+        this.props.setCreatorID(result.creatorID);
         this.props.history.push('/lobby');
       }
     });
@@ -63,7 +65,7 @@ class CreateGame extends Component {
     return (
       <div className="vertical-flex create-game-container">
         {/* alert is probably not the best choice for notification of failure here */}
-        {this.state.failed ? <Alert variant="danger">Create attempt failed.</Alert> : <></>}
+        {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
         <div className="title-text">
           Create a Game
         </div>
@@ -85,4 +87,4 @@ class CreateGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentPlayerID })(CreateGame));
+export default withRouter(connect(null, { setSessionID, setCurrentPlayerID, setCreatorID })(CreateGame));
