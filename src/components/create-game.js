@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentPlayerID } from '../actions';
+import { setSessionID, setCurrentPlayerID, setCreatorID } from '../actions';
 
 import socket from '../socketConfig';
 
@@ -24,11 +24,13 @@ class CreateGame extends Component {
 
   componentDidMount() {
     socket.on('createGame', (result) => {
+      // console.log(result);
       if (result.playerID === null) {
         this.setState({ failed: true });
       } else {
         this.props.setSessionID(this.state.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
+        this.props.setCreatorID(result.creatorID);
         this.props.history.push('/lobby');
       }
     });
@@ -67,10 +69,12 @@ class CreateGame extends Component {
         <div className="title-text">
           Create a Game
         </div>
-        <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
-        <Form.Control type="input" onChange={this.onChangePassword} value={this.state.password} placeholder="Session Password" />
-        <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="playerID (this will be your name in the game)" />
-        <div className="horizontal-flex">
+        <div className="input-container">
+          <Form.Control type="input" onChange={this.onChangeSessionID} value={this.state.sessionID} placeholder="Session ID" />
+          <Form.Control type="input" onChange={this.onChangePassword} value={this.state.password} placeholder="Session Password" />
+          <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="playerID (this will be your name in the game)" />
+        </div>
+        <div className="horizontal-flex-center bottom-navigation">
           <Button variant="primary" onClick={this.onClickCreate}>
             Create
           </Button>
@@ -83,4 +87,4 @@ class CreateGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentPlayerID })(CreateGame));
+export default withRouter(connect(null, { setSessionID, setCurrentPlayerID, setCreatorID })(CreateGame));

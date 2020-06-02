@@ -1,10 +1,13 @@
+$spy-red: #BB0000;
+$resistance-blue: #0B71AB;
+
 html, #main, #app-container {
   height: 100%;
 }
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #00008b !important;
+  background-color: #00008b;
   height: 100%;
 }
 
@@ -13,12 +16,22 @@ body {
   line-height: 85px;
   text-align: center;
 
-  width: 65vw;
+  max-width: 700px;
 
   color: #FFFFFF;
+  text-shadow: 0px 0px 10px #000000;
 }
 
 .vertical-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  height: 100%;
+}
+
+.vertical-flex-center {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +49,23 @@ body {
   width: 100%;
 }
 
+.horizontal-flex-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.bottom-navigation button {
+  font-size: 20px;
+  height: 45px;
+  width: 150px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
 // various containers
 .welcome-container, .join-game-container, .create-game-container {
   background-image: url('../images/spy_squad.jpg');
@@ -43,8 +73,232 @@ body {
   background-size: cover;
 }
 
+.join-game-container, .create-game-container {
+  .input-container {
+    width: 500px;
+    input {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .lobby-container {
   background-image: url('../images/smoking_spy.jpg');
   background-position: center;
   background-size: cover;
+
+  height: 100%;
+
+  .shade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: rgba(0, 0, 0, 0.65);
+
+    height: 100%;
+
+    .sessionID {
+      width: 100%;
+      padding: 0px 50px 0px 50px;
+      font-size: 30px;
+      color: white;
+      text-shadow: 0px 0px 12px #000000;
+    }
+
+    .message {
+      color: white;
+      font-size: 25px;
+    }
+
+    .playerID-grid {
+      color: white;
+      text-shadow: 0px 0px 10px #000000;
+      font-size: 25px;
+      
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      
+      .playerID-column {
+        margin: 0px 20px 0px 20px;
+        min-width: 220px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 100%;
+
+        .placeholderID {
+          font-style: italic; 
+        }
+      }
+    }
+  }
+}
+
+.in-game-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+
+  .game-board-container {
+    background-image: url('../images/smoking_spy.jpg');
+    background-position: center;
+    background-size: cover;
+
+    height: 100%;
+    width: 80%;
+
+    .shade {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+
+      background-color: rgba(0, 0, 0, 0.65);
+
+      height: 100%;
+
+      .directions {
+        color: white;
+      }
+
+      .missions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .mission {
+          color: white;
+
+          height: 100px;
+          width: 100px;
+          border-radius: 50px;
+          margin: 0px 10px 0px 10px;
+
+          border: solid;
+          border-color: white;
+          border-width: 4px;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .succeeded {
+          background-color: $resistance-blue;
+        }
+
+        .failed {
+          background-color: $spy-red;
+        }
+      }
+
+      .failed-votes {
+        color: white;
+      }
+
+      .player-cards {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .player-card {
+          width: 100px;
+          height: 143px;
+
+          margin: 0px 7px 0px 7px;
+
+          background-image: url('../images/card_back.png');
+          background-size: cover;
+          background-position: center;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .playerID {
+            color: white;
+            padding: 0px 3px 0px 3px;
+            background-color: rgba(0, 0, 0, 0.5);
+
+            font-size: 16px;
+          }
+        }
+
+        .selected {
+          box-shadow: 0px 0px 10px white;
+          width: 110px;
+          height: 157.3px;
+        }
+      }
+    }
+  }
+
+  .team-reveal-container {
+    background-image: url('../images/smoking_spy.jpg');
+    background-position: center;
+    background-size: cover;
+
+    height: 100%;
+    width: 100%;
+
+    .shade {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+
+      background-color: rgba(0, 0, 0, 0.65);
+
+      height: 100%;
+
+      .directions {
+        color: white;
+      }
+
+      .player-card {
+        width: 170px;
+        height: 243.1px;
+
+        margin: 0px 7px 0px 7px;
+
+        background-image: url('../images/card_back.png');
+        background-size: cover;
+        background-position: center;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .card-text {
+          color: white;
+          padding: 0px 3px 0px 3px;
+          background-color: rgba(0, 0, 0, 0.5);
+
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .chat-container {
+    color: white;
+    background-color: #AAAAAA;
+    width: 20%;
+    height: 100%;
+
+    // temporary formatting to put this text in the center
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
