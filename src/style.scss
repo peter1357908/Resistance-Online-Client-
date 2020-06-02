@@ -66,6 +66,10 @@ body {
   margin-left: 15px;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 // various containers
 .welcome-container, .join-game-container, .create-game-container {
   background-image: url('../images/spy_squad.jpg');
@@ -270,14 +274,7 @@ body {
         height: 243.1px;
 
         margin: 0px 7px 0px 7px;
-
-        background-image: url('../images/card_back.png');
-        background-size: cover;
-        background-position: center;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        border-radius: 4px;
 
         .card-text {
           color: white;
@@ -285,6 +282,88 @@ body {
           background-color: rgba(0, 0, 0, 0.5);
 
           font-size: 16px;
+        }
+      }
+      .mystery {
+        background-image: url('../images/card_back.png');
+        background-size: cover;
+        background-position: center;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .flipped {
+        background-color: white;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .top-icon {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+
+          width: 100%;        
+        }
+
+        .bottom-icon {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+
+          width: 100%;
+        }
+
+        .icon-spy {
+          background-image: url('../images/clip_art_knife.png');
+          background-size: cover;
+          background-position: center;
+
+          height: 40px;
+          width: 40px;
+
+          margin: 5px;
+        }
+
+        .icon-resistance {
+          background-image: url('../images/clip_art_fist.png');
+          background-size: cover;
+          background-position: center;
+
+          height: 40px;
+          width: 40px;
+
+          margin: 5px;
+        }
+
+        .direction {
+          font-size: 14px;
+          font-style: italic;
+          text-align: center;
+        }
+
+        .faction-name  {
+          font-size: 25px;
+        }
+
+        .spy {
+          color: red;
+        }
+
+        .resistance {
+          color: $resistance-blue;
+        }
+
+        .other-spies-list {
+          font-size: 14px;
+          color: red;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
       }
     }

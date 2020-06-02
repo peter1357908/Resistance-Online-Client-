@@ -16,13 +16,14 @@ class JoinGame extends Component {
       password: '',
       playerID: '',
       failed: false,
+      failMessage: '',
     };
   }
 
   componentDidMount() {
     socket.on('joinGame', (result) => {
       if (result.playerID === null) {
-        this.setState({ failed: true });
+        this.setState({ failed: true, failMessage: result.failMessage });
       } else {
         console.log(result);
         this.props.setSessionID(this.state.sessionID);
@@ -66,7 +67,7 @@ class JoinGame extends Component {
     return (
       <div className="vertical-flex join-game-container">
         {/* alert is probably not the best choice for notification of failure here */}
-        {this.state.failed ? <Alert variant="danger">Join attempt failed.</Alert> : <></>}
+        {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
         <div className="title-text">
           Join a Game
         </div>
