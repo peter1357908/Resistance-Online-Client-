@@ -4,6 +4,7 @@ const initialState = {
   sessionID: '',
   playerIDs: [],
   currentPlayerID: '',
+  creatorID: '',
 };
 
 const LobbyReducer = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const LobbyReducer = (state = initialState, action) => {
       return { ...state, sessionID: action.sessionID };
     case ActionTypes.SET_CURRENT_PLAYER_ID:
       return { ...state, currentPlayerID: action.currentPlayerID };
+    case ActionTypes.SET_CREATOR_ID:
+      return { ...state, creatorID: action.creatorID };
     default:
       return state;
   }
