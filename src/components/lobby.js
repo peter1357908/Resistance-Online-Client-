@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
 import socket from '../socketConfig';
-import { setPlayerIDs } from '../actions';
+import { setPlayerIDs, setCreatorID } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -16,11 +16,38 @@ function mapStateToProps(reduxState) {
 }
 
 class Lobby extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      failed: false,
+      failMessage: '',
+    };
+  }
+
   componentDidMount() {
     socket.on('lobby', (result) => {
-      this.props.setPlayerIDs(result.playerIDs);
-      if (result.action === 'gameStarted') {
-        this.props.history.push(`/in-game/${this.props.sessionID}`);
+      switch (result.action) {
+        case 'gameStarted':
+          this.props.history.push(`/in-game/${this.props.sessionID}`);
+          break;
+        case 'someoneQuit':
+          this.props.setPlayerIDs(result.playerIDs);
+          this.props.setCreatorID(result.creatorID);
+          break;
+        case 'someoneJoined':
+          this.props.setPlayerIDs(result.playerIDs);
+          this.props.setCreatorID(result.creatorID);
+          break;
+        case 'quitAcknowledged':
+          this.props.history.push('/');
+          break;
+        case 'fail':
+          this.setState({ failed: true, failMessage: result.failMessage });
+          break;
+        default:
+          console.log(`unknown action received from server: ${result.action}`);
+          break;
       }
     });
   }
@@ -28,13 +55,12 @@ class Lobby extends Component {
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
-    // TODO eventually we'll check that there are the appropriate number of players
+    this.setState({ failed: false });
     socket.emit('lobby', { action: 'startGame' });
   }
 
   onClickQuit = (event) => {
     socket.emit('lobby', { action: 'quitLobby' });
-    this.props.history.push('/');
   }
 
   renderMessage = () => {
@@ -86,7 +112,7 @@ class Lobby extends Component {
     const numPlayers = this.props.playerIDs.length;
     const playerIDs = this.props.playerIDs.concat(placeholderIDs.slice(numPlayers, placeholderIDs.length));
 
-    // NOTE: playerIDs must be unique or else there will be a "two elements have the same key" error
+    // NOTE: back-end ensures that the playerIDs are unique, so they can be used as keys
     const players = playerIDs.map((playerID, index) => {
       // render each player's name
       if (index < numPlayers) {
@@ -107,6 +133,7 @@ class Lobby extends Component {
 
     return (
       <div className="lobby-container">
+        {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
         <div className="shade">
           <div className="sessionID">
             Session ID: {this.props.sessionID}
@@ -130,4 +157,4 @@ class Lobby extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setPlayerIDs })(Lobby));
+export default withRouter(connect(mapStateToProps, { setPlayerIDs, setCreatorID })(Lobby));
