@@ -22,7 +22,7 @@ const initialState = {
   waitingFor: [], // the players we're waiting on
   faction: 'resistance',
   spies: [], // empty if you're not a spy
-  missionSize: 2, // how many players we need on the current mission,
+  missionSize: 0, // how many players we need on the current mission,
   // TODO we'll also need some structure to store how people voted on the most recent round
 };
 
@@ -46,7 +46,7 @@ const InGameReducer = (state = initialState, action) => {
     case ActionTypes.SET_ROUND:
       console.log('setround reducer called');
       return {
-        ...state, currentLeader: action.currentLeader, currentMission: action.currentMission, currentRound: action.currentRound,
+        ...state, currentLeader: action.currentLeader, currentMission: action.currentMission, currentRound: action.currentRound, missionSize: action.missionSize,
       };
     default:
       return state;

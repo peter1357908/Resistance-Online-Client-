@@ -8,7 +8,7 @@ import MissionStatus from '../resources/mission-status';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.inGame.playerID,
+    playerID: reduxState.lobby.currentPlayerID,
     currentLeader: reduxState.inGame.currentLeader,
     missionStatuses: reduxState.inGame.missionStatuses,
     playerIDs: reduxState.inGame.playerIDs,

@@ -38,7 +38,7 @@ class InGame extends Component {
         case 'everyoneJoined':
           console.log('waiting for is empty');
           this.props.setGamePhase(Phase.SELECTING_TEAM);
-          this.props.setRound(this.props.playerIDs[result.currentLeaderIndex], result.currentMission, result.currentRound);
+          this.props.setRound(this.props.playerIDs[result.currentLeaderIndex], result.currentMission, result.currentRound, result.missionSize);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
