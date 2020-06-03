@@ -136,6 +136,11 @@ body {
         justify-content: space-evenly;
         height: 100%;
 
+        .creatorPlayerID {
+          color: yellow;
+          font-weight: bold;
+        }
+
         .placeholderID {
           font-style: italic; 
         }
