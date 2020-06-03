@@ -24,6 +24,7 @@ const initialState = {
   spies: [], // empty if you're not a spy
   missionSize: 2, // how many players we need on the current mission,
   // TODO we'll also need some structure to store how people voted on the most recent round
+  logs: [],
 };
 
 const InGameReducer = (state = initialState, action) => {
@@ -48,6 +49,8 @@ const InGameReducer = (state = initialState, action) => {
       return {
         ...state, currentLeader: action.currentLeader, currentMission: action.currentMission, currentRound: action.currentRound,
       };
+    case ActionTypes.SET_LOGS:
+      return { ...state, logs: action.logs };
     default:
       return state;
   }

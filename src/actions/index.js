@@ -9,6 +9,7 @@ export const ActionTypes = {
   SET_CURRENT_LEADER: 'SET_CURRENT_LEADER',
   SET_WAITING_FOR: 'SET_WAITING_FOR',
   SET_ROUND: 'SET_ROUND',
+  SET_LOGS: 'SET_LOGS',
 };
 
 export function setSessionID(sessionID) {
@@ -81,5 +82,12 @@ export function setRound(currentLeader, currentMission, currentRound) {
     currentLeader,
     currentMission,
     currentRound,
+  };
+}
+
+export function setLogs(logs) {
+  return {
+    type: ActionTypes.SET_LOGS,
+    logs,
   };
 }
