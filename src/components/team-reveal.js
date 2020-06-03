@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import { setGamePhase } from '../actions';
-import Phase from '../resources/phase';
+
+import socket from '../socketConfig';
 
 function mapStateToProps(reduxState) {
   return {
     faction: reduxState.inGame.faction,
     spies: reduxState.inGame.spies,
     playerID: reduxState.lobby.currentPlayerID,
+    waitingFor: reduxState.inGame.waitingFor,
   };
 }
 
@@ -19,6 +20,7 @@ class TeamReveal extends Component {
 
     this.state = {
       revealed: false,
+      okPressed: false,
     };
   }
 
@@ -72,7 +74,11 @@ class TeamReveal extends Component {
   }
 
   onOkClick = (event) => {
-    this.props.setGamePhase(Phase.SELECTING_TEAM);
+    const message = {
+      action: 'factionViewed',
+    };
+    socket.emit('inGame', message);
+    this.setState({ okPressed: true });
   }
 
   renderOkButton = () => {
@@ -87,15 +93,35 @@ class TeamReveal extends Component {
   }
 
   renderDirections = () => {
-    if (this.state.revealed) {
-      return (
-        <div className="directions">
-          The waiting-on-player information will go here
-        </div>
-      );
+    if (this.state.revealed && this.state.okPressed) {
+      const num = this.props.waitingFor.length;
+      if (num > 3) {
+        return (
+          <div className="directions">
+            Waitiing for {num} people...
+          </div>
+        );
+      } else if (num !== 0) {
+        let concat = this.props.waitingFor[0].toString();
+        for (let i = 1; i < num; i += 1) {
+          concat = concat.concat(', ');
+          concat += this.props.waitingFor[i];
+        }
+        return (
+          <div className="directions">
+            Waitiing for {concat} to join...
+          </div>
+        );
+      } else {
+        return (
+          <div className="directions">
+            All here...
+          </div>
+        );
+      }
     } else {
       return (
-        <div className="directions" />
+        <div className="directions" /> // returning an empty div ensures that the page formatting remains unchanged
       );
     }
   }
@@ -113,4 +139,4 @@ class TeamReveal extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setGamePhase })(TeamReveal));
+export default withRouter(connect(mapStateToProps, null)(TeamReveal));
