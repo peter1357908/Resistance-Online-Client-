@@ -4,9 +4,9 @@ import { ActionTypes } from '../actions';
 
 // some of these values in initialState are intentionally initialized to something so that there's something to display
 const initialState = {
-  playerID: 'player1',
-  playerIDs: ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'],
-  currentLeader: 'player1', // whose turn it is
+  playerID: '',
+  playerIDs: [],
+  currentLeader: '', // whose turn it is
   currentMission: 1,
   currentRound: 1,
   missionStatuses: [
@@ -20,8 +20,8 @@ const initialState = {
   numSelectedPlayers: 0, // this is not really needed, but it's fixing a bug where the board doesn't refresh when selectedPlayers changes
   gamePhase: Phase.VIEWING_TEAM,
   waitingOn: [], // the players we're waiting on
-  faction: 'spy',
-  otherSpies: ['player1', 'player2'], // empty if you're not a spy
+  faction: 'resistance',
+  spies: [], // empty if you're not a spy
   missionSize: 2, // how many players we need on the current mission,
   // TODO we'll also need some structure to store how people voted on the most recent round
 };
@@ -32,6 +32,13 @@ const InGameReducer = (state = initialState, action) => {
       console.log('update method called in the reducer');
       console.log(action.selectedPlayers);
       return { ...state, numSelectedPlayers: action.selectedPlayers.length, selectedPlayers: action.selectedPlayers };
+    case ActionTypes.SET_SPIES:
+      console.log('spy_method in reducer');
+      return { ...state, faction: 'spy', spies: action.spies };
+    case ActionTypes.SET_PLAYER_IDS:
+      return { ...state, playerIDs: action.playerIDs };
+    case ActionTypes.SET_PHASE:
+      return { ...state, gamePhase: action.phase };
     default:
       return state;
   }

@@ -6,18 +6,33 @@ import GameBoard from './game-board';
 import TeamReveal from './team-reveal';
 import Chat from './chat';
 import Phase from '../resources/phase';
+import socket from '../socketConfig';
+import { setPlayerIDs, setSpies } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
     gamePhase: reduxState.inGame.gamePhase,
+    playerIDs: reduxState.inGame.playerIDs,
   };
 }
 
 class InGame extends Component {
   componentDidMount() {
-    // socket.on('in-game', (result) => {
-    //   console.log('this does not do anything yet');
-    // });
+    socket.on('inGame', (result) => {
+      console.log('ingame action: ', result.action);
+      switch (result.action) {
+        case 'begin':
+          this.props.setPlayerIDs(result.playerIDs);
+          break;
+        case 'setspy':
+          this.props.setSpies(result.spies);
+          break;
+        default:
+          console.log('unknown action received from server: ', result.action);
+          break;
+      }
+      console.log('result: ', result);
+    });
   }
 
   render() {
@@ -37,4 +52,4 @@ class InGame extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(InGame));
+export default withRouter(connect(mapStateToProps, { setSpies, setPlayerIDs })(InGame));

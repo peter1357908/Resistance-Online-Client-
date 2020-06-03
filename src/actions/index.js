@@ -4,6 +4,8 @@ export const ActionTypes = {
   SET_CURRENT_PLAYER_ID: 'SET_CURRENT_PLAYER_ID',
   SET_CREATOR_ID: 'SET_CREATOR_ID',
   UPDATE_SELECTED_PLAYERS: 'UPDATE_SELECTED_PLAYERS',
+  SET_SPIES: 'SET_SPIES',
+  SET_PHASE: 'SET_PHASE',
 };
 
 export function setSessionID(sessionID) {
@@ -38,5 +40,19 @@ export function updateSelectedPlayers(selectedPlayers) {
   return {
     type: ActionTypes.UPDATE_SELECTED_PLAYERS,
     selectedPlayers,
+  };
+}
+
+export function setSpies(spies) {
+  return {
+    type: ActionTypes.SET_SPIES,
+    spies,
+  };
+}
+
+export function setGamePhase(phase) {
+  return {
+    type: ActionTypes.SET_PHASE,
+    phase,
   };
 }

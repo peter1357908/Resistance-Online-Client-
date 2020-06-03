@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
+import { setGamePhase } from '../actions';
+import Phase from '../resources/phase';
 
 function mapStateToProps(reduxState) {
   return {
     faction: reduxState.inGame.faction,
-    otherSpies: reduxState.inGame.otherSpies,
+    spies: reduxState.inGame.spies,
+    playerID: reduxState.lobby.currentPlayerID,
   };
 }
 
@@ -29,7 +32,7 @@ class TeamReveal extends Component {
         </div>
       );
     } else if (this.props.faction === 'spy') {
-      const otherSpies = this.props.otherSpies.map((ID) => {
+      const otherSpies = this.props.spies.filter((e) => e !== this.props.playerID).map((ID) => {
         return (
           <div key={ID} className="spy-playerID">
             {ID}
@@ -44,7 +47,7 @@ class TeamReveal extends Component {
           <div className="faction-name spy">SPY</div>
           <div className="direction spy">(You win if 3 missions fail)</div>
           <div className="other-spies-list">
-            <div className>Other spies:</div>
+            <div className="other-spies-heading">Other spies:</div>
             {otherSpies}
           </div>
           <div className="bottom-icon">
@@ -68,11 +71,15 @@ class TeamReveal extends Component {
     }
   }
 
+  onOkClick = (event) => {
+    this.props.setGamePhase(Phase.SELECTING_TEAM);
+  }
+
   renderOkButton = () => {
     const buttonClassName = this.state.revealed ? 'revealed' : 'hidden';
     return (
       <div className="horizontal-flex-center bottom-navigation">
-        <Button variant="primary" className={buttonClassName} onClick={this.thisMethodDoesNotExist}>
+        <Button variant="primary" className={buttonClassName} onClick={this.onOkClick}>
           Ok
         </Button>
       </div>
@@ -106,4 +113,4 @@ class TeamReveal extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(TeamReveal));
+export default withRouter(connect(mapStateToProps, { setGamePhase })(TeamReveal));
