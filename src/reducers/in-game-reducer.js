@@ -10,8 +10,8 @@ const initialState = {
   currentMission: 1,
   currentRound: 1,
   missionStatuses: [
-    MissionStatus.SUCCEEDED, // the success/failure status of all 5 missions
-    MissionStatus.FAILED,
+    MissionStatus.TBD, // the success/failure status of all 5 missions
+    MissionStatus.TBD,
     MissionStatus.TBD,
     MissionStatus.TBD,
     MissionStatus.TBD,

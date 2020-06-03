@@ -16,6 +16,7 @@ function mapStateToProps(reduxState) {
     selectedPlayers: reduxState.inGame.selectedPlayers,
     numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)
     missionSize: reduxState.inGame.missionSize,
+    currentMission: reduxState.inGame.currentMission,
   };
 }
 
@@ -67,6 +68,12 @@ class GameBoard extends Component {
       } else if (status === MissionStatus.FAILED) {
         return (
           <div key={key} className="mission failed">
+            Mission-<span>{index + 1}</span>
+          </div>
+        );
+      } else if (index === this.props.currentMission) {
+        return (
+          <div key={key} className="mission current">
             Mission-<span>{index + 1}</span>
           </div>
         );

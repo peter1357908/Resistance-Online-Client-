@@ -203,6 +203,11 @@ body {
         .failed {
           background-color: $spy-red;
         }
+
+        .current {
+          background-color: green;
+        }
+        
       }
 
       .failed-votes {
