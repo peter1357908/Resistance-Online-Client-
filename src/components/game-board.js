@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-
+import socket from '../socketConfig';
 import { updateSelectedPlayers } from '../actions';
 import MissionStatus from '../resources/mission-status';
 
@@ -20,11 +20,15 @@ function mapStateToProps(reduxState) {
 }
 
 class GameBoard extends Component {
+  onDoneClicked = () => {
+    socket.emit('inGame', { selectedPlayers: this.props.selectedPlayers });
+  }
+
   renderButton = () => {
     if (this.props.selectedPlayers.length === this.props.missionSize && this.props.currentLeader === this.props.playerID) {
       return (
         <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.thisMethodDoesNotExist}>
+          <Button variant="primary" onClick={this.onDoneClicked}>
             Done
           </Button>
         </div>
@@ -97,7 +101,7 @@ class GameBoard extends Component {
             {missions}
           </div>
           <div className="failed-votes">
-            Failed votes: <span>{this.props.currentRound - 1}</span>
+            Failed votes: <span>{this.props.currentRound}</span>
           </div>
           <div className="player-cards">
             {players}

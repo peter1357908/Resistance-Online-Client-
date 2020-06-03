@@ -19,7 +19,7 @@ const initialState = {
   selectedPlayers: [], // i.e. which cards should be displayed as enlarged and glowing
   numSelectedPlayers: 0, // this is not really needed, but it's fixing a bug where the board doesn't refresh when selectedPlayers changes
   gamePhase: Phase.VIEWING_TEAM,
-  waitingOn: [], // the players we're waiting on
+  waitingFor: [], // the players we're waiting on
   faction: 'resistance',
   spies: [], // empty if you're not a spy
   missionSize: 2, // how many players we need on the current mission,
@@ -39,6 +39,15 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, playerIDs: action.playerIDs };
     case ActionTypes.SET_PHASE:
       return { ...state, gamePhase: action.phase };
+    case ActionTypes.SET_CURRENT_LEADER:
+      return { ...state, currentLeader: action.currentLeader };
+    case ActionTypes.SET_WAITING_FOR:
+      return { ...state, waitingFor: action.waitingFor };
+    case ActionTypes.SET_ROUND:
+      console.log('setround reducer called');
+      return {
+        ...state, currentLeader: action.currentLeader, currentMission: action.currentMission, currentRound: action.currentRound,
+      };
     default:
       return state;
   }

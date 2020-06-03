@@ -6,6 +6,9 @@ export const ActionTypes = {
   UPDATE_SELECTED_PLAYERS: 'UPDATE_SELECTED_PLAYERS',
   SET_SPIES: 'SET_SPIES',
   SET_PHASE: 'SET_PHASE',
+  SET_CURRENT_LEADER: 'SET_CURRENT_LEADER',
+  SET_WAITING_FOR: 'SET_WAITING_FOR',
+  SET_ROUND: 'SET_ROUND',
 };
 
 export function setSessionID(sessionID) {
@@ -54,5 +57,29 @@ export function setGamePhase(phase) {
   return {
     type: ActionTypes.SET_PHASE,
     phase,
+  };
+}
+
+export function setCurrentLeader(currentLeader) {
+  return {
+    type: ActionTypes.SET_CURRENT_LEADER,
+    currentLeader,
+  };
+}
+
+export function setWaitingFor(waitingFor) {
+  return {
+    type: ActionTypes.SET_WAITING_FOR,
+    waitingFor,
+  };
+}
+
+export function setRound(currentLeader, currentMission, currentRound) {
+  console.log('setround action called');
+  return {
+    type: ActionTypes.SET_ROUND,
+    currentLeader,
+    currentMission,
+    currentRound,
   };
 }
