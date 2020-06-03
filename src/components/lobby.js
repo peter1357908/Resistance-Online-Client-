@@ -116,6 +116,13 @@ class Lobby extends Component {
     const players = playerIDs.map((playerID, index) => {
       // render each player's name
       if (index < numPlayers) {
+        if (this.props.creatorID === playerID) {
+          return (
+            <div className="creatorPlayerID" key={playerID}>
+              {playerID}
+            </div>
+          );
+        }
         return (
           <div className="playerID" key={playerID}>
             {playerID}

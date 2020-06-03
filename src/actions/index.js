@@ -75,13 +75,14 @@ export function setWaitingFor(waitingFor) {
   };
 }
 
-export function setRound(currentLeader, currentMission, currentRound) {
+export function setRound(currentLeader, currentMission, currentRound, missionSize) {
   console.log('setround action called');
   return {
     type: ActionTypes.SET_ROUND,
     currentLeader,
     currentMission,
     currentRound,
+    missionSize,
   };
 }
 

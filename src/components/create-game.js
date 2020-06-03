@@ -28,9 +28,8 @@ class CreateGame extends Component {
       if (result.playerID === null) {
         this.setState({ failed: true, failMessage: result.failMessage });
       } else {
-        this.props.setSessionID(this.state.sessionID);
+        this.props.setSessionID(result.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
-        this.props.setCreatorID(result.creatorID);
         this.props.history.push('/lobby');
       }
     });
