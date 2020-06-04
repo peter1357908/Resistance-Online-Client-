@@ -9,6 +9,7 @@ export const ActionTypes = {
   SET_CURRENT_LEADER: 'SET_CURRENT_LEADER',
   SET_WAITING_FOR: 'SET_WAITING_FOR',
   SET_ROUND: 'SET_ROUND',
+  SET_ACTED: 'SET_ACTED',
 };
 
 export function setSessionID(sessionID) {
@@ -71,6 +72,13 @@ export function setWaitingFor(waitingFor) {
   return {
     type: ActionTypes.SET_WAITING_FOR,
     waitingFor,
+  };
+}
+
+export function setActed(acted) {
+  return {
+    type: ActionTypes.SET_ACTED,
+    acted,
   };
 }
 

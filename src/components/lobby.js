@@ -10,7 +10,7 @@ function mapStateToProps(reduxState) {
   return {
     sessionID: reduxState.lobby.sessionID,
     playerIDs: reduxState.lobby.playerIDs,
-    currentPlayerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.lobby.currentPlayerID,
     creatorID: reduxState.lobby.creatorID,
   };
 }
