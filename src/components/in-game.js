@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import GameBoard from './game-board';
+import GameBoard from './game-board/game-board';
 import TeamReveal from './team-reveal';
 import Chat from './chat';
-import Phase from '../resources/phase';
+import { Phase, stringifyPhase } from '../resources/phase';
 import socket from '../socketConfig';
 import {
   setPlayerIDs, setSpies, setGamePhase, setCurrentLeader, setWaitingFor, setRound,
@@ -55,18 +55,14 @@ class InGame extends Component {
           <TeamReveal />
         </div>
       );
-    } else if (this.props.gamePhase === Phase.SELECTING_TEAM) {
-      return (
-        <div className="in-game-container">
-          <Chat />
-          <GameBoard />
-        </div>
-      );
     }
+    const gamePhaseWrapper = `${stringifyPhase(this.props.gamePhase)}-container`;
     return (
       <div className="in-game-container">
         <Chat />
-        <GameBoard />
+        <div className={gamePhaseWrapper}>
+          <GameBoard />
+        </div>
       </div>
     );
   }
