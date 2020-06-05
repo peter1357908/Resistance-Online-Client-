@@ -25,7 +25,7 @@ const useStyles = {
     flexDirection: 'column',
     width: '80%',
     height: '95%',
-    background: 'linear-gradient(48deg, rgba(0,42,50,1) 39%, rgba(39,142,148,1) 52%, rgba(0,42,50,1) 70%);',
+    background: 'linear-gradient(147deg, rgba(21,60,79,1) 42%, rgba(108,124,147,1) 52%, rgba(21,60,79,1) 62%);',
     borderRadius: '10px',
   },
   info: { padding: '20px', textAlign: 'center', fontSize: '20px' },

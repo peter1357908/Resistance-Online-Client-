@@ -7,7 +7,7 @@ import { setLogs } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.inGame.playerID,
+    playerID: reduxState.lobby.currentPlayerID,
     logs: reduxState.inGame.logs,
   };
 }
@@ -17,28 +17,13 @@ class Chat extends Component {
     super(props);
     this.state = {
       currentMessage: '',
-      logs: [
-        { user: 'ass', message: 'oldest' },
-        { user: 'ass', message: 'second' },
-        { user: 'Chad', message: 'Goshfucking damnit I cant believe how fucking shit you are at this game you ugly bastard' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'ass', message: 'newest' },
-        { user: 'Chad', message: 'Goshfucking damnit I cant believe how fucking shit you are at this game you ugly bastard' },
-        { user: 'Chad', message: 'Goshfucking damnit I cant believe how fucking shit you are at this game you ugly bastard' },
-        { user: 'Chad', message: 'Goshfucking damnit I cant believe how fucking shit you are at this game you ugly bastard' },
-        { user: 'Chad', message: 'Goshfucking damnit I cant believe how fucking shit you are at this game you ugly bastard' }],
     };
   }
 
   componentDidMount() {
     socket.on('chat', (result) => {
-      this.props.setLogs(result.logs);
+      this.props.setLogs(result);
+      this.updateScroll();
     });
   }
 
@@ -56,12 +41,17 @@ class Chat extends Component {
     }
   }
 
+  updateScroll = () => {
+    const element = document.getElementById('chat-history');
+    element.scrollTop = element.scrollHeight;
+  }
+
   render() {
     return (
       <div className="chat-container">
-        <div className="chat-history">
-          {this.state.logs.map((log, index) => {
-            return <div key={index} className="chat-message"><span className="chat-user">{log.user}:</span> {log.message}</div>;
+        <div id="chat-history" className="chat-history">
+          {this.props.logs.map((log, index) => {
+            return <div key={index} className="chat-message"><span className="chat-user">{log.playerID}:</span> {log.message}</div>;
           })}
         </div>
         <input className="chat-input" type="text" placeholder="Type something..." onChange={this.onChange} onKeyDown={this.onEnter} value={this.state.currentMessage} />
