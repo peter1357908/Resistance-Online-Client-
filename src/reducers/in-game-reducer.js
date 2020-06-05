@@ -26,6 +26,7 @@ const initialState = {
   votes: ['yes', 'no', 'yes', 'yes', 'yes', 'no'], // how people voted on the most recent round
   // ^ we may eventually find a better structure to store the votes
   acted: false, // whether or not the player has done the action required in the current round, e.g., clicking "ok", voting, etc.
+  logs: [], // the message logs
 };
 
 const InGameReducer = (state = initialState, action) => {
@@ -48,6 +49,8 @@ const InGameReducer = (state = initialState, action) => {
       };
     case ActionTypes.SET_ACTED:
       return { ...state, acted: action.acted };
+    case ActionTypes.SET_LOGS:
+      return { ...state, logs: action.logs };
     default:
       return state;
   }

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Modal from './modal';
 
 const Welcome = (props) => {
   return (
     <div className="vertical-flex welcome-container">
+      <Modal />
       <div className="title-text">
         <div>Welcome to Resistance Online</div>
       </div>

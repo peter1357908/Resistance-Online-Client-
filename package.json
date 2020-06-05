@@ -16,6 +16,7 @@
   "author": "Peter Gao <peter1357908@hotmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.10.0",
     "@types/jquery": "^3.3.35",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
