@@ -10,7 +10,7 @@ function mapStateToProps(reduxState) {
   return {
     sessionID: reduxState.lobby.sessionID,
     playerIDs: reduxState.lobby.playerIDs,
-    currentPlayerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.lobby.currentPlayerID,
     creatorID: reduxState.lobby.creatorID,
   };
 }
@@ -66,7 +66,7 @@ class Lobby extends Component {
   renderMessage = () => {
     if (this.props.playerIDs.length < 5) {
       return <div className="message">Waiting for players to join</div>;
-    } else if (this.props.creatorID === this.props.currentPlayerID) {
+    } else if (this.props.creatorID === this.props.playerID) {
       return <div className="message">Ready to start game</div>;
     } else {
       return <div className="message">Waiting for {this.props.creatorID} to start the game</div>;
@@ -74,7 +74,7 @@ class Lobby extends Component {
   }
 
   renderBottom = () => {
-    if (this.props.creatorID === this.props.currentPlayerID) {
+    if (this.props.creatorID === this.props.playerID) {
       return (
         <div className="horizontal-flex-center bottom-navigation">
           <Button variant="primary" onClick={this.onClickStart}>

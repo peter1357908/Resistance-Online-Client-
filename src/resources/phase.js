@@ -1,5 +1,5 @@
 // the phases the game can be in. The server should be responsible for telling each client what phase to be in
-const Phase = {
+export const Phase = {
   VIEWING_TEAM: 0,
   SELECTING_TEAM: 1, // note that this will be displayed differently depending on whether the client is the current leader or not
   VOTING_ON_TEAM: 2,
@@ -10,4 +10,19 @@ const Phase = {
   //             this to display.
 };
 
-export default Phase;
+export function stringifyPhase(phase) {
+  switch (phase) {
+    case Phase.VIEWING_TEAM:
+      return 'viewing-team';
+    case Phase.SELECTING_TEAM:
+      return 'selecting-team';
+    case Phase.VOTING_ON_TEAM:
+      return 'voting-on-team';
+    case Phase.VIEWING_VOTES:
+      return 'viewing-votes';
+    case Phase.MISSION:
+      return 'mission';
+    default:
+      return '';
+  }
+}

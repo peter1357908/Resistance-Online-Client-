@@ -3,7 +3,7 @@ import { ActionTypes } from '../actions';
 const initialState = {
   sessionID: '',
   playerIDs: [],
-  currentPlayerID: '',
+  currentPlayerID: 'player1',
   creatorID: '',
 };
 
