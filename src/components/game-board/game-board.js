@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 /* eslint-disable no-nested-ternary */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { updateSelectedPlayers } from '../../actions';
+import { setSelectedPlayers } from '../../actions';
 import MissionStatus from '../../resources/mission-status';
 import BottomButtons from './bottom-buttons';
 import TopText from './top-text';
@@ -10,7 +10,7 @@ import { Phase } from '../../resources/phase';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.inGame.playerID,
     currentLeader: reduxState.inGame.currentLeader,
     missionStatuses: reduxState.inGame.missionStatuses,
     playerIDs: reduxState.inGame.playerIDs,
@@ -28,10 +28,10 @@ class GameBoard extends Component {
     if (this.props.currentLeader === this.props.playerID && this.props.gamePhase === Phase.SELECTING_TEAM) {
       if (this.props.selectedPlayers.includes(ID)) {
         const selectedPlayers = this.props.selectedPlayers.filter((e) => e !== ID);
-        this.props.updateSelectedPlayers(selectedPlayers);
+        this.props.setSelectedPlayers(selectedPlayers);
       } else {
         this.props.selectedPlayers.push(ID);
-        this.props.updateSelectedPlayers(this.props.selectedPlayers);
+        this.props.setSelectedPlayers(this.props.selectedPlayers);
       }
     }
   }
@@ -84,7 +84,7 @@ class GameBoard extends Component {
             {missions}
           </div>
           <div className="failed-votes">
-            Failed votes: <span>{this.props.currentRound - 1}</span>
+            Failed votes: <span>{this.props.currentRound}</span>
           </div>
           <div className="player-cards">
             {players}
@@ -96,4 +96,4 @@ class GameBoard extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { updateSelectedPlayers })(GameBoard));
+export default withRouter(connect(mapStateToProps, { setSelectedPlayers })(GameBoard));

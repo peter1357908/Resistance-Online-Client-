@@ -8,7 +8,7 @@ import { setActed } from '../../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.inGame.playerID,
     currentLeader: reduxState.inGame.currentLeader,
     selectedPlayers: reduxState.inGame.selectedPlayers,
     numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)

@@ -5,10 +5,24 @@ import { connect } from 'react-redux';
 import GameBoard from './game-board/game-board';
 import TeamReveal from './team-reveal';
 import Chat from './chat';
+import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
 import socket from '../socketConfig';
 import {
-  setPlayerIDs, setSpies, setGamePhase, setCurrentLeader, setWaitingFor, setRound,
+  setPlayerID,
+  setPlayerIDs,
+  setCurrentLeader,
+  setCurrentMission,
+  setMissionSize,
+  setCurrentRound,
+  setMissionStatuses,
+  setSelectedPlayers,
+  setGamePhase,
+  setWaitingFor,
+  setFaction,
+  setSpies,
+  // setVotes,
+  setActed,
 }
   from '../actions';
 
@@ -16,6 +30,7 @@ function mapStateToProps(reduxState) {
   return {
     gamePhase: reduxState.inGame.gamePhase,
     playerIDs: reduxState.inGame.playerIDs,
+    lobbyPlayerID: reduxState.lobby.currentPlayerID,
   };
 }
 
@@ -25,20 +40,32 @@ class InGame extends Component {
       console.log('ingame action: ', result.action);
       switch (result.action) {
         case 'begin':
+          this.props.setPlayerID(this.props.lobbyPlayerID); // move copy the playerID from lobby to in-game
           this.props.setPlayerIDs(result.playerIDs);
-          this.props.setCurrentLeader(result.playerIDs[0]);
+          this.props.setGamePhase(Phase.VIEWING_TEAM);
+          this.props.setFaction('resistance'); // by default, you're on the resistance
           break;
         case 'setSpy':
+          this.props.setFaction('spy');
           this.props.setSpies(result.spies);
           break;
         case 'waitingFor':
-          console.log('waiting for ', result.waitingFor);
           this.props.setWaitingFor(result.waitingFor);
           break;
         case 'everyoneJoined':
-          console.log('waiting for is empty');
           this.props.setGamePhase(Phase.SELECTING_TEAM);
-          this.props.setRound(this.props.playerIDs[result.currentLeaderIndex], result.currentMission, result.currentRound, result.missionSize);
+          this.props.setCurrentLeader(this.props.playerIDs[result.currentLeaderIndex]);
+          this.props.setCurrentMission(result.currentMission + 1); // on the front-end, currentMission ranges from 1 to 5
+          this.props.setMissionSize(result.missionSize);
+          this.props.setCurrentRound(result.currentRound);
+          this.props.setSelectedPlayers([]);
+          this.props.setActed(false);
+          this.props.setMissionStatuses([
+            MissionStatus.TBD,
+            MissionStatus.TBD,
+            MissionStatus.TBD,
+            MissionStatus.TBD,
+            MissionStatus.TBD]);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -69,5 +96,18 @@ class InGame extends Component {
 }
 
 export default withRouter(connect(mapStateToProps, {
-  setSpies, setPlayerIDs, setGamePhase, setCurrentLeader, setWaitingFor, setRound,
+  setPlayerID,
+  setPlayerIDs,
+  setCurrentLeader,
+  setCurrentMission,
+  setMissionSize,
+  setCurrentRound,
+  setMissionStatuses,
+  setSelectedPlayers,
+  setGamePhase,
+  setWaitingFor,
+  setFaction,
+  setSpies,
+  // setVotes,
+  setActed,
 })(InGame));

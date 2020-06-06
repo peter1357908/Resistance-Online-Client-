@@ -7,7 +7,7 @@ function mapStateToProps(reduxState) {
   return {
     gamePhase: reduxState.inGame.gamePhase,
     numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)
-    playerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.inGame.playerID,
     currentLeader: reduxState.inGame.currentLeader,
     missionSize: reduxState.inGame.missionSize,
     acted: reduxState.inGame.acted,
