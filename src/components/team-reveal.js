@@ -98,7 +98,7 @@ class TeamReveal extends Component {
       if (num > 3) {
         return (
           <div className="directions">
-            Waitiing for {num} people...
+            Waiting for {num} people...
           </div>
         );
       } else if (num !== 0) {
@@ -109,7 +109,7 @@ class TeamReveal extends Component {
         }
         return (
           <div className="directions">
-            Waitiing for {concat} to join...
+            Waiting for {concat} to join...
           </div>
         );
       } else {

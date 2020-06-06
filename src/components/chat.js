@@ -7,7 +7,7 @@ import { setLogs } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.lobby.currentPlayerID,
+    playerID: reduxState.inGame.playerID,
     logs: reduxState.inGame.logs,
   };
 }
