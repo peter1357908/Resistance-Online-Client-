@@ -19,6 +19,7 @@ function mapStateToProps(reduxState) {
     numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)
     currentMission: reduxState.inGame.currentMission,
     gamePhase: reduxState.inGame.gamePhase,
+    missionSize: reduxState.inGame.missionSize,
     votes: reduxState.inGame.votes,
   };
 }
@@ -29,7 +30,7 @@ class GameBoard extends Component {
       if (this.props.selectedPlayers.includes(ID)) {
         const selectedPlayers = this.props.selectedPlayers.filter((e) => e !== ID);
         this.props.setSelectedPlayers(selectedPlayers);
-      } else {
+      } else if (this.props.numSelectedPlayers < this.props.missionSize) {
         this.props.selectedPlayers.push(ID);
         this.props.setSelectedPlayers(this.props.selectedPlayers);
       }
@@ -59,13 +60,16 @@ class GameBoard extends Component {
 
       return (
         <div key={key} className={className}>
-          Mission-<span>{index + 1}</span>
+          Mission {index + 1}
         </div>
       );
     });
 
     const players = this.props.playerIDs.map((ID) => {
-      const className = this.props.selectedPlayers.includes(ID) ? 'player-card selected' : 'player-card not-selected';
+      const selectedString = this.props.selectedPlayers.includes(ID) ? 'selected' : 'not-selected';
+      const hoverableString = this.props.currentLeader === this.props.playerID
+        && (this.props.selectedPlayers.includes(ID) || this.props.numSelectedPlayers < this.props.missionSize) ? 'hoverable' : '';
+      const className = `player-card ${selectedString} ${hoverableString}`;
       return (
         <div role="button" tabIndex="0" key={ID} className={className} onClick={() => this.cardClicked(ID)}>
           <div className="playerID">
