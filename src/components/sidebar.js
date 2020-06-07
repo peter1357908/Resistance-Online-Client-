@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import Chat from './chat';
 
 class SideBar extends Component {
@@ -23,7 +24,7 @@ class SideBar extends Component {
       return (
         <div className="sidebar-material">
           <div className="sidebar-buttons">
-            Button to view directions will go here
+            <Button variant="secondary" className="directions-button" onClick={this.openDirections}>Directions</Button>
           </div>
           <Chat />
         </div>

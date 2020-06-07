@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import GameBoard from './game-board/game-board';
-import TeamReveal from './team-reveal';
+import FactionReveal from './faction-reveal';
 import SideBar from './sidebar';
 import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
@@ -43,6 +43,7 @@ class InGame extends Component {
           this.props.setPlayerIDs(result.playerIDs);
           this.props.setGamePhase(Phase.VIEWING_TEAM);
           this.props.setFaction('resistance'); // by default, you're on the resistance
+          this.props.setActed(false);
           break;
         case 'youAreSpy':
           this.props.setFaction('spy');
@@ -117,7 +118,7 @@ class InGame extends Component {
     if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (
         <div className="game-container">
-          <TeamReveal />
+          <FactionReveal />
         </div>
       );
     }

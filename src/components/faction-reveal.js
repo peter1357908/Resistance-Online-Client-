@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 
 import socket from '../socketConfig';
 import SideBar from './sidebar';
+import { setActed } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -12,10 +13,11 @@ function mapStateToProps(reduxState) {
     spies: reduxState.inGame.spies,
     playerID: reduxState.lobby.currentPlayerID,
     waitingFor: reduxState.inGame.waitingFor,
+    acted: reduxState.inGame.acted,
   };
 }
 
-class TeamReveal extends Component {
+class FactionReveal extends Component {
   constructor(props) {
     super(props);
 
@@ -80,10 +82,11 @@ class TeamReveal extends Component {
     };
     socket.emit('inGame', message);
     this.setState({ okPressed: true });
+    this.props.setActed(true);
   }
 
   renderOkButton = () => {
-    const buttonClassName = this.state.revealed ? 'revealed' : 'hidden';
+    const buttonClassName = this.state.revealed && !this.props.acted ? 'revealed' : 'hidden';
     return (
       <div className="horizontal-flex-center bottom-navigation">
         <Button variant="primary" className={buttonClassName} onClick={this.onOkClick}>
@@ -131,7 +134,7 @@ class TeamReveal extends Component {
     return (
       <div className="game-container">
         <SideBar />
-        <div className="team-reveal-container">
+        <div className="faction-reveal-container">
           <div className="shade">
             {this.renderDirections()}
             {this.renderCard()}
@@ -143,4 +146,4 @@ class TeamReveal extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(TeamReveal));
+export default withRouter(connect(mapStateToProps, { setActed })(FactionReveal));
