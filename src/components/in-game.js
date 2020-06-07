@@ -81,7 +81,7 @@ class InGame extends Component {
         case 'roundVotes':
           this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setActed(false);
-          this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition.ID));
+          this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition[ID]));
           this.props.setCurrentRound(result.currentRound);
           break;
         case 'tooManyRounds':

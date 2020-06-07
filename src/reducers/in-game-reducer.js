@@ -58,7 +58,7 @@ const InGameReducer = (state = initialState, action) => {
     case ActionTypes.SET_ACTED:
       return { ...state, acted: action.acted };
     case ActionTypes.SET_VOTES:
-      return { ...state, vote: action.votes };
+      return { ...state, votes: action.votes };
     case ActionTypes.SET_LOGS:
       return { ...state, logs: action.logs };
     default:
