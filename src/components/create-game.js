@@ -5,12 +5,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-
 import {
   setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
 } from '../actions';
-
 import socket from '../socketConfig';
+
+function isEmptyOrSpaces(str) {
+  return str === null || str === undefined || str === '' || str.match(/^ *$/) !== null;
+}
 
 class CreateGame extends Component {
   constructor(props) {
@@ -63,6 +65,21 @@ class CreateGame extends Component {
     this.props.history.push('/');
   }
 
+  renderCreateButton = () => {
+    if (isEmptyOrSpaces(this.state.sessionID) || isEmptyOrSpaces(this.state.password) || isEmptyOrSpaces(this.state.playerID)) {
+      return (
+        <Button variant="primary" onClick={this.onClickCreate} disabled>
+          Create
+        </Button>
+      );
+    }
+    return (
+      <Button variant="primary" onClick={this.onClickCreate}>
+        Create
+      </Button>
+    );
+  }
+
   render() {
     return (
       <div className="vertical-flex create-game-container">
@@ -77,9 +94,7 @@ class CreateGame extends Component {
           <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="playerID (this will be your name in the game)" />
         </div>
         <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.onClickCreate}>
-            Create
-          </Button>
+          {this.renderCreateButton()}
           <Button variant="primary" onClick={this.onClickBack}>
             Back
           </Button>

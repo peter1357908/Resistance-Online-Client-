@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-
 import {
   setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
 } from '../actions';
-
 import socket from '../socketConfig';
+
+function isEmptyOrSpaces(str) {
+  return str === null || str === undefined || str === '' || str.match(/^ *$/) !== null;
+}
 
 class JoinGame extends Component {
   constructor(props) {
@@ -65,6 +67,22 @@ class JoinGame extends Component {
     this.props.history.push('/');
   }
 
+  renderJoinButton = () => {
+    console.log(this.state.playerID);
+    if (isEmptyOrSpaces(this.state.sessionID) || isEmptyOrSpaces(this.state.playerID) || isEmptyOrSpaces(this.state.password)) {
+      return (
+        <Button variant="primary" onClick={this.onClickJoin} disabled>
+          Join
+        </Button>
+      );
+    }
+    return (
+      <Button variant="primary" onClick={this.onClickJoin}>
+        Join
+      </Button>
+    );
+  }
+
   render() {
     return (
       <div className="vertical-flex join-game-container">
@@ -79,9 +97,7 @@ class JoinGame extends Component {
           <Form.Control type="input" onChange={this.onChangePlayerID} value={this.state.playerID} placeholder="PlayerID (this will be your in-game name)" />
         </div>
         <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.onClickJoin}>
-            Join
-          </Button>
+          {this.renderJoinButton()}
           <Button variant="primary" onClick={this.onClickBack}>
             Back
           </Button>
