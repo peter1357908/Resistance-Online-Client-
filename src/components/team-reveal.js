@@ -109,7 +109,7 @@ class TeamReveal extends Component {
         }
         return (
           <div className="directions">
-            Waiting for {concat} to join...
+            Waiting for {concat} view their faction...
           </div>
         );
       } else {

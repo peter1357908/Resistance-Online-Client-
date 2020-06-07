@@ -226,7 +226,7 @@ body {
         
       }
 
-      .failed-votes {
+      .current-round {
         color: white;
       }
 
@@ -347,7 +347,7 @@ body {
       background-color: rgba(0, 0, 0, 0.80);
     }
 
-    .player-cards {
+    .player-cards .not-selected {
       opacity: 0.5;
     }
   }        

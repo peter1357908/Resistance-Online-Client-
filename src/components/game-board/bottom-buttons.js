@@ -21,25 +21,22 @@ function mapStateToProps(reduxState) {
 class BottomButtons extends Component {
   submitSelectedTeam = () => {
     console.log(this.props.selectedPlayers);
-    socket.emit('inGame', { selectedPlayers: this.props.selectedPlayers });
+    socket.emit('inGame', { action: 'proposeTeam', proposedTeam: this.props.selectedPlayers });
   }
 
-  // TODO eventually this will take, as an argument, the vote ('yes' or 'no')
-  submitVote = () => {
+  submitVote = (voteType) => {
     this.props.setActed(true);
-    // TODO send something on the socket here
+    socket.emit('inGame', { action: 'voteOnTeamProposal', voteType });
   }
 
   submitVotesViewed = () => {
     this.props.setActed(true);
-    // TODO send something on the socket here (tell the server that we viewed the votes)
+    socket.emit('inGame', { action: 'votesViewed' });
   }
 
-  // TODO eventually this will take, as an argument, the mission vote ('succeed' or 'fail')
-  submitMissionVote = () => {
-    console.log('voted for mission');
+  submitMissionVote = (voteType) => {
     this.props.setActed(true);
-    // TODO send something on the socket here
+    socket.emit('inGame', { action: 'voteOnMissionOutcome', voteType });
   }
 
   renderEmptyButtons = () => {
@@ -74,10 +71,10 @@ class BottomButtons extends Component {
     }
     return (
       <div className="horizontal-flex-center bottom-navigation">
-        <Button variant="primary" onClick={this.submitVote}>
+        <Button variant="primary" onClick={() => this.submitVote('APPROVE')}>
           Yes
         </Button>
-        <Button variant="danger" className="negative" onClick={this.submitVote}>
+        <Button variant="danger" className="negative" onClick={() => this.submitVote('REJECT')}>
           No
         </Button>
       </div>
@@ -102,10 +99,10 @@ class BottomButtons extends Component {
     if (this.props.selectedPlayers.includes(this.props.playerID) && this.props.acted === false) {
       return (
         <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.submitMissionVote}>
+          <Button variant="primary" onClick={() => this.submitMissionVote('SUCCESS')}>
             Succeed
           </Button>
-          <Button variant="danger" className="negative" onClick={this.submitMissionVote}>
+          <Button variant="danger" className="negative" onClick={() => this.submitMissionVote('FAIL')}>
             Fail
           </Button>
         </div>

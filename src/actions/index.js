@@ -135,6 +135,13 @@ export function setActed(acted) {
   };
 }
 
+export function setVotes(votes) {
+  return {
+    type: ActionTypes.SET_VOTES,
+    votes,
+  };
+}
+
 export function setLogs(logs) {
   return {
     type: ActionTypes.SET_LOGS,
