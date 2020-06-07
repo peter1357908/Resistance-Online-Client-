@@ -98,6 +98,8 @@ class InGame extends Component {
           this.props.setGamePhase(Phase.SELECTING_TEAM);
           this.props.setCurrentLeader(result.currentLeaderID);
           this.props.setCurrentMission(result.currentMission);
+          this.props.setMissionSize(result.missionSize);
+          this.props.setCurretRound(result.currentRound);
           break;
         case 'missionVotes':
           // TODO make a modal that displays the results of the mission vote
