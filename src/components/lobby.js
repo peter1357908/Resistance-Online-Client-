@@ -73,13 +73,26 @@ class Lobby extends Component {
     }
   }
 
+  renderStartButton = () => {
+    if (this.props.playerIDs.length >= 5) {
+      return (
+        <Button variant="primary" onClick={this.onClickStart}>
+          Start
+        </Button>
+      );
+    }
+    return (
+      <Button variant="primary" onClick={this.onClickStart} disabled>
+        Start
+      </Button>
+    );
+  }
+
   renderBottom = () => {
     if (this.props.creatorID === this.props.playerID) {
       return (
         <div className="horizontal-flex-center bottom-navigation">
-          <Button variant="primary" onClick={this.onClickStart}>
-            Start
-          </Button>
+          {this.renderStartButton()}
           <Button variant="primary" onClick={this.onClickQuit}>
             Quit
           </Button>
