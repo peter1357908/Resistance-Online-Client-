@@ -21,6 +21,7 @@ import {
   setFaction,
   setSpies,
   setVotes,
+  setRoundOutcome,
   setActed,
 }
   from '../actions';
@@ -82,6 +83,7 @@ class InGame extends Component {
           this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setActed(false);
           this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition[ID]));
+          this.props.setRoundOutcome(result.roundOutcome);
           this.props.setCurrentRound(result.currentRound);
           break;
         case 'tooManyRounds':
@@ -148,5 +150,6 @@ export default withRouter(connect(mapStateToProps, {
   setFaction,
   setSpies,
   setVotes,
+  setRoundOutcome,
   setActed,
 })(InGame));
