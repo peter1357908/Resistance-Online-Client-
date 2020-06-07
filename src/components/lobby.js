@@ -4,7 +4,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import socket from '../socketConfig';
 import { setPlayerIDs, setCreatorID } from '../actions';
-import Chat from './chat';
+import SideBar from './sidebar';
 
 function mapStateToProps(reduxState) {
   return {
@@ -140,7 +140,7 @@ class Lobby extends Component {
 
     return (
       <div className="game-container">
-        <Chat />
+        <SideBar />
         <div className="lobby-container">
           <div className="shade">
             {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
