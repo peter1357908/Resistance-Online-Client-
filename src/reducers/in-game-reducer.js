@@ -24,6 +24,7 @@ const initialState = {
   faction: 'resistance',
   spies: [], // empty if you're not a spy
   votes: ['APPROVE', 'REJECT', 'APPROVE', 'APPROVE', 'APPROVE', 'REJECT'], // how people voted on the most recent round
+  roundOutcome: '', // the outcome of the most recent round vote (either 'APPROVED' or 'REJECTED')
   // ^ we may eventually find a better structure to store the votes
   acted: false, // whether or not the player has done the action required in the current round, e.g., clicking "ok", voting, etc.
   logs: [], // the message logs
@@ -55,10 +56,12 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, faction: action.faction };
     case ActionTypes.SET_SPIES:
       return { ...state, spies: action.spies };
+    case ActionTypes.SET_VOTES:
+      return { ...state, votes: action.votes };
+    case ActionTypes.SET_ROUND_OUTCOME:
+      return { ...state, roundOutcome: action.roundOutcome };
     case ActionTypes.SET_ACTED:
       return { ...state, acted: action.acted };
-    case ActionTypes.SET_VOTES:
-      return { ...state, vote: action.votes };
     case ActionTypes.SET_LOGS:
       return { ...state, logs: action.logs };
     default:

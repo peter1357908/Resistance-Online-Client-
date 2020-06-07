@@ -13,6 +13,7 @@ function mapStateToProps(reduxState) {
     acted: reduxState.inGame.acted,
     waitingFor: reduxState.inGame.waitingFor,
     selected: reduxState.inGame.selectedPlayers,
+    roundOutcome: reduxState.inGame.roundOutcome,
   };
 }
 
@@ -47,8 +48,9 @@ class TopText extends Component {
       case Phase.VIEWING_VOTES:
         if (this.props.acted) {
           return `Waiting for ${this.getWaitingFor()}`;
+        } else {
+          return `The team was ${this.props.roundOutcome}`;
         }
-        return '';
       case Phase.MISSION:
         if (this.props.selected.includes(this.props.playerID) && this.props.acted === false) {
           return 'Choose how you want to act on the mission';

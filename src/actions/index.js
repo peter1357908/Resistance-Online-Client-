@@ -17,6 +17,7 @@ export const ActionTypes = {
   SET_FACTION: 'SET_FACTION',
   SET_SPIES: 'SET_SPIES',
   SET_VOTES: 'SET_VOTES',
+  SET_ROUND_OUTCOME: 'SET_ROUND_OUTCOME',
   SET_ACTED: 'SET_ACTED',
   SET_LOGS: 'SET_LOGS',
 };
@@ -128,17 +129,24 @@ export function setSpies(spies) {
   };
 }
 
-export function setActed(acted) {
-  return {
-    type: ActionTypes.SET_ACTED,
-    acted,
-  };
-}
-
 export function setVotes(votes) {
   return {
     type: ActionTypes.SET_VOTES,
     votes,
+  };
+}
+
+export function setRoundOutcome(roundOutcome) {
+  return {
+    type: ActionTypes.SET_ROUND_OUTCOME,
+    roundOutcome,
+  };
+}
+
+export function setActed(acted) {
+  return {
+    type: ActionTypes.SET_ACTED,
+    acted,
   };
 }
 
