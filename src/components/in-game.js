@@ -116,14 +116,14 @@ class InGame extends Component {
   render() {
     if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (
-        <div className="in-game-container">
+        <div className="game-container">
           <TeamReveal />
         </div>
       );
     }
     const gamePhaseWrapper = `${stringifyPhase(this.props.gamePhase)}-container`;
     return (
-      <div className="in-game-container">
+      <div className="game-container">
         <Chat />
         <div className={gamePhaseWrapper}>
           <GameBoard />

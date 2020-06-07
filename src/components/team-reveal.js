@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
 import socket from '../socketConfig';
+import Chat from './chat';
 
 function mapStateToProps(reduxState) {
   return {
@@ -128,11 +129,14 @@ class TeamReveal extends Component {
 
   render() {
     return (
-      <div className="team-reveal-container">
-        <div className="shade">
-          {this.renderDirections()}
-          {this.renderCard()}
-          {this.renderOkButton()}
+      <div className="game-container">
+        <Chat />
+        <div className="team-reveal-container">
+          <div className="shade">
+            {this.renderDirections()}
+            {this.renderCard()}
+            {this.renderOkButton()}
+          </div>
         </div>
       </div>
     );

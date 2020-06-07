@@ -112,6 +112,7 @@ body {
   background-position: center;
   background-size: cover;
 
+  width: 80%;
   height: 100%;
 
   .shade {
@@ -169,7 +170,7 @@ body {
   }
 }
 
-.in-game-container {
+.game-container {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -372,7 +373,7 @@ body {
     background-size: cover;
 
     height: 100%;
-    width: 100%;
+    width: 80%;
 
     .shade {
       display: flex;
@@ -386,6 +387,7 @@ body {
 
       .directions {
         color: white;
+        height: 45px;
       }
 
       .player-card {

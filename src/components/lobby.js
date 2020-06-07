@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-
 import socket from '../socketConfig';
 import { setPlayerIDs, setCreatorID } from '../actions';
+import Chat from './chat';
 
 function mapStateToProps(reduxState) {
   return {
@@ -139,25 +139,28 @@ class Lobby extends Component {
     });
 
     return (
-      <div className="lobby-container">
-        <div className="shade">
-          {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
-          <div className="sessionID">
-            Session ID: {this.props.sessionID}
-          </div>
-          <div className="title-text">
-            Resistance
-          </div>
-          {this.renderMessage()}
-          <div className="playerID-grid">
-            <div className="playerID-column">
-              {players.slice(0, 5)}
+      <div className="game-container">
+        <Chat />
+        <div className="lobby-container">
+          <div className="shade">
+            {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
+            <div className="sessionID">
+              Session ID: {this.props.sessionID}
             </div>
-            <div className="playerID-column">
-              {players.slice(5, 10)}
+            <div className="title-text">
+              Resistance
             </div>
+            {this.renderMessage()}
+            <div className="playerID-grid">
+              <div className="playerID-column">
+                {players.slice(0, 5)}
+              </div>
+              <div className="playerID-column">
+                {players.slice(5, 10)}
+              </div>
+            </div>
+            {this.renderBottom()}
           </div>
-          {this.renderBottom()}
         </div>
       </div>
     );
