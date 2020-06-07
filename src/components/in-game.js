@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import GameBoard from './game-board/game-board';
 import TeamReveal from './team-reveal';
-import Chat from './chat';
+import SideBar from './sidebar';
 import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
 import socket from '../socketConfig';
@@ -116,15 +116,15 @@ class InGame extends Component {
   render() {
     if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (
-        <div className="in-game-container">
+        <div className="game-container">
           <TeamReveal />
         </div>
       );
     }
     const gamePhaseWrapper = `${stringifyPhase(this.props.gamePhase)}-container`;
     return (
-      <div className="in-game-container">
-        <Chat />
+      <div className="game-container">
+        <SideBar />
         <div className={gamePhaseWrapper}>
           <GameBoard />
         </div>

@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentPlayerID, setCreatorID } from '../actions';
+import {
+  setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
+} from '../actions';
 
 import socket from '../socketConfig';
 
@@ -27,6 +29,7 @@ class JoinGame extends Component {
       } else {
         this.props.setSessionID(result.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
+        this.props.setPlayerID(result.playerID);
         this.props.setCreatorID(result.creatorID);
         if (result.action === 'quitGame') {
           console.log('quitting game'); // Display something here
@@ -88,4 +91,6 @@ class JoinGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentPlayerID, setCreatorID })(JoinGame));
+export default withRouter(connect(null, {
+  setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
+})(JoinGame));

@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import { setSessionID, setCurrentPlayerID, setCreatorID } from '../actions';
+import {
+  setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
+} from '../actions';
 
 import socket from '../socketConfig';
 
@@ -30,6 +32,7 @@ class CreateGame extends Component {
       } else {
         this.props.setSessionID(result.sessionID);
         this.props.setCurrentPlayerID(result.playerID);
+        this.props.setPlayerID(result.playerID);
         this.props.history.push('/lobby');
       }
     });
@@ -86,4 +89,6 @@ class CreateGame extends Component {
   }
 }
 
-export default withRouter(connect(null, { setSessionID, setCurrentPlayerID, setCreatorID })(CreateGame));
+export default withRouter(connect(null, {
+  setSessionID, setCurrentPlayerID, setCreatorID, setPlayerID,
+})(CreateGame));

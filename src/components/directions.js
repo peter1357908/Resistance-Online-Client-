@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import HelpModal from './help';
+import DirectionsModal from './directions-modal';
 
-class Modal extends Component {
+class Directions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,11 +21,11 @@ class Modal extends Component {
   render() {
     return (
       <>
-        <HelpModal show={this.state.showModal} closeModal={this.closeClick} />
-        <Button variant="secondary" onClick={this.openClick}>Help</Button>
+        <DirectionsModal show={this.state.showModal} closeModal={this.closeClick} />
+        <Button variant="secondary" className="directions-button" onClick={this.openClick}>Directions</Button>
       </>
     );
   }
 }
 
-export default Modal;
+export default Directions;
