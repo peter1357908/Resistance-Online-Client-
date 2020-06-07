@@ -19,11 +19,11 @@ const initialState = {
   ],
   selectedPlayers: ['player1', 'player2'], // i.e. which cards should be displayed as enlarged and glowing
   numSelectedPlayers: 2, // this is not really needed, but it's fixing a bug where the board doesn't refresh when selectedPlayers changes
-  gamePhase: Phase.SELECTING_TEAM,
+  gamePhase: Phase.VIEWING_VOTES,
   waitingFor: ['player3', 'player4', 'player5'], // the players we're waiting on
   faction: 'resistance',
   spies: [], // empty if you're not a spy
-  votes: ['yes', 'no', 'yes', 'yes', 'yes', 'no'], // how people voted on the most recent round
+  votes: ['APPROVE', 'REJECT', 'APPROVE', 'APPROVE', 'APPROVE', 'REJECT'], // how people voted on the most recent round
   // ^ we may eventually find a better structure to store the votes
   acted: false, // whether or not the player has done the action required in the current round, e.g., clicking "ok", voting, etc.
   logs: [], // the message logs
@@ -57,6 +57,8 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, spies: action.spies };
     case ActionTypes.SET_ACTED:
       return { ...state, acted: action.acted };
+    case ActionTypes.SET_VOTES:
+      return { ...state, vote: action.votes };
     case ActionTypes.SET_LOGS:
       return { ...state, logs: action.logs };
     default:

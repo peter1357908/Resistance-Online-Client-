@@ -38,7 +38,9 @@ class GameBoard extends Component {
   }
 
   renderPlayerVote = (ID) => {
-    const vote = this.props.votes[this.props.playerIDs.indexOf(ID)];
+    const formalVote = this.props.votes[this.props.playerIDs.indexOf(ID)];
+    const vote = formalVote === 'APPROVE' ? 'yes'
+      : formalVote === 'REJECT' ? 'no' : 'unclear';
     const className = `player-vote ${vote}`;
 
     return (

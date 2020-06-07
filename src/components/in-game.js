@@ -21,7 +21,7 @@ import {
   setWaitingFor,
   setFaction,
   setSpies,
-  // setVotes,
+  setVotes,
   setActed,
 }
   from '../actions';
@@ -54,7 +54,8 @@ class InGame extends Component {
           break;
         case 'everyoneJoined':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
-          this.props.setCurrentLeader(this.props.playerIDs[result.currentLeaderIndex]);
+          this.props.setWaitingFor([]);
+          this.props.setCurrentLeader(result.currentLeaderID);
           this.props.setCurrentMission(result.currentMission + 1); // on the front-end, currentMission ranges from 1 to 5
           this.props.setMissionSize(result.missionSize);
           this.props.setCurrentRound(result.currentRound);
@@ -66,6 +67,45 @@ class InGame extends Component {
             MissionStatus.TBD,
             MissionStatus.TBD,
             MissionStatus.TBD]);
+          break;
+        // case 'cardClicked':
+        //   this.props.selectedPlayers.push(result.cardPlayerID);
+        //   this.props.setSelectedPlayers(this.props.selectedPlayers);
+        //   break;
+        // case 'cardUnclicked':
+        //   this.props.setSelectedPlayers(this.props.selectedPlayers.filter((e) => e !== result.cardPlayerID));
+        //   break;
+        case 'proposeTeam':
+          this.props.setSelectedPlayers(result.proposedTeam);
+          this.props.setGamePhase(Phase.VOTING_ON_TEAM);
+          break;
+        case 'roundVotes':
+          this.props.setGamePhase(Phase.VIEWING_VOTES);
+          this.props.setActed(false);
+          this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition.ID));
+          this.props.setCurrentRound(result.round);
+          break;
+        case 'tooManyRounds':
+          this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.FAILED;
+          this.props.setMissionStatuses(this.props.missionStatuses);
+          break;
+        case 'missionStarting':
+          this.props.setGamePhase(Phase.MISSION);
+          this.props.setSelectedPlayers(result.playersOnMission);
+          break;
+        case 'teamSelectionStarting':
+          this.props.setGamePhase(Phase.SELECTING_TEAM);
+          this.props.setCurrentLeader(result.currentLeaderID);
+          this.props.setCurrentMission(result.currentMission);
+          break;
+        case 'missionVotes':
+          // TODO make a modal that displays the results of the mission vote
+          if (result.missionStatus === 'SUCCEEDED') {
+            this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.SUCCEEDED;
+          } else if (result.missionStatus === 'FAILED') {
+            this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.FAILED;
+          }
+          this.setMissionStatuses(this.props.missionStatuses);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -108,6 +148,6 @@ export default withRouter(connect(mapStateToProps, {
   setWaitingFor,
   setFaction,
   setSpies,
-  // setVotes,
+  setVotes,
   setActed,
 })(InGame));
