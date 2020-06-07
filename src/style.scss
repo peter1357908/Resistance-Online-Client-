@@ -72,6 +72,20 @@ body {
   }
 }
 
+.button-region {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .directions-button {
+    margin-top: 20px;
+    font-size: 20px;
+    height: 45px;
+    width: 150px;
+  }
+}
+
 .hidden {
   visibility: hidden;
 }
