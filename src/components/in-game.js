@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -39,24 +38,23 @@ class InGame extends Component {
     socket.on('inGame', (result) => {
       console.log('ingame action: ', result.action);
       switch (result.action) {
-        case 'begin':
+        case 'gameStarted':
           this.props.setPlayerID(this.props.lobbyPlayerID); // move copy the playerID from lobby to in-game
           this.props.setPlayerIDs(result.playerIDs);
           this.props.setGamePhase(Phase.VIEWING_TEAM);
           this.props.setFaction('resistance'); // by default, you're on the resistance
           break;
-        case 'setSpy':
+        case 'youAreSpy':
           this.props.setFaction('spy');
           this.props.setSpies(result.spies);
           break;
         case 'waitingFor':
           this.props.setWaitingFor(result.waitingFor);
           break;
-        case 'everyoneJoined':
+        case 'everyoneViewedFaction':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
-          this.props.setWaitingFor([]);
           this.props.setCurrentLeader(result.currentLeaderID);
-          this.props.setCurrentMission(result.currentMission + 1); // on the front-end, currentMission ranges from 1 to 5
+          this.props.setCurrentMission(result.currentMission);
           this.props.setMissionSize(result.missionSize);
           this.props.setCurrentRound(result.currentRound);
           this.props.setSelectedPlayers([]);
@@ -83,10 +81,10 @@ class InGame extends Component {
           this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setActed(false);
           this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition.ID));
-          this.props.setCurrentRound(result.round);
+          this.props.setCurrentRound(result.currentRound);
           break;
         case 'tooManyRounds':
-          this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.FAILED;
+          this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
           this.props.setMissionStatuses(this.props.missionStatuses);
           break;
         case 'missionStarting':
@@ -101,9 +99,9 @@ class InGame extends Component {
         case 'missionVotes':
           // TODO make a modal that displays the results of the mission vote
           if (result.missionStatus === 'SUCCEEDED') {
-            this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.SUCCEEDED;
+            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.SUCCEEDED;
           } else if (result.missionStatus === 'FAILED') {
-            this.props.missionStatuses[result.missionNumber - 1] = MissionStatus.FAILED;
+            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
           }
           this.setMissionStatuses(this.props.missionStatuses);
           break;

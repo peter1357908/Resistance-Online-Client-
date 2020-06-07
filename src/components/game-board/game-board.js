@@ -89,8 +89,8 @@ class GameBoard extends Component {
           <div className="missions">
             {missions}
           </div>
-          <div className="failed-votes">
-            Failed votes: <span>{this.props.currentRound}</span>
+          <div className="current-round">
+            Current Round: <span>{this.props.currentRound}</span>
           </div>
           <div className="player-cards">
             {players}
