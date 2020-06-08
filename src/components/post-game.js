@@ -141,7 +141,11 @@ class PostGame extends Component {
       console.log('postGame action: ', result.action);
       switch (result.action) {
         case 'gameHistory':
-          this.setState({ gameHistory: result.gameHistory });
+          this.setState({
+            victoriousFaction: result.victoriousFaction,
+            gameHistory: result.gameHistory,
+            spies: result.spies,
+          });
           break;
         default:
           console.log('unknown action received from server: ', result.action);
