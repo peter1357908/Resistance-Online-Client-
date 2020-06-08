@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import DirectionsModal from './directions-modal';
+import DirectionsModal from './modals/directions-modal';
 
 class Welcome extends Component {
   constructor(props) {
