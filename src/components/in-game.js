@@ -64,6 +64,9 @@ class InGame extends Component {
           break;
         case 'waitingFor':
           this.props.setWaitingFor(result.waitingFor);
+          // if (result.waitingFor.include(this.props.playerID)) {
+          //   setActed(false);
+          // }
           break;
         case 'everyoneViewedFaction':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
@@ -103,6 +106,7 @@ class InGame extends Component {
           this.props.setMissionStatus(result.failedMission, MissionStatus.FAILED);
           break;
         case 'missionStarting':
+          this.props.setActed(false);
           this.props.setGamePhase(Phase.MISSION);
           this.props.setSelectedPlayers(result.playersOnMission);
           break;
@@ -115,7 +119,6 @@ class InGame extends Component {
           this.props.setSelectedPlayers([]);
           break;
         case 'missionVotes':
-          this.props.setActed(false);
           this.setState({ modalToDisplay: result.missionStatus });
           this.setState({ numFailVotes: result.numFailVotes });
           if (result.missionStatus === 'SUCCEEDED') {
