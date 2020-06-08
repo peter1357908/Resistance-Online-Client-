@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import GameBoard from './game-board/game-board';
-import TeamReveal from './team-reveal';
+import FactionReveal from './faction-reveal';
 import SideBar from './sidebar';
 import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
+import MissionSucceededModal from './modals/mission-succeeded-modal';
+import MissionFailedModal from './modals/mission-failed-modal';
+import ResistanceWinsModal from './modals/resistance-wins-modal';
+import SpiesWinModal from './modals/spies-win-modal';
 import socket from '../socketConfig';
 import {
   setPlayerID,
@@ -15,12 +19,14 @@ import {
   setMissionSize,
   setCurrentRound,
   setMissionStatuses,
+  setMissionStatus,
   setSelectedPlayers,
   setGamePhase,
   setWaitingFor,
   setFaction,
   setSpies,
   setVotes,
+  setRoundOutcome,
   setActed,
 }
   from '../actions';
@@ -30,10 +36,21 @@ function mapStateToProps(reduxState) {
     gamePhase: reduxState.inGame.gamePhase,
     playerIDs: reduxState.inGame.playerIDs,
     lobbyPlayerID: reduxState.lobby.currentPlayerID,
+    faction: reduxState.inGame.faction,
+    sessionID: reduxState.lobby.sessionID,
   };
 }
 
 class InGame extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalToDisplay: '', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
+      numFailVotes: 0,
+    };
+  }
+
   componentDidMount() {
     socket.on('inGame', (result) => {
       console.log('ingame action: ', result.action);
@@ -43,6 +60,7 @@ class InGame extends Component {
           this.props.setPlayerIDs(result.playerIDs);
           this.props.setGamePhase(Phase.VIEWING_TEAM);
           this.props.setFaction('resistance'); // by default, you're on the resistance
+          this.props.setActed(false);
           break;
         case 'youAreSpy':
           this.props.setFaction('spy');
@@ -50,6 +68,9 @@ class InGame extends Component {
           break;
         case 'waitingFor':
           this.props.setWaitingFor(result.waitingFor);
+          // if (result.waitingFor.include(this.props.playerID)) {
+          //   setActed(false);
+          // }
           break;
         case 'everyoneViewedFaction':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
@@ -74,36 +95,47 @@ class InGame extends Component {
         //   this.props.setSelectedPlayers(this.props.selectedPlayers.filter((e) => e !== result.cardPlayerID));
         //   break;
         case 'proposeTeam':
+          this.props.setActed(false);
           this.props.setSelectedPlayers(result.proposedTeam);
           this.props.setGamePhase(Phase.VOTING_ON_TEAM);
           break;
         case 'roundVotes':
-          this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setActed(false);
-          this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition.ID));
-          this.props.setCurrentRound(result.currentRound);
+          this.props.setGamePhase(Phase.VIEWING_VOTES);
+          this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition[ID]));
+          this.props.setRoundOutcome(result.roundOutcome);
+          this.props.setCurrentRound(result.concludedRound);
           break;
         case 'tooManyRounds':
-          this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
-          this.props.setMissionStatuses(this.props.missionStatuses);
+          this.props.setMissionStatus(result.failedMission, MissionStatus.FAILED);
           break;
         case 'missionStarting':
+          this.props.setActed(false);
           this.props.setGamePhase(Phase.MISSION);
           this.props.setSelectedPlayers(result.playersOnMission);
+          this.props.setWaitingFor(result.playersOnMission);
           break;
         case 'teamSelectionStarting':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
           this.props.setCurrentLeader(result.currentLeaderID);
           this.props.setCurrentMission(result.currentMission);
+          this.props.setMissionSize(result.missionSize);
+          this.props.setCurrentRound(result.currentRound);
+          this.props.setSelectedPlayers([]);
           break;
         case 'missionVotes':
-          // TODO make a modal that displays the results of the mission vote
-          if (result.missionStatus === 'SUCCEEDED') {
-            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.SUCCEEDED;
-          } else if (result.missionStatus === 'FAILED') {
-            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
+          this.setState({ modalToDisplay: result.missionOutcome });
+          this.setState({ numFailVotes: result.numFailVotes });
+          if (result.missionOutcome === 'SUCCEEDED') {
+            this.props.setMissionStatus(result.concludedMission, MissionStatus.SUCCEEDED);
+          } else if (result.missionOutcome === 'FAILED') {
+            this.props.setMissionStatus(result.concludedMission, MissionStatus.FAILED);
           }
-          this.setMissionStatuses(this.props.missionStatuses);
+          break;
+        case 'gameFinished':
+          this.setState({ modalToDisplay: result.victoriousFaction });
+          // TODO make this history.push stuff happen only once the modal is closed
+          this.props.history.push(`/post-game/${this.props.sessionID}`);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -117,13 +149,17 @@ class InGame extends Component {
     if (this.props.gamePhase === Phase.VIEWING_TEAM) {
       return (
         <div className="game-container">
-          <TeamReveal />
+          <FactionReveal />
         </div>
       );
     }
     const gamePhaseWrapper = `${stringifyPhase(this.props.gamePhase)}-container`;
     return (
       <div className="game-container">
+        <MissionSucceededModal show={this.state.modalToDisplay === 'SUCCEEDED'} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <MissionFailedModal show={this.state.modalToDisplay === 'FAILED'} numFailVotes={this.state.numFailVotes} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <ResistanceWinsModal show={this.state.modalToDisplay === 'RESISTANCE'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <SpiesWinModal show={this.state.modalToDisplay === 'SPY'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
         <SideBar />
         <div className={gamePhaseWrapper}>
           <GameBoard />
@@ -141,11 +177,13 @@ export default withRouter(connect(mapStateToProps, {
   setMissionSize,
   setCurrentRound,
   setMissionStatuses,
+  setMissionStatus,
   setSelectedPlayers,
   setGamePhase,
   setWaitingFor,
   setFaction,
   setSpies,
   setVotes,
+  setRoundOutcome,
   setActed,
 })(InGame));

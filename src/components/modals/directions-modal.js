@@ -36,7 +36,7 @@ const useStyles = {
   modalHide: { opacity: '0', transform: 'scale(0)' },
 };
 
-const HelpModal = (props) => {
+const DirectionsModal = (props) => {
   const showClassName = props.show ? `${props.classes.modal} ${props.classes.modalDisplay}` : `${props.classes.modal} ${props.classes.modalHide}`;
 
   return (
@@ -64,4 +64,4 @@ const HelpModal = (props) => {
   );
 };
 
-export default withStyles(useStyles)(HelpModal);
+export default withStyles(useStyles)(DirectionsModal);

@@ -90,7 +90,7 @@ class GameBoard extends Component {
             {missions}
           </div>
           <div className="current-round">
-            Current Round: <span>{this.props.currentRound}</span>
+            Attempt to approve team: {this.props.currentRound} (of 5)
           </div>
           <div className="player-cards">
             {players}

@@ -293,17 +293,6 @@ body {
           }
         }
 
-        .hoverable.selected:hover {
-          box-shadow: 0px 0px 10px $resistance-blue;
-        }
-
-        .hoverable.not-selected:hover {
-          box-shadow: 0px 0px 10px lightblue;
-          width: 102px;
-          height: 145.86px;
-          margin: 0px 6px 0px 6px;
-        }
-
         .selected {
           box-shadow: 0px 0px 10px white;
           width: 110px;
@@ -316,6 +305,17 @@ body {
   .selecting-team-container {
     width: 100%;
     height: 100%;
+
+    .hoverable.selected:hover {
+      box-shadow: 0px 0px 10px $resistance-blue;
+    }
+
+    .hoverable.not-selected:hover {
+      box-shadow: 0px 0px 10px lightblue;
+      width: 102px;
+      height: 145.86px;
+      margin: 0px 6px 0px 6px;
+    }
   }
 
   .voting-on-team-container {
@@ -326,7 +326,7 @@ body {
       opacity: 0.5;
     }
 
-    .failed-votes {
+    .current-round {
       opacity: 0.5;
     }
 
@@ -354,7 +354,7 @@ body {
       opacity: 0.5;
     }
 
-    .failed-votes {
+    .current-round {
       opacity: 0.5;
     }
 
@@ -367,7 +367,7 @@ body {
     }
   }        
 
-  .team-reveal-container {
+  .faction-reveal-container {
     background-image: url('../images/smoking_spy.jpg');
     background-position: center;
     background-size: cover;
@@ -499,6 +499,20 @@ body {
     .sidebar-material {
       display: flex;
       flex-direction: column;
+
+      .sidebar-buttons {
+        background-color: #AAAAAA;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: space-around;
+
+        button {
+          margin: 10px;
+
+          font-size: 16px;
+        }
+      }
     }
 
     .sidebar-toggle {
@@ -563,4 +577,166 @@ body {
     padding: 1px;
   }
 
+  .post-game-container {
+    background-image: url('../images/smoking_spy.jpg');
+    background-position: center;
+    background-size: cover;
+
+    min-height: 100%;
+    width: 100%;
+
+    .shade {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+
+      background-color: rgba(0, 0, 0, 0.65);
+
+      height: 100%;
+
+      .post-game-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .victorious-faction {
+          color: white;
+          text-shadow: 0px 0px 10px #000000;
+          font-size: 50px;
+        }
+
+        .icon-spy {
+          background-image: url('../images/clip_art_knife.png');
+          background-size: cover;
+          background-position: center;
+
+          height: 40px;
+          width: 40px;
+
+          margin: 12px 25px 0px 25px;
+        }
+
+        .icon-resistance {
+          background-image: url('../images/clip_art_fist.png');
+          background-size: cover;
+          background-position: center;
+
+          height: 40px;
+          width: 40px;
+
+          margin: 12px 25px 0px 25px;
+        }
+      }
+
+      .spies-listing {
+          color: white;
+          text-shadow: 0px 0px 10px #000000;
+          font-size: 20px;
+      }
+
+      .mission-reports{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        .mission-report{
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 8px;
+
+          .mission-number-and-outcome {
+            display: flex;
+            flex-direction: row;
+            font-size: 18px;
+
+            .mission-number {
+              color: white;
+              margin-right: 5px;
+            }
+
+            .mission-outcome.spy {
+              color: red;
+              font-weight: 550;
+            }
+
+            .mission-outcome.resistance {
+              color: $resistance-blue;
+              font-weight: 550;
+            }
+          }
+
+          .round-report {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            color: white;
+            font-size: 14px;
+
+            .round-report-number {
+              font-weight: 650;
+              margin-right: 5px;
+            }
+
+            .player-and-round-vote {
+              display: flex;
+              flex-direction: row;
+              margin: 0px 5px 0px 4px;
+            }
+
+            .no {
+              margin-right: 3.7px;
+              color: red;
+            }
+
+            .yes {
+              color: $resistance-blue;
+            }
+
+            .leader {
+              color: yellow;
+            }
+
+            .player {
+              margin-right: 2px;
+            }
+
+            .on-mission {
+              border: solid 1px #AAAAAA;
+              border-radius: 10px;
+            }
+          }
+
+          .mission-vote-report {
+            color: white;
+            font-size: 14px;
+            display: flex;
+            flex-direction: row;
+
+            .header-text {
+              font-weight: 650;
+            }
+
+            .mission-and-player-vote {
+              display: flex;
+              flex-direction: row;
+              margin: 0px 10px 0px 10px;
+            }
+
+            .SUCCESS {
+              color: $resistance-blue;
+              font-weight: 550;
+            }
+
+            .FAIL {
+              color: $spy-red;
+              font-weight: 550;
+            }
+          }
+        }
+      }
+    }
+  }
 }

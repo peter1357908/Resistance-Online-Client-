@@ -11,12 +11,14 @@ export const ActionTypes = {
   SET_MISSION_SIZE: 'SET_MISSION_SIZE',
   SET_CURRENT_ROUND: 'SET_CURRENT_ROUND',
   SET_MISSION_STATUSES: 'SET_MISSION_STATUSES',
+  SET_MISSION_STATUS: 'SET_MISSION_STATUS',
   SET_SELECTED_PLAYERS: 'SET_SELECTED_PLAYERS',
   SET_GAME_PHASE: 'SET_GAME_PHASE',
   SET_WAITING_FOR: 'SET_WAITING_FOR',
   SET_FACTION: 'SET_FACTION',
   SET_SPIES: 'SET_SPIES',
   SET_VOTES: 'SET_VOTES',
+  SET_ROUND_OUTCOME: 'SET_ROUND_OUTCOME',
   SET_ACTED: 'SET_ACTED',
   SET_LOGS: 'SET_LOGS',
 };
@@ -93,6 +95,14 @@ export function setMissionStatuses(missionStatuses) {
   };
 }
 
+export function setMissionStatus(mission, missionStatus) { // mission is an integer from 1 to 5
+  return {
+    type: ActionTypes.SET_MISSION_STATUS,
+    mission,
+    missionStatus,
+  };
+}
+
 export function setSelectedPlayers(selectedPlayers) {
   return {
     type: ActionTypes.SET_SELECTED_PLAYERS,
@@ -128,17 +138,24 @@ export function setSpies(spies) {
   };
 }
 
-export function setActed(acted) {
-  return {
-    type: ActionTypes.SET_ACTED,
-    acted,
-  };
-}
-
 export function setVotes(votes) {
   return {
     type: ActionTypes.SET_VOTES,
     votes,
+  };
+}
+
+export function setRoundOutcome(roundOutcome) {
+  return {
+    type: ActionTypes.SET_ROUND_OUTCOME,
+    roundOutcome,
+  };
+}
+
+export function setActed(acted) {
+  return {
+    type: ActionTypes.SET_ACTED,
+    acted,
   };
 }
 
