@@ -17,6 +17,7 @@ import {
   setMissionSize,
   setCurrentRound,
   setMissionStatuses,
+  setMissionStatus,
   setSelectedPlayers,
   setGamePhase,
   setWaitingFor,
@@ -100,8 +101,7 @@ class InGame extends Component {
           this.props.setCurrentRound(result.concludedRound);
           break;
         case 'tooManyRounds':
-          this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
-          this.props.setMissionStatuses(this.props.missionStatuses);
+          this.props.setMissionStatus(result.failedMission, MissionStatus.FAILED);
           break;
         case 'missionStarting':
           this.props.setGamePhase(Phase.MISSION);
@@ -119,11 +119,10 @@ class InGame extends Component {
           this.setState({ modalToDisplay: result.missionStatus });
           this.setState({ numFailVotes: result.numFailVotes });
           if (result.missionStatus === 'SUCCEEDED') {
-            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.SUCCEEDED;
+            this.props.setMissionStatus(result.concludedMission, MissionStatus.SUCCEEDED);
           } else if (result.missionStatus === 'FAILED') {
-            this.props.missionStatuses[result.currentMission - 1] = MissionStatus.FAILED;
+            this.props.setMissionStatus(result.concludedMission, MissionStatus.FAILED);
           }
-          this.setMissionStatuses(this.props.missionStatuses);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -163,6 +162,7 @@ export default withRouter(connect(mapStateToProps, {
   setMissionSize,
   setCurrentRound,
   setMissionStatuses,
+  setMissionStatus,
   setSelectedPlayers,
   setGamePhase,
   setWaitingFor,
