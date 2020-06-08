@@ -17,7 +17,6 @@ const initialState = {
     MissionStatus.TBD,
     MissionStatus.TBD,
   ],
-  recentMissionStatus: 'FAILED',
   selectedPlayers: ['player1', 'player2'], // i.e. which cards should be displayed as enlarged and glowing
   numSelectedPlayers: 2, // this is not really needed, but it's fixing a bug where the board doesn't refresh when selectedPlayers changes
   gamePhase: Phase.MISSION,
@@ -47,8 +46,6 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, currentRound: action.currentRound };
     case ActionTypes.SET_MISSION_STATUSES:
       return { ...state, missionStatuses: action.missionStatuses };
-    case ActionTypes.SET_RECENT_MISSION_STATUS:
-      return { ...state, recentMissionStatus: action.recentMissionStatus };
     case ActionTypes.SET_SELECTED_PLAYERS:
       return { ...state, numSelectedPlayers: action.selectedPlayers.length, selectedPlayers: action.selectedPlayers };
     case ActionTypes.SET_GAME_PHASE:

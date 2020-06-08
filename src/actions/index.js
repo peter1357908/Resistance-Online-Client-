@@ -11,7 +11,6 @@ export const ActionTypes = {
   SET_MISSION_SIZE: 'SET_MISSION_SIZE',
   SET_CURRENT_ROUND: 'SET_CURRENT_ROUND',
   SET_MISSION_STATUSES: 'SET_MISSION_STATUSES',
-  SET_RECENT_MISSION_STATUS: 'SET_RECENT_MISSION_STATUS',
   SET_SELECTED_PLAYERS: 'SET_SELECTED_PLAYERS',
   SET_GAME_PHASE: 'SET_GAME_PHASE',
   SET_WAITING_FOR: 'SET_WAITING_FOR',
@@ -92,13 +91,6 @@ export function setMissionStatuses(missionStatuses) {
   return {
     type: ActionTypes.SET_MISSION_STATUSES,
     missionStatuses,
-  };
-}
-
-export function setRecentMissionStatus(recentMissionStatus) {
-  return {
-    type: ActionTypes.SET_RECENT_MISSION_STATUS,
-    recentMissionStatus,
   };
 }
 
