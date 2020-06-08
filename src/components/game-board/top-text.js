@@ -22,15 +22,15 @@ class TopText extends Component {
     const num = this.props.waitingFor.length;
     if (num === 0) {
       return '';
-    } else if (num > 3) {
+    } else if (num === 1) {
+      return `${this.props.waitingFor[0]}`;
+    } else if (num === 2) {
+      return `${this.props.waitingFor[0]} and ${this.props.waitingFor[1]}`;
+    } else if (num === 3) {
+      return `${this.props.waitingFor[0]}, ${this.props.waitingFor[1]}, and ${this.props.waitingFor[2]}`;
+    } else { // num > 3
       return `${num} players`;
     }
-    let concat = this.props.waitingFor[0].toString();
-    for (let i = 1; i < num; i += 1) {
-      concat = concat.concat(', ');
-      concat += this.props.waitingFor[i];
-    }
-    return concat;
   }
 
   getText = () => {
@@ -44,7 +44,7 @@ class TopText extends Component {
         if (this.props.acted === false) {
           return 'Do you approve this team?';
         }
-        return `Waiting for ${this.getWaitingFor()}`;
+        return `Waiting for ${this.getWaitingFor()}...`;
       case Phase.VIEWING_VOTES:
         if (this.props.acted) {
           return `Waiting for ${this.getWaitingFor()}`;
