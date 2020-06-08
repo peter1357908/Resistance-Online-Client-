@@ -7,7 +7,7 @@ const initialState = {
   playerID: 'player1',
   playerIDs: ['player1', 'player2', 'player3', 'player4', 'player5', 'player6'],
   currentLeader: 'player1', // whose turn it is
-  currentMission: 1,
+  currentMission: 2,
   missionSize: 2, // how many players we need on the current mission,
   currentRound: 1,
   missionStatuses: [
@@ -46,6 +46,11 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, currentRound: action.currentRound };
     case ActionTypes.SET_MISSION_STATUSES:
       return { ...state, missionStatuses: action.missionStatuses };
+    case ActionTypes.SET_MISSION_STATUS: {
+      const newMissionStatuses = state.missionStatuses.slice();
+      newMissionStatuses[action.mission - 1] = action.missionStatus;
+      return { ...state, missionStatuses: newMissionStatuses };
+    }
     case ActionTypes.SET_SELECTED_PLAYERS:
       return { ...state, numSelectedPlayers: action.selectedPlayers.length, selectedPlayers: action.selectedPlayers };
     case ActionTypes.SET_GAME_PHASE:

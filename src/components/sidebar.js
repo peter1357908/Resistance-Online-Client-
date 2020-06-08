@@ -35,7 +35,7 @@ class SideBar extends Component {
         <div className="sidebar-material">
           <div className="sidebar-buttons">
             <Button variant="secondary" className="directions-button" onClick={this.openDirections}>Directions</Button>
-            <Button variant="secondary" className="discord-button" onClick={this.thisMethodDoesNotExist}>Join Discord</Button>
+            <Button variant="secondary" className="discord-button" onClick={this.thisMethodDoesNotExist} disabled>Join Discord</Button>
           </div>
           <Chat />
         </div>
