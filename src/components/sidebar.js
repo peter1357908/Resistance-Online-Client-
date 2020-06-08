@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import Chat from './chat';
-import DirectionsModal from './directions-modal';
+import DirectionsModal from './modals/directions-modal';
 
 class SideBar extends Component {
   constructor(props) {

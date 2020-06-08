@@ -6,8 +6,8 @@ import FactionReveal from './faction-reveal';
 import SideBar from './sidebar';
 import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
-import MissionSucceededModal from './mission-succeeded-modal';
-import MissionFailedModal from './mission-failed-modal';
+import MissionSucceededModal from './modals/mission-succeeded-modal';
+import MissionFailedModal from './modals/mission-failed-modal';
 import socket from '../socketConfig';
 import {
   setPlayerID,
@@ -63,8 +63,10 @@ class InGame extends Component {
           this.props.setSpies(result.spies);
           break;
         case 'waitingFor':
-          console.log('waiting for: ', result.waitingFor);
-          // this.props.setWaitingFor(result.waitingFor);
+          this.props.setWaitingFor(result.waitingFor);
+          // if (result.waitingFor.include(this.props.playerID)) {
+          //   setActed(false);
+          // }
           break;
         case 'everyoneViewedFaction':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
@@ -94,8 +96,8 @@ class InGame extends Component {
           this.props.setGamePhase(Phase.VOTING_ON_TEAM);
           break;
         case 'roundVotes':
-          this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setActed(false);
+          this.props.setGamePhase(Phase.VIEWING_VOTES);
           this.props.setVotes(this.props.playerIDs.map((ID) => result.voteComposition[ID]));
           this.props.setRoundOutcome(result.roundOutcome);
           this.props.setCurrentRound(result.concludedRound);
@@ -104,6 +106,7 @@ class InGame extends Component {
           this.props.setMissionStatus(result.failedMission, MissionStatus.FAILED);
           break;
         case 'missionStarting':
+          this.props.setActed(false);
           this.props.setGamePhase(Phase.MISSION);
           this.props.setSelectedPlayers(result.playersOnMission);
           break;
