@@ -233,7 +233,7 @@ class PostGame extends Component {
 
   renderMissionPlayerAndVote = (playerID, vote, mission) => {
     return (
-      <div className="mission-and-player-vote">
+      <div className="mission-and-player-vote" key={playerID}>
         <div>
           {playerID}
         </div>
