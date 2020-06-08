@@ -105,21 +105,28 @@ class FactionReveal extends Component {
             Waiting for {num} people...
           </div>
         );
-      } else if (num !== 0) {
-        let concat = this.props.waitingFor[0].toString();
-        for (let i = 1; i < num; i += 1) {
-          concat = concat.concat(', ');
-          concat += this.props.waitingFor[i];
-        }
+      } else if (num === 3) {
         return (
           <div className="directions">
-            Waiting for {concat} view their faction...
+            Waiting for {this.props.waitingFor[0]}, {this.props.waitingFor[1]}, and {this.props.waitingFor[2]}...
+          </div>
+        );
+      } else if (num === 2) {
+        return (
+          <div className="directions">
+            Waiting for {this.props.waitingFor[0]} and {this.props.waitingFor[1]}...
+          </div>
+        );
+      } else if (num === 1) {
+        return (
+          <div className="directions">
+            Waiting for {this.props.waitingFor[0]}...
           </div>
         );
       } else {
         return (
           <div className="directions">
-            All here...
+            All here.
           </div>
         );
       }

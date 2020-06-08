@@ -20,20 +20,107 @@ class PostGame extends Component {
     super(props);
 
     this.state = {
-      text: 'hi',
-      // victoriousFaction: 'RESISTANCE',
-      // spies: ['player1', 'player2'],
+      victoriousFaction: 'SPY',
+      spies: ['player1', 'player2'],
       // gameHistory: {
       //   missions: [
       //     {
-      //       missionOutcome: 'SUCCESS',
+      //       missionOutcome: 'SUCCEEDED',
       //       missionVoteComposition: {
       //         player1: 'SUCCESS',
       //         player2: 'FAIL',
       //       },
       //       rounds: [
-      //         {},
-      //         {},
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'REJECT',
+      //             player2: 'APPROVE',
+      //             player3: 'REJECT',
+      //             player4: 'REJECT',
+      //             player5: 'REJECT',
+      //             player6: 'REJECT',
+      //           },
+      //         },
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'APPROVE',
+      //             player2: 'REJECT',
+      //             player3: 'APPROVE',
+      //             player4: 'APPROVE',
+      //             player5: 'APPROVE',
+      //             player6: 'APPROVE',
+      //           },
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       missionOutcome: 'SUCCEEDED',
+      //       missionVoteComposition: {
+      //         player1: 'SUCCESS',
+      //         player2: 'FAIL',
+      //       },
+      //       rounds: [
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'REJECT',
+      //             player2: 'APPROVE',
+      //             player3: 'REJECT',
+      //             player4: 'REJECT',
+      //             player5: 'REJECT',
+      //             player6: 'REJECT',
+      //           },
+      //         },
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'APPROVE',
+      //             player2: 'REJECT',
+      //             player3: 'APPROVE',
+      //             player4: 'APPROVE',
+      //             player5: 'APPROVE',
+      //             player6: 'APPROVE',
+      //           },
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       missionOutcome: 'SUCCEEDED',
+      //       missionVoteComposition: {
+      //         player1: 'SUCCESS',
+      //         player2: 'FAIL',
+      //       },
+      //       rounds: [
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'REJECT',
+      //             player2: 'APPROVE',
+      //             player3: 'REJECT',
+      //             player4: 'REJECT',
+      //             player5: 'REJECT',
+      //             player6: 'REJECT',
+      //           },
+      //         },
+      //         {
+      //           roundOutcome: 'REJECTED',
+      //           roundLeader: 'player1',
+      //           roundVoteComposition: {
+      //             player1: 'APPROVE',
+      //             player2: 'REJECT',
+      //             player3: 'APPROVE',
+      //             player4: 'APPROVE',
+      //             player5: 'APPROVE',
+      //             player6: 'APPROVE',
+      //           },
+      //         },
       //       ],
       //     },
       //     {
@@ -42,13 +129,7 @@ class PostGame extends Component {
       //     {
 
       //     },
-      //     {
-
-      //     },
-      //     {
-
-      //     },
-      //   ]
+      //   ],
       // },
     };
   }
@@ -68,12 +149,46 @@ class PostGame extends Component {
     });
   }
 
+  renderHeader = () => {
+    if (this.state.victoriousFaction === 'RESISTANCE') {
+      return (
+        <div className="post-game-header">
+          <div className="icon-resistance" />
+          <div className="victorious-faction resistance">
+            Resistance won
+          </div>
+          <div className="icon-resistance" />
+        </div>
+      );
+    }
+    return (
+      <div className="post-game-header">
+        <div className="icon-spy" />
+        <div className="victorious-faction spy">
+          Spies won
+        </div>
+        <div className="icon-spy" />
+      </div>
+    );
+  }
+
+  renderSpies() {
+    return (
+      <div className="spies-listing">
+        {this.state.spies};
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="game-container">
         <SideBar />
         <div className="post-game-container">
-          {this.state.text};
+          <div className="shade">
+            {this.renderHeader()}
+            {this.renderSpies()}
+          </div>
         </div>
       </div>
     );
