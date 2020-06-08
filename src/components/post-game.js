@@ -5,10 +5,6 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SideBar from './sidebar';
 import socket from '../socketConfig';
-// import {
-//   setPlayerID,
-// }
-//   from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -44,89 +40,6 @@ class PostGame extends Component {
                   player4: 'REJECT',
                   player5: 'REJECT',
                   player6: 'REJECT',
-                },
-              },
-              {
-                roundOutcome: 'REJECTED',
-                roundLeader: 'player1',
-                proposedTeam: ['player1', 'player2'],
-                roundVoteComposition: {
-                  player1: 'APPROVE',
-                  player2: 'REJECT',
-                  player3: 'APPROVE',
-                  player4: 'APPROVE',
-                  player5: 'APPROVE',
-                  player6: 'APPROVE',
-                },
-              },
-            ],
-          },
-          {
-            missionOutcome: 'SUCCEEDED',
-            missionVoteComposition: {
-              player1: 'SUCCESS',
-              player2: 'FAIL',
-            },
-            rounds: [
-              {
-                roundOutcome: 'REJECTED',
-                roundLeader: 'player1',
-                proposedTeam: ['player1', 'player2'],
-                roundVoteComposition: {
-                  player1: 'REJECT',
-                  player2: 'APPROVE',
-                  player3: 'REJECT',
-                  player4: 'REJECT',
-                  player5: 'REJECT',
-                  player6: 'REJECT',
-                },
-              },
-              {
-                roundOutcome: 'REJECTED',
-                roundLeader: 'player1',
-                proposedTeam: ['player1', 'player2'],
-                roundVoteComposition: {
-                  player1: 'APPROVE',
-                  player2: 'REJECT',
-                  player3: 'APPROVE',
-                  player4: 'APPROVE',
-                  player5: 'APPROVE',
-                  player6: 'APPROVE',
-                },
-              },
-            ],
-          },
-          {
-            missionOutcome: 'SUCCEEDED',
-            missionVoteComposition: {
-              player1: 'SUCCESS',
-              player2: 'FAIL',
-            },
-            rounds: [
-              {
-                roundOutcome: 'REJECTED',
-                roundLeader: 'player1',
-                proposedTeam: ['player1', 'player2'],
-                roundVoteComposition: {
-                  player1: 'REJECT',
-                  player2: 'APPROVE',
-                  player3: 'REJECT',
-                  player4: 'REJECT',
-                  player5: 'REJECT',
-                  player6: 'REJECT',
-                },
-              },
-              {
-                roundOutcome: 'REJECTED',
-                roundLeader: 'player1',
-                proposedTeam: ['player1', 'player2'],
-                roundVoteComposition: {
-                  player1: 'APPROVE',
-                  player2: 'REJECT',
-                  player3: 'APPROVE',
-                  player4: 'APPROVE',
-                  player5: 'APPROVE',
-                  player6: 'APPROVE',
                 },
               },
             ],
@@ -310,7 +223,3 @@ class PostGame extends Component {
 }
 
 export default withRouter(connect(mapStateToProps, null)(PostGame));
-
-// export default withRouter(connect(mapStateToProps, {
-//   setPlayerID,
-// })(PostGame));
