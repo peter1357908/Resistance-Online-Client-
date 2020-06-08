@@ -124,6 +124,10 @@ class InGame extends Component {
             this.props.setMissionStatus(result.concludedMission, MissionStatus.FAILED);
           }
           break;
+        case 'gameFinished':
+          console.log('game is over');
+          // TODO start listening on the "postGame" event (may need to write another method to do this)
+          break;
         default:
           console.log('unknown action received from server: ', result.action);
           break;
