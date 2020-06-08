@@ -629,6 +629,114 @@ body {
           margin: 12px 25px 0px 25px;
         }
       }
+
+      .spies-listing {
+          color: white;
+          text-shadow: 0px 0px 10px #000000;
+          font-size: 20px;
+      }
+
+      .mission-reports{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        .mission-report{
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 8px;
+
+          .mission-number-and-outcome {
+            display: flex;
+            flex-direction: row;
+            font-size: 18px;
+
+            .mission-number {
+              color: white;
+              margin-right: 5px;
+            }
+
+            .mission-outcome.spy {
+              color: red;
+              font-weight: 550;
+            }
+
+            .mission-outcome.resistance {
+              color: $resistance-blue;
+              font-weight: 550;
+            }
+          }
+
+          .round-report {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            color: white;
+            font-size: 14px;
+
+            .round-report-number {
+              font-weight: 650;
+              margin-right: 5px;
+            }
+
+            .player-and-round-vote {
+              display: flex;
+              flex-direction: row;
+              margin: 0px 5px 0px 4px;
+            }
+
+            .no {
+              margin-right: 3.7px;
+              color: red;
+            }
+
+            .yes {
+              color: $resistance-blue;
+            }
+
+            .leader {
+              color: yellow;
+            }
+
+            .player {
+              margin-right: 2px;
+            }
+
+            .on-mission {
+              border: solid 1px #AAAAAA;
+              border-radius: 10px;
+            }
+          }
+
+          .mission-vote-report {
+            color: white;
+            font-size: 14px;
+            display: flex;
+            flex-direction: row;
+
+            .header-text {
+              font-weight: 650;
+            }
+
+            .mission-and-player-vote {
+              display: flex;
+              flex-direction: row;
+              margin: 0px 10px 0px 10px;
+            }
+
+            .SUCCESS {
+              color: $resistance-blue;
+              font-weight: 550;
+            }
+
+            .FAIL {
+              color: $spy-red;
+              font-weight: 550;
+            }
+          }
+        }
+      }
     }
   }
 

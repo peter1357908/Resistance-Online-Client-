@@ -1,5 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SideBar from './sidebar';
 import socket from '../socketConfig';
@@ -22,115 +24,115 @@ class PostGame extends Component {
     this.state = {
       victoriousFaction: 'SPY',
       spies: ['player1', 'player2'],
-      // gameHistory: {
-      //   missions: [
-      //     {
-      //       missionOutcome: 'SUCCEEDED',
-      //       missionVoteComposition: {
-      //         player1: 'SUCCESS',
-      //         player2: 'FAIL',
-      //       },
-      //       rounds: [
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'REJECT',
-      //             player2: 'APPROVE',
-      //             player3: 'REJECT',
-      //             player4: 'REJECT',
-      //             player5: 'REJECT',
-      //             player6: 'REJECT',
-      //           },
-      //         },
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'APPROVE',
-      //             player2: 'REJECT',
-      //             player3: 'APPROVE',
-      //             player4: 'APPROVE',
-      //             player5: 'APPROVE',
-      //             player6: 'APPROVE',
-      //           },
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       missionOutcome: 'SUCCEEDED',
-      //       missionVoteComposition: {
-      //         player1: 'SUCCESS',
-      //         player2: 'FAIL',
-      //       },
-      //       rounds: [
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'REJECT',
-      //             player2: 'APPROVE',
-      //             player3: 'REJECT',
-      //             player4: 'REJECT',
-      //             player5: 'REJECT',
-      //             player6: 'REJECT',
-      //           },
-      //         },
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'APPROVE',
-      //             player2: 'REJECT',
-      //             player3: 'APPROVE',
-      //             player4: 'APPROVE',
-      //             player5: 'APPROVE',
-      //             player6: 'APPROVE',
-      //           },
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       missionOutcome: 'SUCCEEDED',
-      //       missionVoteComposition: {
-      //         player1: 'SUCCESS',
-      //         player2: 'FAIL',
-      //       },
-      //       rounds: [
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'REJECT',
-      //             player2: 'APPROVE',
-      //             player3: 'REJECT',
-      //             player4: 'REJECT',
-      //             player5: 'REJECT',
-      //             player6: 'REJECT',
-      //           },
-      //         },
-      //         {
-      //           roundOutcome: 'REJECTED',
-      //           roundLeader: 'player1',
-      //           roundVoteComposition: {
-      //             player1: 'APPROVE',
-      //             player2: 'REJECT',
-      //             player3: 'APPROVE',
-      //             player4: 'APPROVE',
-      //             player5: 'APPROVE',
-      //             player6: 'APPROVE',
-      //           },
-      //         },
-      //       ],
-      //     },
-      //     {
-
-      //     },
-      //     {
-
-      //     },
-      //   ],
-      // },
+      gameHistory: {
+        missions: [
+          {
+            missionOutcome: 'FAILED',
+            missionVoteComposition: {
+              player1: 'SUCCESS',
+              player2: 'FAIL',
+            },
+            rounds: [
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'REJECT',
+                  player2: 'APPROVE',
+                  player3: 'REJECT',
+                  player4: 'REJECT',
+                  player5: 'REJECT',
+                  player6: 'REJECT',
+                },
+              },
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'APPROVE',
+                  player2: 'REJECT',
+                  player3: 'APPROVE',
+                  player4: 'APPROVE',
+                  player5: 'APPROVE',
+                  player6: 'APPROVE',
+                },
+              },
+            ],
+          },
+          {
+            missionOutcome: 'SUCCEEDED',
+            missionVoteComposition: {
+              player1: 'SUCCESS',
+              player2: 'FAIL',
+            },
+            rounds: [
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'REJECT',
+                  player2: 'APPROVE',
+                  player3: 'REJECT',
+                  player4: 'REJECT',
+                  player5: 'REJECT',
+                  player6: 'REJECT',
+                },
+              },
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'APPROVE',
+                  player2: 'REJECT',
+                  player3: 'APPROVE',
+                  player4: 'APPROVE',
+                  player5: 'APPROVE',
+                  player6: 'APPROVE',
+                },
+              },
+            ],
+          },
+          {
+            missionOutcome: 'SUCCEEDED',
+            missionVoteComposition: {
+              player1: 'SUCCESS',
+              player2: 'FAIL',
+            },
+            rounds: [
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'REJECT',
+                  player2: 'APPROVE',
+                  player3: 'REJECT',
+                  player4: 'REJECT',
+                  player5: 'REJECT',
+                  player6: 'REJECT',
+                },
+              },
+              {
+                roundOutcome: 'REJECTED',
+                roundLeader: 'player1',
+                proposedTeam: ['player1', 'player2'],
+                roundVoteComposition: {
+                  player1: 'APPROVE',
+                  player2: 'REJECT',
+                  player3: 'APPROVE',
+                  player4: 'APPROVE',
+                  player5: 'APPROVE',
+                  player6: 'APPROVE',
+                },
+              },
+            ],
+          },
+        ],
+      },
     };
   }
 
@@ -139,7 +141,7 @@ class PostGame extends Component {
       console.log('postGame action: ', result.action);
       switch (result.action) {
         case 'gameHistory':
-          console.log('got the game history');
+          this.setState({ gameHistory: result.gameHistory });
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -172,11 +174,117 @@ class PostGame extends Component {
     );
   }
 
-  renderSpies() {
+  stringifySpies = () => {
+    const num = this.state.spies.length;
+    switch (num) {
+      case 2:
+        return `${this.state.spies[0]} and ${this.state.spies[1]}`;
+      case 3:
+        return `${this.state.spies[0]}, ${this.state.spies[1]}, and ${this.state.spies[2]}`;
+      case 4:
+        return `${this.state.spies[0]}, ${this.state.spies[1]}, ${this.state.spies[2]}, and ${this.state.spies[3]}`;
+      default:
+        return 'uh-oh, an error occured';
+    }
+  }
+
+  renderSpies = () => {
     return (
       <div className="spies-listing">
-        {this.state.spies};
+        Spies: {this.stringifySpies()}
       </div>
+    );
+  }
+
+  renderRoundPlayerAndVote = (playerID, vote, round) => {
+    const leader = playerID === round.roundLeader ? 'leader' : '';
+    const onMission = round.proposedTeam.includes(playerID) ? 'on-mission' : '';
+    const playerClassName = `player ${leader} ${onMission}`;
+    const shortVote = vote === 'APPROVE' ? 'yes'
+      : vote === 'REJECT' ? 'no' : 'unclear';
+    return (
+      <div className="player-and-round-vote" key={playerID}>
+        <div className={playerClassName}>
+          {playerID}
+        </div>
+        <div className={shortVote}>
+          -{shortVote},
+        </div>
+      </div>
+    );
+  }
+
+  renderRoundReport = (round, roundIndex) => {
+    console.log(Object.entries(round.roundVoteComposition));
+    const key = roundIndex + 1;
+    return (
+      <div className="round-report" key={key}>
+        <div className="round-report-number">
+          Round {roundIndex + 1}
+        </div>
+        {Object.entries(round.roundVoteComposition).map((pair) => this.renderRoundPlayerAndVote(pair[0], pair[1], round))}
+      </div>
+    );
+  }
+
+  renderMissionPlayerAndVote = (playerID, vote, mission) => {
+    return (
+      <div className="mission-and-player-vote">
+        <div>
+          {playerID}
+        </div>
+        <div className={vote}>
+          -{vote}
+        </div>
+      </div>
+    );
+  }
+
+  renderMissionVotes = (mission) => {
+    return (
+      <div className="mission-vote-report">
+        <div className="header-text">
+          Mission Actions
+        </div>
+        {Object.entries(mission.missionVoteComposition).map((pair) => this.renderMissionPlayerAndVote(pair[0], pair[1], mission))}
+      </div>
+    );
+  }
+
+  renderMissionReport = (mission, missionIndex) => {
+    const missionOutcomeClass = mission.missionOutcome === 'SUCCEEDED' ? 'mission-outcome resistance'
+      : mission.missionOutcome === 'FAILED' ? 'mission-outcome spy' : 'unclear';
+
+    const key = missionIndex + 1;
+    return (
+      <div className="mission-report" key={key}>
+        <div className="mission-number-and-outcome">
+          <div className="mission-number">
+            Mission {missionIndex + 1} -
+          </div>
+          <div className={missionOutcomeClass}>
+            {mission.missionOutcome}
+          </div>
+        </div>
+        {mission.rounds.map((round, index) => this.renderRoundReport(round, index))}
+        {this.renderMissionVotes(mission)}
+      </div>
+    );
+  }
+
+  renderMissionReports = () => {
+    return (
+      <div className="mission-reports">
+        {this.state.gameHistory.missions.map((mission, index) => this.renderMissionReport(mission, index))}
+      </div>
+    );
+  }
+
+  renderDoneButton = () => {
+    return (
+      <Button variant="primary" onClick={() => this.props.history.push('/lobby')}>
+        Done
+      </Button>
     );
   }
 
@@ -188,6 +296,8 @@ class PostGame extends Component {
           <div className="shade">
             {this.renderHeader()}
             {this.renderSpies()}
+            {this.renderMissionReports()}
+            {this.renderDoneButton()}
           </div>
         </div>
       </div>

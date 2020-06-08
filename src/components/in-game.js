@@ -37,6 +37,7 @@ function mapStateToProps(reduxState) {
     playerIDs: reduxState.inGame.playerIDs,
     lobbyPlayerID: reduxState.lobby.currentPlayerID,
     faction: reduxState.inGame.faction,
+    sessionID: reduxState.lobby.sessionID,
   };
 }
 
