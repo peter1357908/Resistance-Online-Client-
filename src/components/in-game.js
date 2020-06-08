@@ -8,6 +8,8 @@ import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
 import MissionSucceededModal from './modals/mission-succeeded-modal';
 import MissionFailedModal from './modals/mission-failed-modal';
+import ResistanceWinsModal from './modals/resistance-wins-modal';
+import SpiesWinModal from './modals/spies-win-modal';
 import socket from '../socketConfig';
 import {
   setPlayerID,
@@ -34,6 +36,7 @@ function mapStateToProps(reduxState) {
     gamePhase: reduxState.inGame.gamePhase,
     playerIDs: reduxState.inGame.playerIDs,
     lobbyPlayerID: reduxState.lobby.currentPlayerID,
+    faction: reduxState.inGame.faction,
   };
 }
 
@@ -42,7 +45,7 @@ class InGame extends Component {
     super(props);
 
     this.state = {
-      modalToDisplay: '',
+      modalToDisplay: '', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
       numFailVotes: 0,
     };
   }
@@ -109,6 +112,7 @@ class InGame extends Component {
           this.props.setActed(false);
           this.props.setGamePhase(Phase.MISSION);
           this.props.setSelectedPlayers(result.playersOnMission);
+          this.props.setWaitingFor(result.playersOnMission);
           break;
         case 'teamSelectionStarting':
           this.props.setGamePhase(Phase.SELECTING_TEAM);
@@ -119,17 +123,18 @@ class InGame extends Component {
           this.props.setSelectedPlayers([]);
           break;
         case 'missionVotes':
-          this.setState({ modalToDisplay: result.missionStatus });
+          this.setState({ modalToDisplay: result.missionOutcome });
           this.setState({ numFailVotes: result.numFailVotes });
-          if (result.missionStatus === 'SUCCEEDED') {
+          if (result.missionOutcome === 'SUCCEEDED') {
             this.props.setMissionStatus(result.concludedMission, MissionStatus.SUCCEEDED);
-          } else if (result.missionStatus === 'FAILED') {
+          } else if (result.missionOutcome === 'FAILED') {
             this.props.setMissionStatus(result.concludedMission, MissionStatus.FAILED);
           }
           break;
         case 'gameFinished':
-          console.log('game is over');
-          // TODO start listening on the "postGame" event (may need to write another method to do this)
+          this.setState({ modalToDisplay: result.victoriousFaction });
+          // TODO make this history.push stuff happen only once the modal is closed
+          this.props.history.push(`/post-game/${this.props.sessionID}`);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -152,6 +157,8 @@ class InGame extends Component {
       <div className="game-container">
         <MissionSucceededModal show={this.state.modalToDisplay === 'SUCCEEDED'} closeModal={() => this.setState({ modalToDisplay: '' })} />
         <MissionFailedModal show={this.state.modalToDisplay === 'FAILED'} numFailVotes={this.state.numFailVotes} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <ResistanceWinsModal show={this.state.modalToDisplay === 'RESISTANCE'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <SpiesWinModal show={this.state.modalToDisplay === 'SPY'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
         <SideBar />
         <div className={gamePhaseWrapper}>
           <GameBoard />
