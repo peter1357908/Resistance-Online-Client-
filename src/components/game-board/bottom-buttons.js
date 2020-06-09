@@ -20,7 +20,6 @@ function mapStateToProps(reduxState) {
 
 class BottomButtons extends Component {
   submitSelectedTeam = () => {
-    console.log(this.props.selectedPlayers);
     socket.emit('inGame', { action: 'proposeTeam', proposedTeam: this.props.selectedPlayers });
   }
 
