@@ -13,8 +13,6 @@ import { Phase } from '../resources/phase';
 import MissionStatus from '../resources/mission-status';
 import {
   // lobby state
-  setSessionID,
-  setCurrentPlayerID,
   setCreatorID,
   setFailed,
   setFailMessage,
@@ -49,20 +47,11 @@ function mapStateToProps(reduxState) {
     // lobby state
     sessionID: reduxState.lobby.sessionID,
     playerIDs: reduxState.lobby.playerIDs,
-    currentPlayerID: reduxState.lobby.currentPlayerID,
     lobbyPlayerID: reduxState.lobby.currentPlayerID,
-    creatorID: reduxState.lobby.creatorID,
-    failed: reduxState.lobby.failed,
-    failMessage: reduxState.lobby.failMessage,
     // ingame state
-    gamePhase: reduxState.inGame.gamePhase,
-    faction: reduxState.inGame.faction,
     selectedPlayers: reduxState.inGame.selectedPlayers,
     numSelectedPlayers: reduxState.inGame.numSelectedPlayers,
     missionSize: reduxState.inGame.missionSize,
-    modalToDisplay: reduxState.inGame.modalToDisplay,
-    numFailVotes: reduxState.inGame.numFailVotes,
-    // postgame state
   };
 }
 
@@ -232,8 +221,6 @@ class Router extends Component {
 
 export default withRouter(connect(mapStateToProps, {
   // lobby state
-  setSessionID,
-  setCurrentPlayerID,
   setCreatorID,
   setFailed,
   setFailMessage,

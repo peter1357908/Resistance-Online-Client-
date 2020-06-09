@@ -5,18 +5,10 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SideBar from './sidebar';
 import socket from '../socketConfig';
-import {
-  setWaitingFor,
-  setActed,
-  setSpies,
-  setVictoriousFaction,
-  setGameHistory,
-} from '../actions';
+import { setActed } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    playerIDs: reduxState.inGame.playerIDs,
-    faction: reduxState.inGame.faction,
     waitingFor: reduxState.inGame.waitingFor,
     acted: reduxState.inGame.acted,
     spies: reduxState.inGame.spies,
@@ -170,13 +162,13 @@ class PostGame extends Component {
     const n = this.props.waitingFor.length;
     switch (n) {
       case 0:
-        return 'nobody';
+        return 'nobody...';
       case 1:
-        return `${this.props.waitingFor[0]}`;
+        return `${this.props.waitingFor[0]}...`;
       case 2:
-        return `${this.props.waitingFor[0]} and ${this.props.waitingFor[1]}`;
+        return `${this.props.waitingFor[0]} and ${this.props.waitingFor[1]}...`;
       case 3:
-        return `${this.props.waitingFor[0]}, ${this.props.waitingFor[1]}, and ${this.props.waitingFor[2]}`;
+        return `${this.props.waitingFor[0]}, ${this.props.waitingFor[1]}, and ${this.props.waitingFor[2]}...`;
       default:
         return `${n} players`;
     }
@@ -214,10 +206,4 @@ class PostGame extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {
-  setWaitingFor,
-  setActed,
-  setSpies,
-  setVictoriousFaction,
-  setGameHistory,
-})(PostGame));
+export default withRouter(connect(mapStateToProps, { setActed })(PostGame));

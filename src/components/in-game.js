@@ -4,46 +4,17 @@ import { connect } from 'react-redux';
 import GameBoard from './game-board/game-board';
 import FactionReveal from './faction-reveal';
 import SideBar from './sidebar';
-// import MissionStatus from '../resources/mission-status';
 import { Phase, stringifyPhase } from '../resources/phase';
 import MissionSucceededModal from './modals/mission-succeeded-modal';
 import MissionFailedModal from './modals/mission-failed-modal';
 import ResistanceWinsModal from './modals/resistance-wins-modal';
 import SpiesWinModal from './modals/spies-win-modal';
-// import socket from '../socketConfig';
-import {
-  setPlayerID,
-  setPlayerIDs,
-  setCurrentLeader,
-  setCurrentMission,
-  setMissionSize,
-  setMissionSizes,
-  setCurrentRound,
-  setMissionStatuses,
-  setMissionStatus,
-  setSelectedPlayers,
-  setGamePhase,
-  setWaitingFor,
-  setFaction,
-  setSpies,
-  setVotes,
-  setRoundOutcome,
-  setActed,
-  setModalToDisplay,
-  setNumFailVotes,
-}
-  from '../actions';
+import { setModalToDisplay } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
     gamePhase: reduxState.inGame.gamePhase,
-    playerIDs: reduxState.inGame.playerIDs,
-    lobbyPlayerID: reduxState.lobby.currentPlayerID,
-    faction: reduxState.inGame.faction,
     sessionID: reduxState.lobby.sessionID,
-    selectedPlayers: reduxState.inGame.selectedPlayers,
-    numSelectedPlayers: reduxState.inGame.numSelectedPlayers,
-    missionSize: reduxState.inGame.missionSize,
     modalToDisplay: reduxState.inGame.modalToDisplay,
     numFailVotes: reduxState.inGame.numFailVotes,
   };
@@ -79,24 +50,4 @@ class InGame extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {
-  setPlayerID,
-  setPlayerIDs,
-  setCurrentLeader,
-  setCurrentMission,
-  setMissionSize,
-  setMissionSizes,
-  setCurrentRound,
-  setMissionStatuses,
-  setMissionStatus,
-  setSelectedPlayers,
-  setGamePhase,
-  setWaitingFor,
-  setFaction,
-  setSpies,
-  setVotes,
-  setRoundOutcome,
-  setActed,
-  setModalToDisplay,
-  setNumFailVotes,
-})(InGame));
+export default withRouter(connect(mapStateToProps, { setModalToDisplay })(InGame));
