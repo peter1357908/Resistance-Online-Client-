@@ -193,6 +193,8 @@ class Router extends Component {
         case 'waitingFor':
           if (result.waitingFor.length === 0) {
             this.props.history.push('/lobby');
+            this.props.setGamePhase(Phase.VIEWING_TEAM);
+            this.props.setVictoriousFaction('');
           }
           this.props.setWaitingFor(result.waitingFor);
           break;
