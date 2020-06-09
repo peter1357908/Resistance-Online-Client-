@@ -23,7 +23,8 @@ export const ActionTypes = {
   SET_VOTES: 'SET_VOTES',
   SET_ROUND_OUTCOME: 'SET_ROUND_OUTCOME',
   SET_ACTED: 'SET_ACTED',
-  SET_LOGS: 'SET_LOGS',
+  SET_CHAT_LOG: 'SET_CHAT_LOG',
+  PUSH_CHAT_LOG: 'PUSH_CHAT_LOG',
   SET_MODAL_TO_DISPLAY: 'SET_MODAL_TO_DISPLAY',
   SET_NUM_FAIL_VOTES: 'SET_NUM_FAIL_VOTES',
   // action types handled by post-game-reducer
@@ -188,10 +189,17 @@ export function setActed(acted) {
   };
 }
 
-export function setLogs(logs) {
+export function setChatLog(chatLog) {
   return {
-    type: ActionTypes.SET_LOGS,
-    logs,
+    type: ActionTypes.SET_CHAT_LOG,
+    chatLog,
+  };
+}
+
+export function pushChatMessage(newChatArray) {
+  return {
+    type: ActionTypes.PUSH_CHAT_LOG,
+    newChatArray,
   };
 }
 

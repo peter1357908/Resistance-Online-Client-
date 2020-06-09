@@ -28,7 +28,6 @@ const initialState = {
   roundOutcome: '', // the outcome of the most recent round vote (either 'APPROVED' or 'REJECTED')
   // ^ we may eventually find a better structure to store the votes
   acted: false, // whether or not the player has done the action required in the current round, e.g., clicking "ok", voting, etc.
-  logs: [], // the message logs
   modalToDisplay: '', // valid values are: '', 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
   numFailVotes: 0, // how many fail votes the most recent mission received
 };
@@ -72,8 +71,6 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, roundOutcome: action.roundOutcome };
     case ActionTypes.SET_ACTED:
       return { ...state, acted: action.acted };
-    case ActionTypes.SET_LOGS:
-      return { ...state, logs: action.logs };
     case ActionTypes.SET_MODAL_TO_DISPLAY:
       return { ...state, modalToDisplay: action.modalToDisplay };
     case ActionTypes.SET_NUM_FAIL_VOTES:

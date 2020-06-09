@@ -1,14 +1,12 @@
-/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socketConfig';
 
-import { setLogs } from '../actions';
+import { setChatLog, pushChatMessage } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
-    playerID: reduxState.inGame.playerID,
-    logs: reduxState.inGame.logs,
+    chatLog: reduxState.chat.chatLog,
   };
 }
 
@@ -22,7 +20,13 @@ class Chat extends Component {
 
   componentDidMount() {
     socket.on('chat', (result) => {
-      this.props.setLogs(result);
+      if ((typeof result[0]) === 'string') {
+        // if it is a single message
+        this.props.pushChatMessage(result);
+      } else {
+        // if it is the entire previous chatLog (part of the response to a joinGame request)
+        this.props.setChatLog(result);
+      }
       this.updateScroll();
     });
   }
@@ -37,10 +41,8 @@ class Chat extends Component {
 
   onEnter = (event) => {
     if (event.keyCode === 13) {
-      console.log(event.target.value);
       // send message
-      const msg = { messageFrom: this.props.playerID, message: event.target.value };
-      socket.emit('chat', msg);
+      socket.emit('chat', this.state.currentMessage);
       this.setState({ currentMessage: '' });
     }
   }
@@ -54,8 +56,10 @@ class Chat extends Component {
     return (
       <div className="chat-container">
         <div id="chat-history" className="chat-history">
-          {this.props.logs.map((log, index) => {
-            return <div key={index} className="chat-message"><span className="chat-user">{log.playerID}:</span> {log.message}</div>;
+          {this.props.chatLog.map((chatArray, index) => {
+            // the array will not be reordered, so using indices as keys is fine
+            // eslint-disable-next-line react/no-array-index-key
+            return <div key={index} className="chat-message"><span className="chat-user">{chatArray[0]}:</span> {chatArray[1]}</div>;
           })}
         </div>
         <input className="chat-input" type="text" placeholder="Type something..." onChange={this.onChange} onKeyDown={this.onEnter} value={this.state.currentMessage} />
@@ -64,4 +68,4 @@ class Chat extends Component {
   }
 }
 
-export default connect(mapStateToProps, { setLogs })(Chat);
+export default connect(mapStateToProps, { setChatLog, pushChatMessage })(Chat);
