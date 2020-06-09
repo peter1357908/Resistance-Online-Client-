@@ -4,12 +4,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import socket from '../socketConfig';
 import SideBar from './sidebar';
-import {
-  setPlayerIDs,
-  setCreatorID,
-  setFailed,
-  setFailMessage,
-} from '../actions';
+import { setFailed } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -23,40 +18,6 @@ function mapStateToProps(reduxState) {
 }
 
 class Lobby extends Component {
-  componentDidMount() {
-    socket.on('lobby', (result) => {
-      console.log(result.action);
-      console.log(result);
-      switch (result.action) {
-        case 'gameStarted':
-          this.props.history.push(`/in-game/${this.props.sessionID}`);
-          break;
-        case 'someoneQuit':
-          this.props.setPlayerIDs(result.playerIDs);
-          this.props.setCreatorID(result.creatorID);
-          break;
-        case 'someoneJoined':
-          this.props.setPlayerIDs(result.playerIDs);
-          this.props.setCreatorID(result.creatorID);
-          break;
-        case 'quitAcknowledged':
-          this.props.history.push('/');
-          break;
-        case 'fail':
-          this.props.setFailed(true);
-          this.props.setFailMessage(result.failMessage);
-          break;
-        default:
-          console.log(`unknown action received from server: ${result.action}`);
-          break;
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    socket.off('lobby');
-  }
-
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
@@ -115,8 +76,6 @@ class Lobby extends Component {
     }
   }
 
-  // TODO: highlight the session creator's playerID
-  // TODO: make it consistent with the Figma mock-up (different rendering for creators than joiners)
   render() {
     const placeholderIDs = ['Player 1',
       'Player 2',
@@ -186,9 +145,4 @@ class Lobby extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {
-  setPlayerIDs,
-  setCreatorID,
-  setFailed,
-  setFailMessage,
-})(Lobby));
+export default withRouter(connect(mapStateToProps, { setFailed })(Lobby));

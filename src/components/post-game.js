@@ -26,35 +26,6 @@ function mapStateToProps(reduxState) {
 }
 
 class PostGame extends Component {
-  componentDidMount() {
-    socket.on('postGame', (result) => {
-      console.log('postGame action: ', result.action);
-      switch (result.action) {
-        case 'gameHistory':
-          this.props.setWaitingFor([]);
-          this.props.setActed(false);
-          this.props.setSpies(result.spies);
-          this.props.setGameHistory(result.gameHistory);
-          this.props.setVictoriousFaction(result.victoriousFaction);
-          break;
-        case 'waitingFor':
-          if (result.waitingFor.length === 0) {
-            this.props.history.push('/lobby');
-          }
-          this.props.setWaitingFor(result.waitingFor);
-          break;
-        default:
-          console.log('unknown action received from server: ', result.action);
-          break;
-      }
-      console.log('result: ', result);
-    });
-  }
-
-  componentWillUnmount() {
-    socket.off('postGame');
-  }
-
   renderHeader = () => {
     if (this.props.victoriousFaction === 'RESISTANCE') {
       return (
