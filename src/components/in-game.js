@@ -39,6 +39,9 @@ function mapStateToProps(reduxState) {
     lobbyPlayerID: reduxState.lobby.currentPlayerID,
     faction: reduxState.inGame.faction,
     sessionID: reduxState.lobby.sessionID,
+    selectedPlayers: reduxState.inGame.selectedPlayers,
+    numSelectedPlayers: reduxState.inGame.numSelectedPlayers,
+    missionSize: reduxState.inGame.missionSize,
   };
 }
 
@@ -89,13 +92,14 @@ class InGame extends Component {
             MissionStatus.TBD,
             MissionStatus.TBD]);
           break;
-        // case 'cardClicked':
-        //   this.props.selectedPlayers.push(result.cardPlayerID);
-        //   this.props.setSelectedPlayers(this.props.selectedPlayers);
-        //   break;
-        // case 'cardUnclicked':
-        //   this.props.setSelectedPlayers(this.props.selectedPlayers.filter((e) => e !== result.cardPlayerID));
-        //   break;
+        case 'cardClicked':
+          if (this.props.selectedPlayers.includes(result.cardPlayerID)) {
+            this.props.setSelectedPlayers(this.props.selectedPlayers.filter((e) => e !== result.cardPlayerID));
+          } else if (this.props.numSelectedPlayers < this.props.missionSize) {
+            this.props.selectedPlayers.push(result.cardPlayerID);
+            this.props.setSelectedPlayers(this.props.selectedPlayers);
+          }
+          break;
         case 'proposeTeam':
           this.props.setActed(false);
           this.props.setSelectedPlayers(result.proposedTeam);
@@ -145,6 +149,10 @@ class InGame extends Component {
       }
       console.log('result: ', result);
     });
+  }
+
+  componentWillUnmount() {
+    socket.off('inGame');
   }
 
   closeEndGameModal = () => {
