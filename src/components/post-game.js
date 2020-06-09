@@ -5,11 +5,13 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import SideBar from './sidebar';
 import socket from '../socketConfig';
+import { setWaitingFor } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
     playerIDs: reduxState.inGame.playerIDs,
     faction: reduxState.inGame.faction,
+    waitingFor: reduxState.inGame.waitingFor,
   };
 }
 
@@ -18,6 +20,7 @@ class PostGame extends Component {
     super(props);
 
     this.state = {
+      buttonClicked: false,
       victoriousFaction: 'SPY',
       spies: ['player1', 'player2'],
       gameHistory: {
@@ -54,11 +57,18 @@ class PostGame extends Component {
       console.log('postGame action: ', result.action);
       switch (result.action) {
         case 'gameHistory':
+          this.props.setWaitingFor([]);
           this.setState({
             victoriousFaction: result.victoriousFaction,
             gameHistory: result.gameHistory,
             spies: result.spies,
           });
+          break;
+        case 'waitingFor':
+          if (result.waitingFor.length === 0) {
+            this.props.history.push('/lobby');
+          }
+          this.props.setWaitingFor(result.waitingFor);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -203,11 +213,39 @@ class PostGame extends Component {
     );
   }
 
+  doneButtonClick = () => {
+    socket.emit('postGame', { action: 'finishViewingGameHistory' });
+    this.setState({ buttonClicked: true });
+  }
+
+  getWaitingFor = () => {
+    const n = this.props.waitingFor.length;
+    switch (n) {
+      case 0:
+        return 'nobody';
+      case 1:
+        return `${this.props.waitingFor[0]}`;
+      case 2:
+        return `${this.props.waitingFor[0]} and ${this.props.waitingFor[1]}`;
+      case 3:
+        return `${this.props.waitingFor[0]}, ${this.props.waitingFor[1]}, and ${this.props.waitingFor[2]}`;
+      default:
+        return `${n} players`;
+    }
+  }
+
   renderDoneButton = () => {
+    if (!this.state.buttonClicked) {
+      return (
+        <Button variant="primary" className="bottom" onClick={() => this.doneButtonClick()}>
+          Done
+        </Button>
+      );
+    }
     return (
-      <Button variant="primary" onClick={() => this.props.history.push('/lobby')}>
-        Done
-      </Button>
+      <div className="bottom waitingFor">
+        Waiting for {this.getWaitingFor()}
+      </div>
     );
   }
 
@@ -228,4 +266,4 @@ class PostGame extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, null)(PostGame));
+export default withRouter(connect(mapStateToProps, { setWaitingFor })(PostGame));
