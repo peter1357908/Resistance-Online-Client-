@@ -47,7 +47,7 @@ class TopText extends Component {
         return `Waiting for ${this.getWaitingFor()}...`;
       case Phase.VIEWING_VOTES:
         if (this.props.acted) {
-          return `Waiting for ${this.getWaitingFor()}`;
+          return `Waiting for ${this.getWaitingFor()}...`;
         } else {
           return `The team was ${this.props.roundOutcome}`;
         }
@@ -55,7 +55,7 @@ class TopText extends Component {
         if (this.props.selected.includes(this.props.playerID) && this.props.acted === false) {
           return 'Choose how you want to act on the mission';
         }
-        return `Mission is ongoing. Waiting for ${this.getWaitingFor()}`;
+        return `Mission is ongoing. Waiting for ${this.getWaitingFor()}...`;
       default:
         return 'We don\'t really know what\'s happening right now';
     }

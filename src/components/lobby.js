@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import socket from '../socketConfig';
-import { setPlayerIDs, setCreatorID } from '../actions';
 import SideBar from './sidebar';
+import {
+  setPlayerIDs,
+  setCreatorID,
+  setFailed,
+  setFailMessage,
+} from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -12,21 +17,16 @@ function mapStateToProps(reduxState) {
     playerIDs: reduxState.lobby.playerIDs,
     playerID: reduxState.lobby.currentPlayerID,
     creatorID: reduxState.lobby.creatorID,
+    failed: reduxState.lobby.failed,
+    failMessage: reduxState.lobby.failMessage,
   };
 }
 
 class Lobby extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      failed: false,
-      failMessage: '',
-    };
-  }
-
   componentDidMount() {
     socket.on('lobby', (result) => {
+      console.log(result.action);
+      console.log(result);
       switch (result.action) {
         case 'gameStarted':
           this.props.history.push(`/in-game/${this.props.sessionID}`);
@@ -43,7 +43,8 @@ class Lobby extends Component {
           this.props.history.push('/');
           break;
         case 'fail':
-          this.setState({ failed: true, failMessage: result.failMessage });
+          this.props.setFailed(true);
+          this.props.setFailMessage(result.failMessage);
           break;
         default:
           console.log(`unknown action received from server: ${result.action}`);
@@ -59,7 +60,8 @@ class Lobby extends Component {
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
-    this.setState({ failed: false });
+    console.log('clicked start');
+    this.props.setFailed(false);
     socket.emit('lobby', { action: 'startGame' });
   }
 
@@ -160,7 +162,7 @@ class Lobby extends Component {
         <SideBar />
         <div className="lobby-container">
           <div className="shade">
-            {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
+            {this.props.failed ? <Alert variant="danger">{this.props.failMessage}</Alert> : <></>}
             <div className="sessionID">
               Session ID: {this.props.sessionID}
             </div>
@@ -184,4 +186,9 @@ class Lobby extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setPlayerIDs, setCreatorID })(Lobby));
+export default withRouter(connect(mapStateToProps, {
+  setPlayerIDs,
+  setCreatorID,
+  setFailed,
+  setFailMessage,
+})(Lobby));

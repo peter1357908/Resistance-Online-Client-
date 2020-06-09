@@ -23,12 +23,14 @@ const initialState = {
   gamePhase: Phase.SELECTING_TEAM,
   waitingFor: ['player3', 'player4', 'player5'], // the players we're waiting on
   faction: 'resistance',
-  spies: [], // empty if you're not a spy
+  spies: ['player1', 'player2'], // empty if you're not a spy
   votes: ['APPROVE', 'REJECT', 'APPROVE', 'APPROVE', 'APPROVE', 'REJECT'], // how people voted on the most recent round
   roundOutcome: '', // the outcome of the most recent round vote (either 'APPROVED' or 'REJECTED')
   // ^ we may eventually find a better structure to store the votes
   acted: false, // whether or not the player has done the action required in the current round, e.g., clicking "ok", voting, etc.
   logs: [], // the message logs
+  modalToDisplay: '', // valid values are: '', 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
+  numFailVotes: 0, // how many fail votes the most recent mission received
 };
 
 const InGameReducer = (state = initialState, action) => {
@@ -72,6 +74,10 @@ const InGameReducer = (state = initialState, action) => {
       return { ...state, acted: action.acted };
     case ActionTypes.SET_LOGS:
       return { ...state, logs: action.logs };
+    case ActionTypes.SET_MODAL_TO_DISPLAY:
+      return { ...state, modalToDisplay: action.modalToDisplay };
+    case ActionTypes.SET_NUM_FAIL_VOTES:
+      return { ...state, numFailVotes: action.numFailVotes };
     default:
       return state;
   }

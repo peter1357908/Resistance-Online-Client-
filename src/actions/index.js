@@ -3,6 +3,8 @@ export const ActionTypes = {
   SET_SESSION_ID: 'SET_SESSION_ID',
   SET_CURRENT_PLAYER_ID: 'SET_CURRENT_PLAYER_ID',
   SET_CREATOR_ID: 'SET_CREATOR_ID',
+  SET_FAILED: 'SET_FAILED',
+  SET_FAIL_MESSAGE: 'SET_FAIL_MESSAGE',
   // action types handled by in-game-reducer
   SET_PLAYER_ID: 'SET_PLAYER_ID',
   SET_PLAYER_IDS: 'SET_PLAYER_IDS',
@@ -22,6 +24,11 @@ export const ActionTypes = {
   SET_ROUND_OUTCOME: 'SET_ROUND_OUTCOME',
   SET_ACTED: 'SET_ACTED',
   SET_LOGS: 'SET_LOGS',
+  SET_MODAL_TO_DISPLAY: 'SET_MODAL_TO_DISPLAY',
+  SET_NUM_FAIL_VOTES: 'SET_NUM_FAIL_VOTES',
+  // action types handled by post-game-reducer
+  SET_VICTORIOUS_FACTION: 'SET_VICTORIOUS_FACTION',
+  SET_GAME_HISTORY: 'SET_GAME_HISTORY',
 };
 
 // lobby-reducer methods
@@ -43,6 +50,20 @@ export function setCreatorID(creatorID) {
   return {
     type: ActionTypes.SET_CREATOR_ID,
     creatorID,
+  };
+}
+
+export function setFailed(failed) {
+  return {
+    type: ActionTypes.SET_FAILED,
+    failed,
+  };
+}
+
+export function setFailMessage(failMessage) {
+  return {
+    type: ActionTypes.SET_FAIL_MESSAGE,
+    failMessage,
   };
 }
 
@@ -171,5 +192,34 @@ export function setLogs(logs) {
   return {
     type: ActionTypes.SET_LOGS,
     logs,
+  };
+}
+
+export function setModalToDisplay(modalToDisplay) {
+  return {
+    type: ActionTypes.SET_MODAL_TO_DISPLAY,
+    modalToDisplay,
+  };
+}
+
+export function setNumFailVotes(numFailVotes) {
+  return {
+    type: ActionTypes.SET_NUM_FAIL_VOTES,
+    numFailVotes,
+  };
+}
+
+// post-game-reducer methods
+export function setVictoriousFaction(victoriousFaction) {
+  return {
+    type: ActionTypes.SET_VICTORIOUS_FACTION,
+    victoriousFaction,
+  };
+}
+
+export function setGameHistory(gameHistory) {
+  return {
+    type: ActionTypes.SET_GAME_HISTORY,
+    gameHistory,
   };
 }

@@ -5,6 +5,8 @@ const initialState = {
   playerIDs: [],
   currentPlayerID: 'player1',
   creatorID: '',
+  failed: false,
+  failMessage: '',
 };
 
 const LobbyReducer = (state = initialState, action) => {
@@ -17,6 +19,10 @@ const LobbyReducer = (state = initialState, action) => {
       return { ...state, currentPlayerID: action.currentPlayerID };
     case ActionTypes.SET_CREATOR_ID:
       return { ...state, creatorID: action.creatorID };
+    case ActionTypes.SET_FAILED:
+      return { ...state, failed: action.failed };
+    case ActionTypes.SET_FAIL_MESSAGE:
+      return { ...state, failMessage: action.failMessage };
     default:
       return state;
   }
