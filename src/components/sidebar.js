@@ -29,13 +29,17 @@ class SideBar extends Component {
     }
   }
 
+  redirectToDiscord = () => {
+    window.open('https://discord.gg/c3vAtpF', '_blank');
+  }
+
   renderMaterial = () => {
     if (this.state.show) {
       return (
         <div className="sidebar-material">
           <div className="sidebar-buttons">
             <Button variant="secondary" className="directions-button" onClick={this.openDirections}>Directions</Button>
-            <Button variant="secondary" className="discord-button" onClick={this.thisMethodDoesNotExist} disabled>Join Discord</Button>
+            <Button variant="secondary" className="discord-button" onClick={this.redirectToDiscord}>Join Discord</Button>
           </div>
           <Chat />
         </div>
