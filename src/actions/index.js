@@ -9,6 +9,7 @@ export const ActionTypes = {
   SET_CURRENT_LEADER: 'SET_CURRENT_LEADER',
   SET_CURRENT_MISSION: 'SET_CURRENT_MISSION',
   SET_MISSION_SIZE: 'SET_MISSION_SIZE',
+  SET_MISSION_SIZES: 'SET_MISSION_SIZES',
   SET_CURRENT_ROUND: 'SET_CURRENT_ROUND',
   SET_MISSION_STATUSES: 'SET_MISSION_STATUSES',
   SET_MISSION_STATUS: 'SET_MISSION_STATUS',
@@ -78,6 +79,13 @@ export function setMissionSize(missionSize) {
   return {
     type: ActionTypes.SET_MISSION_SIZE,
     missionSize,
+  };
+}
+
+export function setMissionSizes(missionSizes) {
+  return {
+    type: ActionTypes.SET_MISSION_SIZES,
+    missionSizes,
   };
 }
 
