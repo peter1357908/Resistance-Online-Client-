@@ -53,6 +53,7 @@ class PostGame extends Component {
   }
 
   componentDidMount() {
+    console.log('MOUNTING POSTGAME');
     socket.on('postGame', (result) => {
       console.log('postGame action: ', result.action);
       switch (result.action) {
@@ -79,6 +80,7 @@ class PostGame extends Component {
   }
 
   componentWillUnmount() {
+    console.log('UNMOUNTING POSTGAME');
     socket.off('postGame');
   }
 

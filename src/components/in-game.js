@@ -50,7 +50,7 @@ class InGame extends Component {
     super(props);
 
     this.state = {
-      modalToDisplay: 'RESISTANCE', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
+      modalToDisplay: '', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
       numFailVotes: 0,
     };
   }
@@ -139,9 +139,8 @@ class InGame extends Component {
           }
           break;
         case 'gameFinished':
-          this.setState({ modalToDisplay: result.victoriousFaction });
-          // TODO make this history.push stuff happen only once the modal is closed
-          // this.props.history.push(`/post-game/${this.props.sessionID}`);
+          // this.setState({ modalToDisplay: result.victoriousFaction });
+          this.props.history.push(`/post-game/${this.props.sessionID}`);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
