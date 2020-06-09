@@ -21,6 +21,10 @@ class SideBar extends Component {
     this.setState({ showDirections: false });
   }
 
+  redirectToDiscord = () => {
+    window.open('https://discord.gg/c3vAtpF', '_blank');
+  }
+
   toggleCollapse = () => {
     if (this.state.show) {
       this.setState({ show: false });
@@ -35,7 +39,7 @@ class SideBar extends Component {
         <div className="sidebar-material">
           <div className="sidebar-buttons">
             <Button variant="secondary" className="directions-button" onClick={this.openDirections}>Directions</Button>
-            <Button variant="secondary" className="discord-button" onClick={this.thisMethodDoesNotExist} disabled>Join Discord</Button>
+            <Button variant="secondary" className="discord-button" onClick={this.redirectToDiscord}>Join Discord</Button>
           </div>
           <Chat />
         </div>
