@@ -221,8 +221,13 @@ body {
           border-width: 4px;
 
           display: flex;
+          flex-direction: column;
           justify-content: center;
           align-items: center;
+
+          .mission-text {
+            margin-top: 5px;
+          }
         }
 
         .succeeded {

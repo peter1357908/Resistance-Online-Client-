@@ -20,6 +20,7 @@ function mapStateToProps(reduxState) {
     currentMission: reduxState.inGame.currentMission,
     gamePhase: reduxState.inGame.gamePhase,
     missionSize: reduxState.inGame.missionSize,
+    missionSizes: reduxState.inGame.missionSizes,
     votes: reduxState.inGame.votes,
   };
 }
@@ -62,7 +63,12 @@ class GameBoard extends Component {
 
       return (
         <div key={key} className={className}>
-          Mission {index + 1}
+          <div className="mission-text">
+            Mission {index + 1}
+          </div>
+          <div>
+            {this.props.missionSizes[index]}
+          </div>
         </div>
       );
     });

@@ -17,6 +17,7 @@ import {
   setCurrentLeader,
   setCurrentMission,
   setMissionSize,
+  setMissionSizes,
   setCurrentRound,
   setMissionStatuses,
   setMissionStatus,
@@ -60,6 +61,7 @@ class InGame extends Component {
           this.props.setPlayerIDs(result.playerIDs);
           this.props.setGamePhase(Phase.VIEWING_TEAM);
           this.props.setFaction('resistance'); // by default, you're on the resistance
+          this.props.setMissionSizes(result.missionSizes);
           this.props.setActed(false);
           break;
         case 'youAreSpy':
@@ -175,6 +177,7 @@ export default withRouter(connect(mapStateToProps, {
   setCurrentLeader,
   setCurrentMission,
   setMissionSize,
+  setMissionSizes,
   setCurrentRound,
   setMissionStatuses,
   setMissionStatus,
