@@ -25,10 +25,10 @@ const useStyles = {
     flexDirection: 'column',
     width: '80%',
     height: '95%',
-    background: 'linear-gradient(147deg, rgba(21,60,79,1) 42%, rgba(108,124,147,1) 52%, rgba(21,60,79,1) 62%);',
+    background: 'linear-gradient(147deg, rgba(21,60,79,1) 42%, rgba(49, 98, 122,1) 52%, rgba(21,60,79,1) 62%);',
     borderRadius: '10px',
   },
-  info: { padding: '20px', textAlign: 'center', fontSize: '20px' },
+  info: { padding: '20px', textAlign: 'center', fontSize: '16px' },
   theX: {
     fontSize: '30px', fontWeight: '700', cursor: 'pointer', alignSelf: 'flex-end',
   },
@@ -46,18 +46,29 @@ const DirectionsModal = (props) => {
           <span className={props.classes.theX} onClick={props.closeModal}>&times;</span>
         </div>
         <div className={props.classes.info}>
-          <p>To start off, each player will randomly be assigned a role. You will either be in the Resistance, or be a Spy. A random person will be selected
-            as the Team leader, and is in charge of selecting the people who will go on the mission. Each mission requires a certain amount of players
-            indicated by the mission table on the board and a majority vote.
+          <p>Resistance is a hidden identity game. At the start of the game, each player is randomly assigned to one of two factions:
+            the <strong>Resistance</strong> and the <strong>spies</strong>. Each spy is told who the other spies are, but the players on the
+            Resistance are told nothing.
           </p>
-          <p>For a mission to succeed, it requires every single person on the team to vote PASS, otherwise the mission will fail. The board also contains the vote track,
-            which will display the number of failed votes for the current mission, it will reset on a successful mission vote. If everyone fails to pass a team 5 times
-            for a single mission, the game is over and the Spys win! (You cant win a fight if youre taking 3000 years to make a decision)
+          <p>The main structure of the game revolves around <strong>missions</strong>. The members of the Resistance want to plan and carry out
+            successful missions, and the spies want to sabotage those missions.
           </p>
-          <span>If you are in the <strong>Resistance:</strong></span>
-          <p>You win by passing 3 missions!</p>
-          <span>If you are a <strong>Spy:</strong></span>
-          <p> You win by failing 3 missions, OR if the Resistance is unable to organize a mission team at any point in the game (5 failed votes on a single mission.)</p>
+          <p>Here’s how that works. The players take turns being the <strong>leader</strong>. On a given turn, the leader will nominate several players
+            to be on a mission. The exact number of players the leader nominates depends on how  many people are playing and on what stage of the game you’re in,
+            but don’t worry – the game will tell you.
+          </p>
+          <p>After the nomination, all players in the game vote on whether they approve the team for the mission. If more than half the players vote yes,
+            the nominated players are now officially on the mission.
+          </p>
+          <p>At this point (i.e. once the mission has begun), each player on the mission is given choice: let the mission <strong>succeed</strong>, or cause it to <strong>fail</strong>.
+            For the mission to succeed, all players on the mission must vote ‘succeed’. It only takes a single player to sabotage it.
+          </p>
+          <p> Once all the players on the mission have decided how to act, the mission outcome (succeed or fail) is shown to everybody – but the individual
+            succeed/fail actions are kept secret. At this point, the next player (in order) becomes the leader, and the game repeats.
+          </p>
+          <p><strong>Winning conditions:</strong></p>
+          <p>Resistance wins when three missions succeed.</p>
+          <p>Spies win when three missions fail, OR if everybody fails five times in a row to agree on a team for a mission.</p>
         </div>
       </div>
     </div>
