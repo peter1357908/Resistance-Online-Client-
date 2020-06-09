@@ -47,7 +47,7 @@ class InGame extends Component {
     super(props);
 
     this.state = {
-      modalToDisplay: '', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
+      modalToDisplay: 'RESISTANCE', // valid values are: 'SUCCEEDED', 'FAILED', 'RESISTANCE' (indicating resistance won), and 'SPY'
       numFailVotes: 0,
     };
   }
@@ -137,7 +137,7 @@ class InGame extends Component {
         case 'gameFinished':
           this.setState({ modalToDisplay: result.victoriousFaction });
           // TODO make this history.push stuff happen only once the modal is closed
-          this.props.history.push(`/post-game/${this.props.sessionID}`);
+          // this.props.history.push(`/post-game/${this.props.sessionID}`);
           break;
         default:
           console.log('unknown action received from server: ', result.action);
@@ -145,6 +145,11 @@ class InGame extends Component {
       }
       console.log('result: ', result);
     });
+  }
+
+  closeEndGameModal = () => {
+    this.setState({ modalToDisplay: '' });
+    this.props.history.push(`/post-game/${this.props.sessionID}`);
   }
 
   render() {
@@ -160,8 +165,8 @@ class InGame extends Component {
       <div className="game-container">
         <MissionSucceededModal show={this.state.modalToDisplay === 'SUCCEEDED'} closeModal={() => this.setState({ modalToDisplay: '' })} />
         <MissionFailedModal show={this.state.modalToDisplay === 'FAILED'} numFailVotes={this.state.numFailVotes} closeModal={() => this.setState({ modalToDisplay: '' })} />
-        <ResistanceWinsModal show={this.state.modalToDisplay === 'RESISTANCE'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
-        <SpiesWinModal show={this.state.modalToDisplay === 'SPY'} faction={this.props.faction} closeModal={() => this.setState({ modalToDisplay: '' })} />
+        <ResistanceWinsModal show={this.state.modalToDisplay === 'RESISTANCE'} faction={this.props.faction} closeModal={() => this.closeEndGameModal()} />
+        <SpiesWinModal show={this.state.modalToDisplay === 'SPY'} faction={this.props.faction} closeModal={() => this.closeEndGameModal()} />
         <SideBar />
         <div className={gamePhaseWrapper}>
           <GameBoard />
