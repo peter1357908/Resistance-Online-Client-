@@ -646,6 +646,23 @@ body {
         flex-direction: column;
         padding: 10px;
 
+        .legend {
+          text-align: center;
+          color: white;
+          font-size: 16px;
+          margin-bottom: 15px;
+
+          .italicized {
+            font-style: italic;
+            font-weight: 500;
+          }
+
+          .circled {
+            border: solid 1.2px #AAAAAA;
+            border-radius: 10px;
+          }
+        }
+
         .mission-report{
           display: flex;
           flex-direction: column;
@@ -701,7 +718,8 @@ body {
             }
 
             .leader {
-              color: yellow;
+              font-style: italic;
+              font-weight: 520;
             }
 
             .player {
@@ -709,7 +727,7 @@ body {
             }
 
             .on-mission {
-              border: solid 1px #AAAAAA;
+              border: solid 1.2px #AAAAAA;
               border-radius: 10px;
             }
           }

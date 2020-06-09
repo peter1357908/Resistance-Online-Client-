@@ -124,8 +124,11 @@ class PostGame extends Component {
         <div className={playerClassName}>
           {playerID}
         </div>
+        <div>
+          -
+        </div>
         <div className={shortVote}>
-          -{shortVote},
+          {shortVote},
         </div>
       </div>
     );
@@ -148,10 +151,10 @@ class PostGame extends Component {
     return (
       <div className="mission-and-player-vote" key={playerID}>
         <div>
-          {playerID}
+          {playerID}-
         </div>
         <div className={vote}>
-          -{vote}
+          {vote}
         </div>
       </div>
     );
@@ -192,6 +195,9 @@ class PostGame extends Component {
   renderMissionReports = () => {
     return (
       <div className="mission-reports">
+        <div className="legend">
+          (Note: leaders are <span className="italicized">italicized</span> and players on the proposed team are <span className="circled">circled</span>)
+        </div>
         {this.state.gameHistory.missions.map((mission, index) => this.renderMissionReport(mission, index))}
       </div>
     );
