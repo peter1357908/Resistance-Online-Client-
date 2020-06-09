@@ -52,6 +52,10 @@ class Lobby extends Component {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('lobby');
+  }
+
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {

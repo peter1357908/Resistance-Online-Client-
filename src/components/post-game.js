@@ -68,6 +68,10 @@ class PostGame extends Component {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('postGame');
+  }
+
   renderHeader = () => {
     if (this.state.victoriousFaction === 'RESISTANCE') {
       return (

@@ -41,6 +41,10 @@ class JoinGame extends Component {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('joinGame');
+  }
+
   onChangeSessionID = (event) => {
     this.setState({ sessionID: event.target.value });
   }

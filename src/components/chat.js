@@ -27,6 +27,10 @@ class Chat extends Component {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('chat');
+  }
+
   onChange = (event) => {
     this.setState({ currentMessage: event.target.value });
   }
