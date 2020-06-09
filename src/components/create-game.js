@@ -40,6 +40,10 @@ class CreateGame extends Component {
     });
   }
 
+  componentWillUnmount() {
+    socket.off('createGame');
+  }
+
   onChangeSessionID = (event) => {
     this.setState({ sessionID: event.target.value });
   }

@@ -33,6 +33,10 @@ class SideBar extends Component {
     }
   }
 
+  redirectToDiscord = () => {
+    window.open('https://discord.gg/c3vAtpF', '_blank');
+  }
+
   renderMaterial = () => {
     if (this.state.show) {
       return (

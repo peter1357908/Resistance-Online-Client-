@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Button, Alert } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import socket from '../socketConfig';
-import { setPlayerIDs, setCreatorID } from '../actions';
 import SideBar from './sidebar';
+import { setFailed } from '../actions';
 
 function mapStateToProps(reduxState) {
   return {
@@ -12,50 +12,17 @@ function mapStateToProps(reduxState) {
     playerIDs: reduxState.lobby.playerIDs,
     playerID: reduxState.lobby.currentPlayerID,
     creatorID: reduxState.lobby.creatorID,
+    failed: reduxState.lobby.failed,
+    failMessage: reduxState.lobby.failMessage,
   };
 }
 
 class Lobby extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      failed: false,
-      failMessage: '',
-    };
-  }
-
-  componentDidMount() {
-    socket.on('lobby', (result) => {
-      switch (result.action) {
-        case 'gameStarted':
-          this.props.history.push(`/in-game/${this.props.sessionID}`);
-          break;
-        case 'someoneQuit':
-          this.props.setPlayerIDs(result.playerIDs);
-          this.props.setCreatorID(result.creatorID);
-          break;
-        case 'someoneJoined':
-          this.props.setPlayerIDs(result.playerIDs);
-          this.props.setCreatorID(result.creatorID);
-          break;
-        case 'quitAcknowledged':
-          this.props.history.push('/');
-          break;
-        case 'fail':
-          this.setState({ failed: true, failMessage: result.failMessage });
-          break;
-        default:
-          console.log(`unknown action received from server: ${result.action}`);
-          break;
-      }
-    });
-  }
-
   // Relies on the backend to discard illegal startGame requests
   // TODO: authentication
   onClickStart = (event) => {
-    this.setState({ failed: false });
+    console.log('clicked start');
+    this.props.setFailed(false);
     socket.emit('lobby', { action: 'startGame' });
   }
 
@@ -109,8 +76,6 @@ class Lobby extends Component {
     }
   }
 
-  // TODO: highlight the session creator's playerID
-  // TODO: make it consistent with the Figma mock-up (different rendering for creators than joiners)
   render() {
     const placeholderIDs = ['Player 1',
       'Player 2',
@@ -156,7 +121,7 @@ class Lobby extends Component {
         <SideBar />
         <div className="lobby-container">
           <div className="shade">
-            {this.state.failed ? <Alert variant="danger">{this.state.failMessage}</Alert> : <></>}
+            {this.props.failed ? <Alert variant="danger">{this.props.failMessage}</Alert> : <></>}
             <div className="sessionID">
               Session ID: {this.props.sessionID}
             </div>
@@ -180,4 +145,4 @@ class Lobby extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setPlayerIDs, setCreatorID })(Lobby));
+export default withRouter(connect(mapStateToProps, { setFailed })(Lobby));

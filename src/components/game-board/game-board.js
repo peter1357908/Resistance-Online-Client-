@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 /* eslint-disable no-nested-ternary */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { setSelectedPlayers } from '../../actions';
 import MissionStatus from '../../resources/mission-status';
 import BottomButtons from './bottom-buttons';
 import TopText from './top-text';
 import { Phase } from '../../resources/phase';
+import socket from '../../socketConfig';
 
 function mapStateToProps(reduxState) {
   return {
@@ -16,10 +16,11 @@ function mapStateToProps(reduxState) {
     playerIDs: reduxState.inGame.playerIDs,
     currentRound: reduxState.inGame.currentRound,
     selectedPlayers: reduxState.inGame.selectedPlayers,
-    numSelectedPlayers: reduxState.inGame.numSelectedPlayers, // I'm using this to force a refresh when selectedPlayers changes (ask Will for details)
+    numSelectedPlayers: reduxState.inGame.numSelectedPlayers,
     currentMission: reduxState.inGame.currentMission,
     gamePhase: reduxState.inGame.gamePhase,
     missionSize: reduxState.inGame.missionSize,
+    missionSizes: reduxState.inGame.missionSizes,
     votes: reduxState.inGame.votes,
   };
 }
@@ -27,13 +28,8 @@ function mapStateToProps(reduxState) {
 class GameBoard extends Component {
   cardClicked = (ID) => {
     if (this.props.currentLeader === this.props.playerID && this.props.gamePhase === Phase.SELECTING_TEAM) {
-      if (this.props.selectedPlayers.includes(ID)) {
-        const selectedPlayers = this.props.selectedPlayers.filter((e) => e !== ID);
-        this.props.setSelectedPlayers(selectedPlayers);
-      } else if (this.props.numSelectedPlayers < this.props.missionSize) {
-        this.props.selectedPlayers.push(ID);
-        this.props.setSelectedPlayers(this.props.selectedPlayers);
-      }
+      console.log('am here');
+      socket.emit('inGame', { action: 'cardClicked', cardPlayerID: ID });
     }
   }
 
@@ -62,7 +58,12 @@ class GameBoard extends Component {
 
       return (
         <div key={key} className={className}>
-          Mission {index + 1}
+          <div className="mission-text">
+            Mission {index + 1}
+          </div>
+          <div>
+            {this.props.missionSizes[index]}
+          </div>
         </div>
       );
     });
@@ -71,6 +72,7 @@ class GameBoard extends Component {
       const selectedString = this.props.selectedPlayers.includes(ID) ? 'selected' : 'not-selected';
       const hoverableString = this.props.currentLeader === this.props.playerID
         && (this.props.selectedPlayers.includes(ID) || this.props.numSelectedPlayers < this.props.missionSize) ? 'hoverable' : '';
+        // numSelectedPlayers is used to force a refresh when selectedPlayers changes (ask Will for details)
       const className = `player-card ${selectedString} ${hoverableString}`;
       return (
         <div role="button" tabIndex="0" key={ID} className={className} onClick={() => this.cardClicked(ID)}>
@@ -102,4 +104,4 @@ class GameBoard extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { setSelectedPlayers })(GameBoard));
+export default withRouter(connect(mapStateToProps, null)(GameBoard));

@@ -24,8 +24,8 @@ const useStyles = {
     color: 'white',
     display: 'flex',
     flexDirection: 'column',
-    width: '200px',
-    height: '135px',
+    width: '250px',
+    height: '160px',
     backgroundColor: '#BB0000',
     borderRadius: '6px',
   },
@@ -50,6 +50,9 @@ const SpiesWinModal = (props) => {
           <div className="missionOutcome">Spies win</div>
           {props.faction === 'resistance' && <div>(better luck next time)</div>}
           {props.faction === 'spy' && <div>(congratulations)</div>}
+          <div className="modal-direction">
+            Close this to view game history
+          </div>
         </div>
       </div>
     </div>
